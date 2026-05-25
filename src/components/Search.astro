@@ -1,0 +1,140 @@
+---
+// Recherche fulltext via Pagefind (statique, généré au build)
+// La librairie pagefind est chargée à la demande quand on ouvre la modale
+---
+
+<button
+  id="search-toggle"
+  type="button"
+  aria-label="Rechercher"
+  class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.2em] uppercase text-neutral-600 dark:text-neutral-400 hover:text-[var(--color-accent-700)] dark:hover:text-[var(--color-accent-500)] transition-colors"
+>
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="11" cy="11" r="8"></circle>
+    <path d="m21 21-4.35-4.35"></path>
+  </svg>
+  <span class="hidden sm:inline">Search</span>
+  <kbd class="hidden md:inline font-mono text-[9px] tracking-widest border border-neutral-400/60 dark:border-neutral-600/60 rounded px-1 py-0.5">⌘K</kbd>
+</button>
+
+<dialog
+  id="search-modal"
+  class="bg-stone-50 dark:bg-neutral-900 text-neutral-900 dark:text-white p-0 m-0 w-full h-full max-w-none max-h-none backdrop:bg-neutral-950/40 backdrop:backdrop-blur-sm open:flex flex-col"
+>
+  <div class="border-b border-neutral-300/70 dark:border-neutral-700/70 px-6 md:px-12 py-5">
+    <div class="max-w-3xl mx-auto flex items-center gap-4">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-neutral-500 shrink-0" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+      <input
+        id="search-input"
+        type="search"
+        placeholder="Rechercher dans les articles…"
+        autocomplete="off"
+        class="flex-1 bg-transparent border-0 outline-none p-0 text-xl md:text-2xl text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-600"
+      />
+      <button id="search-close" type="button" aria-label="Fermer" class="font-mono text-[10px] tracking-widest uppercase text-neutral-500 dark:text-neutral-400 border border-neutral-400/60 dark:border-neutral-600/60 rounded px-2 py-1 hover:bg-stone-100 dark:hover:bg-neutral-800">ESC</button>
+    </div>
+  </div>
+  <div id="search-results" class="flex-1 overflow-y-auto px-6 md:px-12 py-8">
+    <div class="max-w-3xl mx-auto">
+      <p class="font-mono text-[11px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500" id="search-empty">
+        Tapez quelques caractères pour rechercher.
+      </p>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  let pagefindReady: Promise<any> | null = null;
+  function loadPagefind() {
+    if (!pagefindReady) {
+      // En dev, le bundle pagefind n'existe pas (build only) → fallback
+      pagefindReady = (async () => {
+        try {
+          // @ts-ignore
+          const pf = await import(/* @vite-ignore */ '/pagefind/pagefind.js');
+          await pf.options({ ranking: { termFrequency: 1 } });
+          return pf;
+        } catch (e) {
+          return null;
+        }
+      })();
+    }
+    return pagefindReady;
+  }
+
+  function initSearch() {
+    const toggle = document.getElementById('search-toggle');
+    const modal = document.getElementById('search-modal') as HTMLDialogElement | null;
+    const close = document.getElementById('search-close');
+    const input = document.getElementById('search-input') as HTMLInputElement | null;
+    const results = document.getElementById('search-results');
+    if (!toggle || !modal || !close || !input || !results) return;
+
+    function open() {
+      modal!.showModal();
+      setTimeout(() => input!.focus(), 50);
+    }
+    function shut() {
+      modal!.close();
+      input!.value = '';
+      results!.querySelector('.max-w-3xl')!.innerHTML = '<p class="font-mono text-[11px] tracking-widest uppercase text-neutral-500">Tapez quelques caractères pour rechercher.</p>';
+    }
+
+    toggle.addEventListener('click', open);
+    close.addEventListener('click', shut);
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        modal!.open ? shut() : open();
+      }
+    });
+
+    let timer: any;
+    input.addEventListener('input', () => {
+      clearTimeout(timer);
+      const q = input.value.trim();
+      if (q.length < 2) {
+        results.querySelector('.max-w-3xl')!.innerHTML = '<p class="font-mono text-[11px] tracking-widest uppercase text-neutral-500">Tapez quelques caractères pour rechercher.</p>';
+        return;
+      }
+      timer = setTimeout(async () => {
+        const pf = await loadPagefind();
+        if (!pf) {
+          results.querySelector('.max-w-3xl')!.innerHTML = '<p class="font-mono text-[11px] tracking-widest uppercase text-neutral-500">Index disponible uniquement après le build (npm run build).</p>';
+          return;
+        }
+        const search = await pf.search(q);
+        if (!search.results.length) {
+          results.querySelector('.max-w-3xl')!.innerHTML = '<p class="font-mono text-[11px] tracking-widest uppercase text-neutral-500">Aucun résultat.</p>';
+          return;
+        }
+        const top = await Promise.all(search.results.slice(0, 8).map((r: any) => r.data()));
+        results.querySelector('.max-w-3xl')!.innerHTML = top
+          .map(
+            (r: any) => `
+              <a href="${r.url}" class="group block py-5 border-b border-neutral-300/70 dark:border-neutral-700/70">
+                <h3 class="text-lg md:text-xl font-medium tracking-tight text-neutral-900 dark:text-neutral-100 group-hover:text-[var(--color-accent-700)] dark:group-hover:text-[var(--color-accent-500)] mb-1">${r.meta?.title || 'Sans titre'}</h3>
+                <p class="text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2">${r.excerpt}</p>
+              </a>`
+          )
+          .join('');
+      }, 150);
+    });
+  }
+
+  initSearch();
+  document.addEventListener('astro:after-swap', initSearch);
+</script>
+
+<style>
+  dialog#search-modal {
+    inset: 0;
+  }
+  dialog#search-modal[open] {
+    display: flex;
+  }
+</style>

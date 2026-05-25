@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection, render } from 'astro:content';
+import { getCurrentLanguage } from '../../lib/i18n';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project: any) => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const currentLang = getCurrentLanguage();
+
+function fmtDate(d: Date | string, lang: string) {
+  return new Date(d).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {
+    day: '2-digit', month: 'long', year: 'numeric',
+  });
+}
+---
+
+<Layout title={`${project.data.title} — DigitalDream`} description={project.data.description}>
+  <main class="min-h-screen">
+    <article class="px-6 md:px-12 pt-20 md:pt-32 pb-16 md:pb-24">
+      <div class="max-w-3xl mx-auto">
+
+        <div class="flex items-center gap-4 mb-8 font-mono text-[11px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500">
+          <a href="/projects" class="link-hover">← {currentLang === 'fr' ? 'Retour' : 'Back'}</a>
+          <span>—</span>
+          <span>{fmtDate(project.data.date, project.data.lang)}</span>
+        </div>
+
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-[1.05] text-neutral-900 dark:text-neutral-50 mb-6">
+          {project.data.title}
+        </h1>
+
+        {project.data.description && (
+          <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed font-serif italic mb-10 max-w-2xl">
+            {project.data.description}
+          </p>
+        )}
+
+        <!-- Liens externes -->
+        {(project.data.demoURL || project.data.repoURL) && (
+          <div class="flex gap-6 mb-12 font-mono text-[11px] tracking-[0.2em] uppercase">
+            {project.data.demoURL && (
+              <a href={project.data.demoURL} target="_blank" rel="noopener" class="text-neutral-900 dark:text-neutral-100 link-hover">↗ Demo</a>
+            )}
+            {project.data.repoURL && (
+              <a href={project.data.repoURL} target="_blank" rel="noopener" class="text-neutral-900 dark:text-neutral-100 link-hover">↗ Code</a>
+            )}
+          </div>
+        )}
+
+        <div class="prose prose-neutral dark:prose-invert prose-lg max-w-none">
+          <Content />
+        </div>
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>

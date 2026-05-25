@@ -1,0 +1,197 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
+import { getCurrentLanguage } from '../lib/i18n';
+
+const currentLang = getCurrentLanguage();
+
+type BlogEntry = Awaited<ReturnType<typeof getCollection<'blog'>>>[number];
+type ProjectEntry = Awaited<ReturnType<typeof getCollection<'projects'>>>[number];
+
+const allBlog: BlogEntry[] = (await getCollection('blog'))
+  .filter((post: BlogEntry) => !post.data.draft && post.data.lang === currentLang)
+  .sort((a: BlogEntry, b: BlogEntry) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const blog = allBlog.slice(0, 5);
+
+const projects: ProjectEntry[] = (await getCollection('projects'))
+  .filter((p: ProjectEntry) => !p.data.draft && p.data.lang === currentLang)
+  .sort((a: ProjectEntry, b: ProjectEntry) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const t = {
+  fr: {
+    label: 'BLOG — NOTES',
+    heroLead: 'Un carnet de bord sur',
+    heroAccent: 'le code, les machines et l\'open-source',
+    heroEnd: '— construire des outils simples, beaux et libres.',
+    metaCount: 'Articles',
+    metaSince: 'Depuis',
+    sectionWriting: 'Écrits récents',
+    sectionWritingDesc: 'Notes de terrain, expérimentations et réflexions sur la tech autonome.',
+    sectionWork: 'Projets',
+    sectionWorkDesc: 'Outils que je construis, en cours ou archivés.',
+    readMore: 'Lire l\'article',
+    viewAll: 'Tout voir',
+  },
+  en: {
+    label: 'BLOG — NOTES',
+    heroLead: 'A field journal on',
+    heroAccent: 'code, machines, and open-source',
+    heroEnd: '— building simple, beautiful, and free tools.',
+    metaCount: 'Articles',
+    metaSince: 'Since',
+    sectionWriting: 'Recent writing',
+    sectionWritingDesc: 'Field notes, experiments, and reflections on independent tech.',
+    sectionWork: 'Works',
+    sectionWorkDesc: 'Tools I build — in progress or archived.',
+    readMore: 'Read article',
+    viewAll: 'View all',
+  },
+}[currentLang];
+
+const oldestYear = allBlog.length > 0 ? Math.min(...allBlog.map(p => new Date(p.data.date).getFullYear())) : new Date().getFullYear();
+
+function fmtDate(d: Date | string, lang: string) {
+  return new Date(d).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {
+    day: '2-digit', month: 'short', year: 'numeric',
+  });
+}
+---
+
+<Layout title="DigitalDream — Blog & Notes">
+  <main class="min-h-screen">
+
+    <!-- BARRE MÉTA — fine, juste label + année/langue -->
+    <section class="px-6 md:px-12 pt-10 md:pt-14 pb-6">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <span class="inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.2em] text-neutral-600 dark:text-neutral-400">
+          <span class="relative inline-flex w-2 h-2">
+            <span class="absolute inset-0 rounded-full bg-[var(--color-accent-500)] pulse-ring"></span>
+            <span class="relative inline-block w-2 h-2 rounded-full bg-[var(--color-accent-500)] pulse-dot"></span>
+          </span>
+          {t.label}
+        </span>
+        <span class="font-mono text-[11px] tracking-[0.2em] text-neutral-500 dark:text-neutral-500">
+          {new Date().getFullYear()} / {currentLang.toUpperCase()}
+        </span>
+      </div>
+    </section>
+
+    <!-- ARTICLES — magazine stack, direct -->
+    <section class="border-t border-neutral-300/70 dark:border-neutral-700/70">
+      <div class="max-w-7xl mx-auto">
+        <ul class="divide-y divide-neutral-300/70 dark:divide-neutral-700/70">
+          {blog.map((post, idx) => (
+            <li>
+              <a
+                href={`/blog/${post.id}`}
+                class="group block px-6 md:px-12 py-10 md:py-14 hover:bg-stone-100/60 dark:hover:bg-neutral-800/40 transition-colors"
+              >
+                <article class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start">
+
+                  <!-- Numéro + Date (mobile compact, desktop sidebar) -->
+                  <div class="md:col-span-2 md:order-1 order-2 flex md:flex-col gap-4 md:gap-1 items-baseline md:items-start font-mono text-[11px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500">
+                    <span class="text-neutral-400 dark:text-neutral-600 group-hover:text-[var(--color-accent-600)] dark:group-hover:text-[var(--color-accent-500)] transition-colors">
+                      {String(idx + 1).padStart(2, '0')}
+                    </span>
+                    <span>{fmtDate(post.data.date, currentLang)}</span>
+                    {post.data.category && (
+                      <span class="hidden md:block mt-2 text-neutral-400 dark:text-neutral-600">
+                        — {post.data.category}
+                      </span>
+                    )}
+                  </div>
+
+                  <!-- Titre + description -->
+                  <div class={post.data.cover ? 'md:col-span-6 md:order-2 order-3' : 'md:col-span-10 md:order-2 order-3'}>
+                    <h2 class={
+                      idx === 0
+                        ? 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05] text-neutral-900 dark:text-neutral-50'
+                        : 'text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight leading-[1.1] text-neutral-900 dark:text-neutral-100'
+                    }>
+                      <span class="link-hover">{post.data.title}</span>
+                    </h2>
+                    {post.data.description && (
+                      <p class="mt-4 text-sm md:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed line-clamp-3 max-w-2xl">
+                        {post.data.description}
+                      </p>
+                    )}
+                    <div class="mt-6 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.2em] uppercase text-neutral-700 dark:text-neutral-300 group-hover:gap-4 group-hover:text-[var(--color-accent-700)] dark:group-hover:text-[var(--color-accent-500)] transition-all">
+                      <span>{currentLang === 'fr' ? 'Lire' : 'Read'}</span>
+                      <span class="text-[var(--color-accent-600)] dark:text-[var(--color-accent-500)]">→</span>
+                    </div>
+                  </div>
+
+                  <!-- Image cover à droite (desktop) / haut (mobile) — N&B → couleur au hover -->
+                  {post.data.cover && (
+                    <div class="md:col-span-4 md:order-3 order-1">
+                      <div class="aspect-[4/3] overflow-hidden bg-stone-200 dark:bg-neutral-800 rounded-sm">
+                        <img
+                          src={post.data.cover}
+                          alt={post.data.title}
+                          loading={idx === 0 ? 'eager' : 'lazy'}
+                          class="w-full h-full object-cover grayscale contrast-[1.05] transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-[1.03]"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                </article>
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <!-- Voir tout -->
+        <div class="px-6 md:px-12 py-12 border-t border-neutral-300/70 dark:border-neutral-700/70 flex items-center justify-between font-mono text-[11px] tracking-[0.2em] uppercase">
+          <span class="text-neutral-500 dark:text-neutral-500">
+            {blog.length} / {allBlog.length} {t.metaCount.toLowerCase()}
+          </span>
+          <a href="/blog" class="text-neutral-900 dark:text-neutral-100 link-hover">
+            {t.viewAll} →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION PROJETS -->
+    {projects.length > 0 && (
+      <section class="px-6 md:px-12 py-16 md:py-28 border-t border-neutral-300/70 dark:border-neutral-700/70 bg-stone-100/50 dark:bg-neutral-800/30">
+        <div class="max-w-7xl mx-auto">
+
+          <ul class="grid grid-cols-1 md:grid-cols-2 gap-px bg-neutral-300/70 dark:bg-neutral-700/70 border border-neutral-300/70 dark:border-neutral-700/70">
+            {projects.map((project, idx) => (
+              <li class="bg-stone-50 dark:bg-neutral-900">
+                <a href={`/projects/${project.id}`} class="block p-8 md:p-10 hover:bg-white dark:hover:bg-neutral-950 transition-colors h-full">
+                  <div class="flex items-start justify-between mb-6">
+                    <span class="font-mono text-[11px] tracking-widest text-neutral-500 dark:text-neutral-500">
+                      ({String(idx + 1).padStart(2, '0')})
+                    </span>
+                    <span class="font-mono text-[11px] tracking-widest text-neutral-500 dark:text-neutral-500">
+                      {fmtDate(project.data.date, currentLang)}
+                    </span>
+                  </div>
+                  <h3 class="text-2xl md:text-3xl font-medium tracking-tight text-neutral-900 dark:text-neutral-100 leading-tight mb-3">
+                    <span class="link-hover">{project.data.title}</span>
+                  </h3>
+                  {project.data.description && (
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-6 max-w-md">
+                      {project.data.description}
+                    </p>
+                  )}
+                  <div class="flex gap-4 text-[11px] font-mono tracking-widest uppercase text-neutral-500 dark:text-neutral-500">
+                    {project.data.repoURL && <span>↗ Code</span>}
+                    {project.data.demoURL && <span>↗ Demo</span>}
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
+
+  </main>
+  <Footer />
+</Layout>

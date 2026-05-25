@@ -1,0 +1,157 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+import { getCurrentLanguage } from '../lib/i18n';
+
+const currentLang = getCurrentLanguage();
+
+const t = {
+  fr: {
+    label: 'MANIFESTE',
+    introTitle: 'Ce blog documente',
+    introTitleAccent: 'des usages réels',
+    introTitleEnd: '.',
+    introLead: "Pas des fiches marketing, pas des articles sponsorisés déguisés. Je teste, j'utilise et j'explique des outils techniques tels qu'ils sont réellement employés, avec leurs qualités et leurs limites.",
+    s1: { num: 'I', title: 'Ligne éditoriale', items: ['contenu écrit librement', 'aucun discours imposé', 'aucun avis acheté', 'transparence systématique'], note: "Si un produit n'est pas pertinent, c'est dit. S'il est bon mais mal positionné, c'est expliqué." },
+    s2: { num: 'II', title: 'Ce que je teste', items: ['accessoires PC et Mac utiles en production', 'mini PC et hardware compact', 'impression 3D et usages concrets', 'outils logiciels orientés efficacité'], note: 'Toujours en conditions réelles. Jamais en vitrine.' },
+    s3: { num: 'III', title: 'Cadre de collaboration', possibleTitle: 'Collaborations possibles', possible: ['prêt de matériel', 'accès anticipé', 'échanges techniques'], condTitle: 'Conditions non négociables', conditions: ['aucun droit de regard', 'aucune promesse de publication', 'mention claire lorsque le matériel est fourni'] },
+    s4: { num: 'IV', title: 'Ce que je refuse', items: ['sponsoring éditorial', 'promotion déguisée', 'discours marketing'], note: "Ce blog n'est pas une régie publicitaire." },
+    contactTitle: 'Contact',
+    contactLead: "Si votre produit supporte un regard indépendant, ou si votre projet correspond à cette démarche et que vous souhaitez collaborer, vous pouvez me contacter via le formulaire en bas de page.",
+    cta: 'Aller au formulaire',
+  },
+  en: {
+    label: 'MANIFESTO',
+    introTitle: 'This blog documents',
+    introTitleAccent: 'real-world usage',
+    introTitleEnd: '.',
+    introLead: "Not marketing sheets, not disguised sponsored articles. I test, use, and explain technical tools as they're actually used, with their strengths and limits.",
+    s1: { num: 'I', title: 'Editorial line', items: ['written freely', 'no imposed narrative', 'no bought opinions', 'systematic transparency'], note: "If a product isn't relevant, I say so. If it's good but poorly positioned, I explain why." },
+    s2: { num: 'II', title: 'What I test', items: ['PC and Mac accessories useful in production', 'mini PCs and compact hardware', '3D printing and practical use', 'efficiency-focused software tools'], note: 'Always in real conditions. Never on display.' },
+    s3: { num: 'III', title: 'Collaboration framework', possibleTitle: 'Possible collaborations', possible: ['hardware loans', 'early access', 'technical exchanges'], condTitle: 'Non-negotiable conditions', conditions: ['no editorial oversight from you', 'no guarantee of publication', 'clear disclosure when hardware is provided'] },
+    s4: { num: 'IV', title: 'What I refuse', items: ['editorial sponsoring', 'disguised promotion', 'marketing narrative'], note: 'This blog is not an ad agency.' },
+    contactTitle: 'Contact',
+    contactLead: "If your product can stand an independent look, or if your project fits this approach and you'd like to collaborate, you can reach me via the form at the bottom of the page.",
+    cta: 'Go to form',
+  },
+}[currentLang];
+---
+
+<Layout title={`${currentLang === 'fr' ? 'Manifeste' : 'Manifesto'} — DigitalDream`}>
+  <main class="min-h-screen">
+
+    <!-- HERO -->
+    <section class="px-6 md:px-12 pt-20 md:pt-32 pb-16 md:pb-24">
+      <div class="max-w-5xl mx-auto">
+        <span class="font-mono text-[11px] tracking-[0.2em] text-neutral-500 dark:text-neutral-500 block mb-8">
+          {t.label}
+        </span>
+        <h1 class="text-4xl sm:text-5xl md:text-7xl font-medium tracking-tight leading-[1.05] text-neutral-900 dark:text-neutral-50">
+          {t.introTitle} <span class="font-serif italic font-normal">{t.introTitleAccent}</span>{t.introTitleEnd}
+        </h1>
+        <p class="mt-10 text-lg md:text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-3xl">
+          {t.introLead}
+        </p>
+      </div>
+    </section>
+
+    <!-- I — Ligne éditoriale -->
+    <section class="px-6 md:px-12 py-16 md:py-20 border-t border-neutral-300/70 dark:border-neutral-700/70">
+      <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
+        <div class="md:col-span-3">
+          <span class="font-mono text-[11px] tracking-[0.2em] text-neutral-500 dark:text-neutral-500 block mb-3">— {t.s1.num}</span>
+          <h2 class="text-2xl md:text-3xl font-medium tracking-tight font-serif italic font-normal">{t.s1.title}</h2>
+        </div>
+        <div class="md:col-span-9">
+          <ul class="space-y-3 text-base md:text-lg text-neutral-700 dark:text-neutral-300 mb-6">
+            {t.s1.items.map(item => (
+              <li class="flex gap-4"><span class="font-mono text-neutral-400 dark:text-neutral-600 pt-2 text-xs">—</span><span>{item}</span></li>
+            ))}
+          </ul>
+          <p class="text-sm md:text-base text-neutral-500 dark:text-neutral-400 italic max-w-2xl">{t.s1.note}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- II — Ce que je teste -->
+    <section class="px-6 md:px-12 py-16 md:py-20 border-t border-neutral-300/70 dark:border-neutral-700/70 bg-stone-100/60 dark:bg-neutral-800/40">
+      <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
+        <div class="md:col-span-3">
+          <span class="font-mono text-[11px] tracking-[0.2em] text-neutral-500 dark:text-neutral-500 block mb-3">— {t.s2.num}</span>
+          <h2 class="text-2xl md:text-3xl font-medium tracking-tight font-serif italic font-normal">{t.s2.title}</h2>
+        </div>
+        <div class="md:col-span-9">
+          <ul class="space-y-3 text-base md:text-lg text-neutral-700 dark:text-neutral-300 mb-6">
+            {t.s2.items.map(item => (
+              <li class="flex gap-4"><span class="font-mono text-neutral-400 dark:text-neutral-600 pt-2 text-xs">—</span><span>{item}</span></li>
+            ))}
+          </ul>
+          <p class="text-sm md:text-base text-neutral-500 dark:text-neutral-400 italic max-w-2xl">{t.s2.note}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- III — Cadre de collaboration -->
+    <section class="px-6 md:px-12 py-16 md:py-20 border-t border-neutral-300/70 dark:border-neutral-700/70">
+      <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
+        <div class="md:col-span-3">
+          <span class="font-mono text-[11px] tracking-[0.2em] text-neutral-500 dark:text-neutral-500 block mb-3">— {t.s3.num}</span>
+          <h2 class="text-2xl md:text-3xl font-medium tracking-tight font-serif italic font-normal">{t.s3.title}</h2>
+        </div>
+        <div class="md:col-span-9 space-y-10">
+          <div>
+            <h3 class="font-mono text-[11px] tracking-[0.2em] uppercase text-neutral-500 dark:text-neutral-500 mb-4">{t.s3.possibleTitle}</h3>
+            <ul class="space-y-3 text-base md:text-lg text-neutral-700 dark:text-neutral-300">
+              {t.s3.possible.map(item => (
+                <li class="flex gap-4"><span class="font-mono text-neutral-400 dark:text-neutral-600 pt-2 text-xs">→</span><span>{item}</span></li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-mono text-[11px] tracking-[0.2em] uppercase text-neutral-500 dark:text-neutral-500 mb-4">{t.s3.condTitle}</h3>
+            <ul class="space-y-3 text-base md:text-lg text-neutral-700 dark:text-neutral-300">
+              {t.s3.conditions.map(item => (
+                <li class="flex gap-4"><span class="font-mono text-neutral-400 dark:text-neutral-600 pt-2 text-xs">→</span><span>{item}</span></li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IV — Ce que je refuse -->
+    <section class="px-6 md:px-12 py-16 md:py-20 border-t border-neutral-300/70 dark:border-neutral-700/70 bg-stone-100/60 dark:bg-neutral-800/40">
+      <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
+        <div class="md:col-span-3">
+          <span class="font-mono text-[11px] tracking-[0.2em] text-neutral-500 dark:text-neutral-500 block mb-3">— {t.s4.num}</span>
+          <h2 class="text-2xl md:text-3xl font-medium tracking-tight font-serif italic font-normal">{t.s4.title}</h2>
+        </div>
+        <div class="md:col-span-9">
+          <ul class="space-y-3 text-base md:text-lg text-neutral-700 dark:text-neutral-300 mb-6">
+            {t.s4.items.map(item => (
+              <li class="flex gap-4"><span class="font-mono text-neutral-400 dark:text-neutral-600 pt-2 text-xs">×</span><span class="line-through decoration-neutral-400 dark:decoration-neutral-600">{item}</span></li>
+            ))}
+          </ul>
+          <p class="text-sm md:text-base text-neutral-500 dark:text-neutral-400 italic max-w-2xl">{t.s4.note}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="px-6 md:px-12 py-20 md:py-28 border-t border-neutral-300/70 dark:border-neutral-700/70">
+      <div class="max-w-5xl mx-auto">
+        <span class="font-mono text-[11px] tracking-[0.2em] text-neutral-500 dark:text-neutral-500 block mb-6">— V</span>
+        <h2 class="text-3xl md:text-5xl font-medium tracking-tight mb-8">
+          <span class="font-serif italic font-normal">{t.contactTitle}</span>
+        </h2>
+        <p class="text-base md:text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed mb-10">{t.contactLead}</p>
+        <a href="#contact" class="inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.2em] uppercase text-neutral-900 dark:text-neutral-100 border-b border-neutral-900 dark:border-neutral-100 pb-1 hover:gap-5 transition-all">
+          {t.cta}
+          <span class="text-base">↓</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>

@@ -1,0 +1,36 @@
+---
+// Barre de progression de lecture en haut de la page article
+---
+
+<div
+  id="reading-progress"
+  class="fixed top-0 left-0 right-0 h-[2px] z-[60] pointer-events-none"
+  aria-hidden="true"
+>
+  <div
+    id="reading-progress-bar"
+    class="h-full bg-[var(--color-accent-500)] origin-left transition-transform duration-100 ease-out"
+    style="transform: scaleX(0)"
+  ></div>
+</div>
+
+<script>
+  function initReadingProgress() {
+    const bar = document.getElementById('reading-progress-bar');
+    if (!bar) return;
+
+    function update() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0;
+      if (bar) bar.style.transform = `scaleX(${progress})`;
+    }
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  }
+
+  initReadingProgress();
+  document.addEventListener('astro:after-swap', initReadingProgress);
+</script>

@@ -1,0 +1,273 @@
+---
+import { getCurrentLanguage } from '../lib/i18n';
+
+const currentLang = getCurrentLanguage();
+
+const translations = {
+  fr: {
+    contactTitle: "Une question, une idée, ou juste l'envie d'échanger ?",
+    contactSubtitle: "Pas de réseaux sociaux. Juste un formulaire direct — je réponds à chaque message personnellement.",
+    contactLabel: "Contact",
+    contactDesc: "Pour parler d'un projet, signaler une erreur dans un article, proposer une collaboration ou juste discuter tech et maker culture.",
+    nameLabel: "Nom",
+    emailLabel: "Email",
+    messageLabel: "Message",
+    sendButton: "Envoyer",
+    copyright: "Tous droits réservés.",
+    poweredBy: "Propulsé par Astro + TailwindCSS v4",
+    successMessage: "Message envoyé, merci !",
+    errorMessage: "Erreur lors de l'envoi. Réessayez.",
+    sending: "Envoi…",
+  },
+  en: {
+    contactTitle: "A question, an idea, or just want to chat?",
+    contactSubtitle: "No social media. Just a direct form — I respond to every message personally.",
+    contactLabel: "Contact",
+    contactDesc: "To discuss a project, report an error in an article, propose a collaboration, or just chat about tech and maker culture.",
+    nameLabel: "Name",
+    emailLabel: "Email",
+    messageLabel: "Message",
+    sendButton: "Send",
+    copyright: "All rights reserved.",
+    poweredBy: "Powered by Astro + TailwindCSS v4",
+    successMessage: "Message sent, thank you!",
+    errorMessage: "Error sending message. Please try again.",
+    sending: "Sending…",
+  },
+};
+
+const t = translations[currentLang];
+---
+
+<footer id="contact" class="mt-0 border-t border-neutral-300/70 dark:border-neutral-700/70">
+
+  <!-- CTA + Formulaire -->
+  <div class="bg-stone-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100">
+    <div class="px-6 md:px-12 py-20 md:py-32 max-w-7xl mx-auto">
+
+      <!-- Label + grand titre éditorial -->
+      <div class="mb-16 md:mb-20">
+        <span class="font-mono text-[11px] tracking-[0.2em] text-neutral-500 dark:text-neutral-500 block mb-6">
+          III — {currentLang === 'fr' ? 'CONTACT' : 'CONTACT'}
+        </span>
+        <h2 class="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.05] max-w-4xl">
+          {currentLang === 'fr' ? (
+            <>Une question, une idée, ou juste<br /><span class="font-serif italic font-normal">l'envie d'échanger</span> ?</>
+          ) : (
+            <>A question, an idea, or just<br /><span class="font-serif italic font-normal">want to chat</span>?</>
+          )}
+        </h2>
+      </div>
+
+      <!-- Grille contact -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
+
+        <!-- Colonne gauche : description -->
+        <div class="md:col-span-4 space-y-6">
+          <div>
+            <span class="font-mono text-[10px] tracking-widest text-neutral-500 dark:text-neutral-500 block mb-2">— 01</span>
+            <p class="text-base leading-relaxed text-neutral-700 dark:text-neutral-300 max-w-sm">
+              {currentLang === 'fr'
+                ? "Pas de réseaux sociaux. Juste un formulaire direct — je réponds à chaque message personnellement."
+                : "No social media. Just a direct form — I respond to every message personally."}
+            </p>
+          </div>
+          <div>
+            <span class="font-mono text-[10px] tracking-widest text-neutral-500 dark:text-neutral-500 block mb-2">— 02</span>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400 max-w-sm">
+              {t.contactDesc}
+            </p>
+          </div>
+        </div>
+
+        <!-- Colonne droite : formulaire -->
+        <form
+          id="footer-contact-form"
+          class="md:col-span-8 space-y-0 border-t border-neutral-300/70 dark:border-neutral-700/70"
+          onsubmit="handleFooterForm(event)"
+        >
+          <!-- Honeypot (invisible aux humains, visible aux bots) -->
+          <input
+            type="checkbox"
+            name="botcheck"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+            style="position:absolute;left:-9999px;opacity:0;pointer-events:none"
+          />
+          <!-- Champ piège secondaire -->
+          <input
+            type="text"
+            name="website"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+            style="position:absolute;left:-9999px;opacity:0;pointer-events:none"
+          />
+          <!-- Timestamp pour détecter soumission trop rapide (bots remplissent en <2s) -->
+          <input type="hidden" name="form_loaded_at" id="form_loaded_at" />
+
+          <div class="grid grid-cols-1 sm:grid-cols-2">
+            <label class="group block py-5 border-b border-neutral-300/70 dark:border-neutral-700/70 sm:border-r">
+              <span class="font-mono text-[10px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500 block mb-2">— {t.nameLabel}</span>
+              <input
+                type="text"
+                name="name"
+                required
+                placeholder={currentLang === 'fr' ? "Jane Doe" : "Jane Doe"}
+                class="w-full bg-transparent border-0 p-0 text-lg md:text-xl text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-600 focus:outline-none focus:ring-0"
+              />
+            </label>
+            <label class="group block py-5 border-b border-neutral-300/70 dark:border-neutral-700/70 sm:pl-6">
+              <span class="font-mono text-[10px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500 block mb-2">— {t.emailLabel}</span>
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="hello@email.com"
+                class="w-full bg-transparent border-0 p-0 text-lg md:text-xl text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-600 focus:outline-none focus:ring-0"
+              />
+            </label>
+          </div>
+          <label class="group block py-5 border-b border-neutral-300/70 dark:border-neutral-700/70">
+            <span class="font-mono text-[10px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500 block mb-2">— {t.messageLabel}</span>
+            <textarea
+              name="message"
+              required
+              rows="4"
+              placeholder={currentLang === 'fr' ? "Dites-moi tout..." : "Tell me everything..."}
+              class="w-full bg-transparent border-0 p-0 text-lg md:text-xl text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-600 focus:outline-none focus:ring-0 resize-none"
+            ></textarea>
+          </label>
+          <div class="flex items-center justify-between gap-4 pt-6">
+            <p id="footer-form-status" class="font-mono text-[11px] tracking-widest uppercase text-neutral-500 hidden"></p>
+            <button
+              type="submit"
+              class="group ml-auto inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.2em] uppercase text-neutral-900 dark:text-neutral-100 border-b border-neutral-900 dark:border-neutral-100 pb-1 hover:gap-5 transition-all"
+            >
+              {t.sendButton}
+              <span class="text-base">→</span>
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Barre basse -->
+  <div class="bg-stone-100 dark:bg-neutral-900 border-t border-neutral-300/70 dark:border-neutral-700/70 px-6 md:px-12">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 py-6 font-mono text-[11px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500">
+      <div>
+        © {new Date().getFullYear()} — DigitalDream
+      </div>
+      <div class="flex items-center gap-4">
+              </div>
+    </div>
+  </div>
+</footer>
+
+<script is:inline>
+  const translations = {
+    fr: {
+      successMessage: "Message envoyé, merci !",
+      errorMessage: "Erreur lors de l'envoi. Réessayez.",
+      sending: "Envoi…",
+      tooFast: "Merci de prendre un instant pour rédiger votre message.",
+      botDetected: "Une erreur est survenue.",
+    },
+    en: {
+      successMessage: "Message sent, thank you!",
+      errorMessage: "Error sending message. Please try again.",
+      sending: "Sending…",
+      tooFast: "Please take a moment to write your message.",
+      botDetected: "An error occurred.",
+    },
+  };
+
+  const currentLang = localStorage.getItem('lang') || 'fr';
+  const t = translations[currentLang] || translations.fr;
+
+  // Marque le moment où le formulaire est chargé (pour détecter les soumissions trop rapides)
+  document.addEventListener('DOMContentLoaded', () => {
+    const ts = document.getElementById('form_loaded_at');
+    if (ts) ts.value = String(Date.now());
+  });
+
+  async function handleFooterForm(event) {
+    event.preventDefault();
+    const form = event.target;
+    const status = document.getElementById('footer-form-status');
+    const button = form.querySelector('button[type="submit"]');
+
+    // === ANTI-SPAM ===
+    // 1. Honeypot : si rempli, c'est un bot
+    if (form.botcheck && form.botcheck.checked) {
+      status.textContent = t.botDetected;
+      status.classList.remove('hidden');
+      return;
+    }
+    if (form.website && form.website.value !== '') {
+      status.textContent = t.botDetected;
+      status.classList.remove('hidden');
+      return;
+    }
+
+    // 2. Délai minimum de 3 secondes (les bots soumettent instantanément)
+    const loadedAt = parseInt(form.form_loaded_at?.value || '0', 10);
+    const elapsed = Date.now() - loadedAt;
+    if (loadedAt && elapsed < 3000) {
+      status.textContent = t.tooFast;
+      status.classList.remove('hidden');
+      return;
+    }
+
+    // 3. Validation basique des champs
+    if (!form.name.value.trim() || !form.email.value.trim() || !form.message.value.trim()) return;
+    if (form.message.value.trim().length < 10) {
+      status.textContent = currentLang === 'fr' ? 'Votre message est trop court.' : 'Your message is too short.';
+      status.classList.remove('hidden');
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = t.sending;
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: 'VOTRE_CLE_WEB3FORMS',
+          name: form.name.value,
+          email: form.email.value,
+          message: form.message.value,
+          // Web3Forms supporte nativement le honeypot via le champ "botcheck"
+          botcheck: form.botcheck?.checked ? 'true' : '',
+          subject: 'Nouveau message — DigitalDream',
+          from_name: 'DigitalDream Contact',
+        }),
+      });
+      const json = await res.json();
+      if (json.success) {
+        status.textContent = t.successMessage;
+        status.classList.remove('hidden', 'text-red-400');
+        status.classList.add('text-green-400');
+        form.reset();
+        // Reset timestamp
+        const ts = document.getElementById('form_loaded_at');
+        if (ts) ts.value = String(Date.now());
+      } else {
+        throw new Error();
+      }
+    } catch {
+      status.textContent = t.errorMessage;
+      status.classList.remove('hidden', 'text-green-400');
+      status.classList.add('text-red-400');
+    } finally {
+      button.disabled = false;
+      button.textContent = currentLang === 'fr' ? 'Envoyer' : 'Send';
+      status.classList.remove('hidden');
+    }
+  }
+</script>

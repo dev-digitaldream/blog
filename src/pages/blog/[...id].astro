@@ -1,0 +1,154 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import ReadingProgress from '../../components/ReadingProgress.astro';
+import { getCollection, render } from 'astro:content';
+import { getCurrentLanguage } from '../../lib/i18n';
+import readingTime from 'reading-time';
+
+export async function getStaticPaths() {
+  const blog = await getCollection('blog');
+  return blog.map((post: any) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const currentLang = getCurrentLanguage();
+
+// Reading time depuis le body brut
+const stats = readingTime(post.body || '');
+const readMinutes = Math.max(1, Math.round(stats.minutes));
+
+// Articles liés (même langue, mêmes tags ou catégorie, hors article courant)
+const allPosts = await getCollection('blog', ({ data }: any) => !data.draft);
+const related = allPosts
+  .filter((p: any) => p.id !== post.id && p.data.lang === post.data.lang)
+  .map((p: any) => {
+    const sharedTags = (p.data.tags ?? []).filter((t: string) => (post.data.tags ?? []).includes(t)).length;
+    const sameCategory = p.data.category && p.data.category === post.data.category ? 2 : 0;
+    return { post: p, score: sharedTags + sameCategory };
+  })
+  .filter((r) => r.score > 0)
+  .sort((a, b) => b.score - a.score || b.post.data.date.valueOf() - a.post.data.date.valueOf())
+  .slice(0, 3)
+  .map((r) => r.post);
+
+function fmtDate(d: Date | string, lang: string) {
+  return new Date(d).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {
+    day: '2-digit', month: 'long', year: 'numeric',
+  });
+}
+
+const t = {
+  fr: { back: 'Retour', minRead: 'min de lecture', related: 'À lire ensuite', share: 'Partager' },
+  en: { back: 'Back', minRead: 'min read', related: 'Read next', share: 'Share' },
+}[post.data.lang] || { back: 'Retour', minRead: 'min de lecture', related: 'À lire ensuite', share: 'Partager' };
+---
+
+<Layout
+  title={`${post.data.title} — DigitalDream`}
+  description={post.data.description}
+  image={post.data.cover}
+  type="article"
+  publishedTime={post.data.date}
+  tags={post.data.tags}
+>
+  <ReadingProgress />
+
+  <main class="min-h-screen">
+    <article
+      class="px-6 md:px-12 pt-20 md:pt-32 pb-16 md:pb-24"
+      data-pagefind-body
+      data-pagefind-meta={`title:${post.data.title}`}
+      data-pagefind-filter={`lang:${post.data.lang}`}
+    >
+      <div class="max-w-3xl mx-auto">
+
+        <!-- Meta header -->
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-8 font-mono text-[11px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500">
+          <a href="/blog" class="link-hover">← {t.back}</a>
+          <span>—</span>
+          <span>{fmtDate(post.data.date, post.data.lang)}</span>
+          <span>—</span>
+          <span>{readMinutes} {t.minRead}</span>
+          {post.data.category && (<><span>—</span><span class="text-[var(--color-accent-700)] dark:text-[var(--color-accent-500)]">{post.data.category}</span></>)}
+        </div>
+
+        <!-- Title -->
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-[1.05] text-neutral-900 dark:text-neutral-50 mb-6">
+          {post.data.title}
+        </h1>
+
+        {post.data.description && (
+          <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed font-serif italic mb-12 max-w-2xl">
+            {post.data.description}
+          </p>
+        )}
+
+        {post.data.cover && (
+          <div class="aspect-[16/9] overflow-hidden bg-stone-200 dark:bg-neutral-800 rounded-sm mb-12">
+            <img src={post.data.cover} alt={post.data.title} class="w-full h-full object-cover" />
+          </div>
+        )}
+
+        <!-- Body -->
+        <div class="prose prose-neutral dark:prose-invert prose-lg max-w-none
+          prose-headings:font-medium prose-headings:tracking-tight
+          prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:scroll-mt-24
+          prose-h3:text-2xl prose-h3:mt-8 prose-h3:scroll-mt-24
+          prose-p:text-neutral-700 dark:prose-p:text-neutral-300
+          prose-a:text-[var(--color-accent-700)] dark:prose-a:text-[var(--color-accent-500)] prose-a:underline prose-a:underline-offset-4 prose-a:decoration-1
+          prose-strong:font-semibold
+          prose-blockquote:border-l-2 prose-blockquote:border-[var(--color-accent-500)] prose-blockquote:font-serif prose-blockquote:italic prose-blockquote:text-xl
+          prose-code:font-mono prose-code:text-sm prose-code:bg-stone-200 dark:prose-code:bg-neutral-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-['']
+          prose-pre:bg-neutral-900 dark:prose-pre:bg-black prose-pre:border prose-pre:border-neutral-300 dark:prose-pre:border-neutral-700
+          prose-img:rounded-sm
+        ">
+          <Content />
+        </div>
+
+        <!-- Tags -->
+        {post.data.tags && post.data.tags.length > 0 && (
+          <div class="mt-16 pt-8 border-t border-neutral-300/70 dark:border-neutral-700/70 flex flex-wrap gap-2 font-mono text-[11px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500">
+            {post.data.tags.map((tag: string) => (
+              <span class="px-3 py-1 border border-neutral-300/70 dark:border-neutral-700/70 rounded-full">{tag}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </article>
+
+    <!-- Articles liés -->
+    {related.length > 0 && (
+      <section class="px-6 md:px-12 py-16 md:py-24 border-t border-neutral-300/70 dark:border-neutral-700/70 bg-stone-100/60 dark:bg-neutral-800/40">
+        <div class="max-w-5xl mx-auto">
+          <span class="font-mono text-[11px] tracking-[0.2em] text-neutral-500 dark:text-neutral-500 block mb-6">— {t.related.toUpperCase()}</span>
+          <ul class="grid grid-cols-1 md:grid-cols-3 gap-px bg-neutral-300/70 dark:bg-neutral-700/70 border border-neutral-300/70 dark:border-neutral-700/70 rounded-sm overflow-hidden">
+            {related.map((p: any) => (
+              <li class="bg-stone-50 dark:bg-neutral-900">
+                <a href={`/blog/${p.id}`} class="group block p-6 md:p-8 hover:bg-white dark:hover:bg-neutral-950 transition-colors h-full">
+                  <span class="font-mono text-[10px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500 block mb-3">
+                    {fmtDate(p.data.date, p.data.lang)}
+                  </span>
+                  <h3 class="text-lg md:text-xl font-medium tracking-tight leading-tight mb-2 text-neutral-900 dark:text-neutral-100">
+                    <span class="link-hover">{p.data.title}</span>
+                  </h3>
+                  {p.data.description && (
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2">{p.data.description}</p>
+                  )}
+                  <span class="mt-4 inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--color-accent-700)] dark:text-[var(--color-accent-500)] group-hover:gap-3 transition-all">
+                    {post.data.lang === 'fr' ? 'Lire' : 'Read'} →
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
+  </main>
+  <Footer />
+</Layout>

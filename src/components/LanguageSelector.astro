@@ -1,0 +1,26 @@
+---
+import { LANGUAGES, getCurrentLanguage, setLanguage, type Language } from '../lib/i18n';
+
+const currentLang = getCurrentLanguage();
+---
+
+<div class="flex items-center gap-2">
+  <select 
+    id="language-selector"
+    class="bg-transparent border border-neutral-200 dark:border-neutral-800 rounded-lg px-3 py-2 text-sm text-neutral-900 dark:text-white focus:outline-none focus:border-neutral-400 dark:focus:border-neutral-600"
+    onchange="changeLanguage(this.value)"
+  >
+    {Object.entries(LANGUAGES).map(([code, name]) => (
+      <option value={code} selected={code === currentLang}>
+        {name}
+      </option>
+    ))}
+  </select>
+</div>
+
+<script is:inline>
+  function changeLanguage(lang) {
+    localStorage.setItem('lang', lang);
+    window.location.reload();
+  }
+</script>

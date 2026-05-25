@@ -1,0 +1,119 @@
+################################################################################
+# PagesCMS configuration — https://pagescms.org
+# Permet d'éditer les billets et projets directement depuis l'interface web
+# en restant 100% compatible avec la collection Astro.
+################################################################################
+
+media:
+  input: public/uploads
+  output: /uploads
+
+content:
+  - name: blog
+    label: Articles de blog
+    path: src/content/blog
+    type: collection
+    format: yaml-frontmatter
+    extension: md
+    view:
+      fields: [title, date, lang, draft]
+      sort: [date]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Titre
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: text
+      - name: date
+        label: Date de publication
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: lang
+        label: Langue
+        type: select
+        default: fr
+        options:
+          values:
+            - { value: fr, label: Français }
+            - { value: en, label: English }
+      - name: draft
+        label: Brouillon
+        type: boolean
+        default: false
+      - name: category
+        label: Catégorie
+        type: string
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: cover
+        label: Image de couverture
+        type: image
+      - name: excerpt
+        label: Extrait
+        type: text
+      - name: metaTitle
+        label: Meta titre (SEO)
+        type: string
+      - name: metaDescription
+        label: Meta description (SEO)
+        type: text
+      - name: body
+        label: Contenu
+        type: rich-text
+
+  - name: projects
+    label: Projets
+    path: src/content/projects
+    type: collection
+    format: yaml-frontmatter
+    extension: mdx
+    view:
+      fields: [title, date, lang, draft]
+      sort: [date]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Titre
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: text
+      - name: date
+        label: Date
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: lang
+        label: Langue
+        type: select
+        default: fr
+        options:
+          values:
+            - { value: fr, label: Français }
+            - { value: en, label: English }
+      - name: draft
+        label: Brouillon
+        type: boolean
+        default: false
+      - name: demoURL
+        label: URL démo
+        type: string
+      - name: repoURL
+        label: URL repo GitHub
+        type: string
+      - name: body
+        label: Contenu
+        type: rich-text
