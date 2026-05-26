@@ -188,11 +188,14 @@ const t = translations[currentLang];
   const currentLang = localStorage.getItem('lang') || 'fr';
   const t = translations[currentLang] || translations.fr;
 
-  // Marque le moment où le formulaire est chargé (pour détecter les soumissions trop rapides)
-  document.addEventListener('DOMContentLoaded', () => {
+  // Marque le moment où le formulaire est chargé (anti-spam timing)
+  function stampLoadedAt() {
     const ts = document.getElementById('form_loaded_at');
     if (ts) ts.value = String(Date.now());
-  });
+  }
+  document.addEventListener('DOMContentLoaded', stampLoadedAt);
+  // Re-stamp après navigation ClientRouter
+  document.addEventListener('astro:page-load', stampLoadedAt);
 
   async function handleFooterForm(event) {
     event.preventDefault();
@@ -257,20 +260,21 @@ const t = translations[currentLang];
           },
         }),
       });
-      const json = await res.json();
-      if (res.ok && json.data?.id) {
+      const json = await res.json().catch(() => ({}));
+      if (res.ok && json?.data?.id) {
         status.textContent = t.successMessage;
         status.classList.remove('hidden', 'text-red-400');
         status.classList.add('text-green-400');
         form.reset();
-        // Reset timestamp
         const ts = document.getElementById('form_loaded_at');
         if (ts) ts.value = String(Date.now());
       } else {
-        throw new Error();
+        console.error('[contact] Formbricks error:', res.status, json);
+        throw new Error(json?.message || `HTTP ${res.status}`);
       }
-    } catch {
-      status.textContent = t.errorMessage;
+    } catch (err) {
+      console.error('[contact] Submit failed:', err);
+      status.textContent = `${t.errorMessage} (${err?.message || 'network'})`;
       status.classList.remove('hidden', 'text-green-400');
       status.classList.add('text-red-400');
     } finally {
