@@ -233,23 +233,32 @@ const t = translations[currentLang];
     button.disabled = true;
     button.textContent = t.sending;
 
+    // === FORMBRICKS ===
+    const FB_URL = 'https://formbricks.dev.digitaldream.work';
+    const FB_ENV = 'cmk12myhj0009qz019fi6vmdm';
+    const FB_SURVEY = 'cmk16vox50000kj0175n4djy7';
+
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
+      const res = await fetch(`${FB_URL}/api/v1/client/${FB_ENV}/responses`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          access_key: 'VOTRE_CLE_WEB3FORMS',
-          name: form.name.value,
-          email: form.email.value,
-          message: form.message.value,
-          // Web3Forms supporte nativement le honeypot via le champ "botcheck"
-          botcheck: form.botcheck?.checked ? 'true' : '',
-          subject: 'Nouveau message — DigitalDream',
-          from_name: 'DigitalDream Contact',
+          surveyId: FB_SURVEY,
+          finished: true,
+          data: {
+            name: form.name.value,
+            email: form.email.value,
+            message: form.message.value,
+          },
+          meta: {
+            source: 'blog.digitaldream.work',
+            url: window.location.href,
+            userAgent: navigator.userAgent,
+          },
         }),
       });
       const json = await res.json();
-      if (json.success) {
+      if (res.ok && json.data?.id) {
         status.textContent = t.successMessage;
         status.classList.remove('hidden', 'text-red-400');
         status.classList.add('text-green-400');
