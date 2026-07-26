@@ -1,0 +1,67 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Footer from '../../../components/Footer.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project: any) => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+function fmtDate(d: Date | string, lang: string) {
+  return new Date(d).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {
+    day: 'numeric', month: 'long', year: 'numeric',
+  });
+}
+---
+
+<Layout title={`${project.data.title} · DigitalDream`} description={project.data.description}>
+  <main class="min-h-screen text-ink relative">
+    <div class="hidden lg:block absolute top-0 bottom-0 left-10 w-px bg-pen/25 pointer-events-none" aria-hidden="true"></div>
+    <div class="hidden lg:block absolute top-0 bottom-0 left-[42px] w-px bg-pen/25 pointer-events-none" aria-hidden="true"></div>
+
+    <article class="relative max-w-3xl mx-auto px-6 md:px-12 pt-14 md:pt-20 pb-16 md:pb-24">
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mb-10">
+        <a href="/en/projects" class="link-hand hand text-xl md:text-2xl inline-flex items-center">
+          <svg class="rotate-180 mr-1.5" width="20" height="10" viewBox="0 0 26 12" fill="none" aria-hidden="true">
+            <path d="M1.5 6.5 C 8 4.5, 15 8, 22.5 6 M19.5 2.5 C 21 4, 22.6 5.2, 24.2 6.3 C 22.6 7.2, 21 8.6, 19.6 10.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+          back to works
+        </a>
+        <span class="hand text-xl text-ink-faint">{fmtDate(project.data.date, project.data.lang)}</span>
+      </div>
+
+      <h1 class="font-display font-extrabold tracking-tight leading-[1.08] text-4xl md:text-5xl text-ink mb-6">
+        {project.data.title}
+      </h1>
+
+      {project.data.description && (
+        <p class="font-serif text-xl md:text-2xl leading-relaxed text-ink-soft mb-10 pl-5 border-l-[3px] border-[var(--pen)]">
+          {project.data.description}
+        </p>
+      )}
+
+      {(project.data.demoURL || project.data.repoURL) && (
+        <div class="flex flex-wrap gap-4 mb-12">
+          {project.data.demoURL && (
+            <a href={project.data.demoURL} target="_blank" rel="noopener" class="paper-card hoverable inline-flex items-center gap-2 px-5 py-2.5 font-display font-semibold text-sm text-ink no-underline">↗ Demo</a>
+          )}
+          {project.data.repoURL && (
+            <a href={project.data.repoURL} target="_blank" rel="noopener" class="paper-card hoverable inline-flex items-center gap-2 px-5 py-2.5 font-display font-semibold text-sm text-ink no-underline">↗ Code</a>
+          )}
+        </div>
+      )}
+
+      <div class="prose-notebook">
+        <Content />
+      </div>
+    </article>
+  </main>
+  <Footer lang={currentLang} />
+</Layout>

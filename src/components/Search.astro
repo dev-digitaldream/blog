@@ -1,12 +1,14 @@
 ---
-// Recherche fulltext via Pagefind (statique, généré au build)
-// La librairie pagefind est chargée à la demande quand on ouvre la modale
+import { getCurrentLanguage } from '../lib/i18n';
+const currentLang = getCurrentLanguage();
+const placeholder = currentLang === 'en' ? 'Search articles...' : 'Rechercher dans les articles...';
+const emptyMsg = currentLang === 'en' ? 'Type a few characters to search.' : 'Tapez quelques caractères pour rechercher.';
 ---
 
 <button
   id="search-toggle"
   type="button"
-  aria-label="Rechercher"
+  aria-label={currentLang === 'en' ? 'Search' : 'Rechercher'}
   class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.2em] uppercase text-neutral-600 dark:text-neutral-400 hover:text-[var(--color-accent-700)] dark:hover:text-[var(--color-accent-500)] transition-colors"
 >
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -19,7 +21,7 @@
 
 <dialog
   id="search-modal"
-  class="bg-stone-50 dark:bg-neutral-900 text-neutral-900 dark:text-white p-0 m-0 w-full h-full max-w-none max-h-none backdrop:bg-neutral-950/40 backdrop:backdrop-blur-sm open:flex flex-col"
+  class="bg-white dark:bg-neutral-950 text-neutral-900 dark:text-white p-0 m-0 w-full h-full max-w-none max-h-none backdrop:bg-neutral-950/40 backdrop:backdrop-blur-sm open:flex flex-col"
 >
   <div class="border-b border-neutral-300/70 dark:border-neutral-700/70 px-6 md:px-12 py-5">
     <div class="max-w-3xl mx-auto flex items-center gap-4">
@@ -30,17 +32,17 @@
       <input
         id="search-input"
         type="search"
-        placeholder="Rechercher dans les articles…"
+        placeholder={placeholder}
         autocomplete="off"
         class="flex-1 bg-transparent border-0 outline-none p-0 text-xl md:text-2xl text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-600"
       />
-      <button id="search-close" type="button" aria-label="Fermer" class="font-mono text-[10px] tracking-widest uppercase text-neutral-500 dark:text-neutral-400 border border-neutral-400/60 dark:border-neutral-600/60 rounded px-2 py-1 hover:bg-stone-100 dark:hover:bg-neutral-800">ESC</button>
+      <button id="search-close" type="button" aria-label="Fermer" class="font-mono text-[10px] tracking-widest uppercase text-neutral-500 dark:text-neutral-400 border border-neutral-400/60 dark:border-neutral-600/60 rounded px-2 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800">ESC</button>
     </div>
   </div>
   <div id="search-results" class="flex-1 overflow-y-auto px-6 md:px-12 py-8">
     <div class="max-w-3xl mx-auto">
       <p class="font-mono text-[11px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500" id="search-empty">
-        Tapez quelques caractères pour rechercher.
+        {emptyMsg}
       </p>
     </div>
   </div>
@@ -77,10 +79,14 @@
       modal!.showModal();
       setTimeout(() => input!.focus(), 50);
     }
+    const emptyMsgJS = document.documentElement.lang === 'en' ? 'Type a few characters to search.' : 'Tapez quelques caractères pour rechercher.';
+    const noIndexMsg = document.documentElement.lang === 'en' ? 'Index only available after build (npm run build).' : 'Index disponible uniquement après le build (npm run build).';
+    const noResultsMsg = document.documentElement.lang === 'en' ? 'No results.' : 'Aucun résultat.';
+
     function shut() {
       modal!.close();
       input!.value = '';
-      results!.querySelector('.max-w-3xl')!.innerHTML = '<p class="font-mono text-[11px] tracking-widest uppercase text-neutral-500">Tapez quelques caractères pour rechercher.</p>';
+      results!.querySelector('.max-w-3xl')!.innerHTML = `<p class="font-mono text-[11px] tracking-widest uppercase text-neutral-500">${emptyMsgJS}</p>`;
     }
 
     toggle.addEventListener('click', open);
@@ -98,18 +104,18 @@
       clearTimeout(timer);
       const q = input.value.trim();
       if (q.length < 2) {
-        results.querySelector('.max-w-3xl')!.innerHTML = '<p class="font-mono text-[11px] tracking-widest uppercase text-neutral-500">Tapez quelques caractères pour rechercher.</p>';
+        results.querySelector('.max-w-3xl')!.innerHTML = `<p class="font-mono text-[11px] tracking-widest uppercase text-neutral-500">${emptyMsgJS}</p>`;
         return;
       }
       timer = setTimeout(async () => {
         const pf = await loadPagefind();
         if (!pf) {
-          results.querySelector('.max-w-3xl')!.innerHTML = '<p class="font-mono text-[11px] tracking-widest uppercase text-neutral-500">Index disponible uniquement après le build (npm run build).</p>';
+          results.querySelector('.max-w-3xl')!.innerHTML = `<p class="font-mono text-[11px] tracking-widest uppercase text-neutral-500">${noIndexMsg}</p>`;
           return;
         }
         const search = await pf.search(q);
         if (!search.results.length) {
-          results.querySelector('.max-w-3xl')!.innerHTML = '<p class="font-mono text-[11px] tracking-widest uppercase text-neutral-500">Aucun résultat.</p>';
+          results.querySelector('.max-w-3xl')!.innerHTML = `<p class="font-mono text-[11px] tracking-widest uppercase text-neutral-500">${noResultsMsg}</p>`;
           return;
         }
         const top = await Promise.all(search.results.slice(0, 8).map((r: any) => r.data()));

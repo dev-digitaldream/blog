@@ -44,7 +44,7 @@ type Theme = typeof themes[number];
       const isActive = btn.getAttribute('data-theme-value') === theme;
       btn.classList.toggle('bg-neutral-900', isActive);
       btn.classList.toggle('dark:bg-neutral-100', isActive);
-      btn.classList.toggle('text-stone-50', isActive);
+      btn.classList.toggle('text-white', isActive);
       btn.classList.toggle('dark:text-neutral-900', isActive);
     });
   }

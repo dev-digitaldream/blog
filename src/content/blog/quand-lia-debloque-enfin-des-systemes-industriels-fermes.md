@@ -15,6 +15,7 @@ tags:
   - codex
   - automatisation
   - gmkteck
+translation: when-ai-finally-unlocked-industrial-systems
 ---
 Pendant plus de dix ans, certaines parties de notre infrastructure semblaient impossibles à faire évoluer sans dépendre entièrement d’un fabricant externe.
 

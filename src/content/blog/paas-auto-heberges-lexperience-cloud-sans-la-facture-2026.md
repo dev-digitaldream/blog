@@ -9,9 +9,10 @@ metaTitle: "PaaS auto-hébergés : l’expérience cloud sans la facture"
 metaDescription: "Un tour d’horizon des PaaS auto-hébergés pour retrouver l’expérience du cloud public sans la facture"
 cover: ""
 lang: fr
+translation: self-hosted-paas-cloud-experience-without-the-bill
 ---
 
-![image2](https://alaoui.be/grav/blog/paas-auto-heberges-lexperience-cloud-sans-la-facture-2026/image2.webp "image2")
+![image2](/blog/paas-auto-heberges-lexperience-cloud-sans-la-facture-2026/image2.webp "image2")
 
 En 2024–2025, un virage net s’est opéré dans le monde du développement : après des années de dépendance aux géants du cloud public, de plus en plus d’équipes font marche arrière. Pas par nostalgie, mais par pragmatisme. Les factures imprévisibles, la fin des free tiers généreux et les limites des PaaS commerciaux comme Heroku ou Vercel ont réveillé une question simple : et si on reprenait le contrôle de notre infrastructure, sans sacrifier la simplicité ?
 
@@ -44,7 +45,7 @@ Résultat : l’expérience “git push to deploy” n’est plus réservée au 
 
 Pour ceux qui veulent une expérience proche de Vercel, Netlify ou Render, mais à la maison.
 
-### Dokploy — La stabilité avant tout
+### Dokploy : La stabilité avant tout
 
 Dokploy fait un choix clair : s’appuyer sur Docker Swarm, avec peu de magie et beaucoup de prévisibilité.
 
@@ -57,7 +58,7 @@ Idéal si tu veux une UI moderne sans transformer ton VPS en radiateur permanent
 
 ***
 
-### Coolify — Le couteau suisse
+### Coolify : Le couteau suisse
 
 Coolify est l’une des solutions les plus populaires et les plus complètes du moment.
 
@@ -75,7 +76,7 @@ Parfait pour tester vite beaucoup de choses, un peu plus risqué si tu cherches 
 
 ***
 
-### CapRover — Le vétéran fiable
+### CapRover : Le vétéran fiable
 
 CapRover est une valeur sûre, éprouvée depuis des années.
 
@@ -91,7 +92,7 @@ Moins sexy visuellement, mais très robuste en utilisation réelle. Un bon choix
 
 Pour ceux qui vivent dans le terminal et n’ont pas peur du SSH.
 
-### Dokku — Le standard historique
+### Dokku : Le standard historique
 
 Dokku, c’est l’esprit d’Heroku sur ton propre serveur.
 
@@ -114,7 +115,7 @@ Le choix le plus sûr pour les puristes qui aiment les workflows simples, reprod
 
 ***
 
-### Piku — Minimalisme radical
+### Piku : Minimalisme radical
 
 Piku tient en quelques milliers de lignes de Python, avec une philosophie : faire juste le nécessaire, sans surcouche inutile.
 
@@ -128,7 +129,7 @@ Quand chaque mégaoctet compte, c’est une option très élégante.
 
 ## La nouvelle génération ultra‑performante
 
-### SwiftWave — La puissance de Go
+### SwiftWave : La puissance de Go
 
 SwiftWave illustre ce que peut être un PaaS moderne et frugal.
 
@@ -144,7 +145,7 @@ Idéal pour maximiser la densité de services sur de petits serveurs low‑cost.
 
 ## Sécurité, exposition et sérénité
 
-### Cosmos Server — Sécurité d’abord
+### Cosmos Server : Sécurité d’abord
 
 Cosmos adopte une approche différente : c’est d’abord une passerelle de sécurité, ensuite une plateforme d’applications.
 
@@ -157,7 +158,7 @@ Parfait pour exposer des services sensibles, administrer un homelab ou un petit 
 
 ***
 
-### Cloudron — L’auto‑hébergement sans stress
+### Cloudron : L’auto‑hébergement sans stress
 
 Cloudron vend surtout une chose : la tranquillité d’esprit.
 

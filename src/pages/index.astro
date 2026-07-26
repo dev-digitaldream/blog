@@ -1,197 +1,315 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
+import Newsletter from '../components/Newsletter.astro';
 import { getCollection } from 'astro:content';
 import { getCurrentLanguage } from '../lib/i18n';
+import readingTime from 'reading-time';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const currentLang = getCurrentLanguage();
 
 type BlogEntry = Awaited<ReturnType<typeof getCollection<'blog'>>>[number];
-type ProjectEntry = Awaited<ReturnType<typeof getCollection<'projects'>>>[number];
 
 const allBlog: BlogEntry[] = (await getCollection('blog'))
   .filter((post: BlogEntry) => !post.data.draft && post.data.lang === currentLang)
   .sort((a: BlogEntry, b: BlogEntry) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const blog = allBlog.slice(0, 5);
+const notes = allBlog.slice(0, 5);
 
-const projects: ProjectEntry[] = (await getCollection('projects'))
-  .filter((p: ProjectEntry) => !p.data.draft && p.data.lang === currentLang)
-  .sort((a: ProjectEntry, b: ProjectEntry) => b.data.date.valueOf() - a.data.date.valueOf());
+const oldestYear = allBlog.length > 0
+  ? Math.min(...allBlog.map(p => new Date(p.data.date).getFullYear()))
+  : new Date().getFullYear();
+
+// --- helpers ------------------------------------------------
+
+// Image de carte : cover frontmatter (PagesCMS) sinon première image du corps
+function cardImage(post: { data: { cover?: string }, body?: string }): string | null {
+  if (post.data.cover) return post.data.cover;
+  return firstImage(post.body);
+}
+function firstImage(body: string | undefined): string | null {
+  if (!body) return null;
+  const m = body.match(/!\[[^\]]*\]\(([^)\s"]+)/);
+  if (!m) return null;
+  const url = m[1];
+  if (!url.startsWith('/')) return null;
+  const filePath = path.join(process.cwd(), 'public', decodeURIComponent(url));
+  return fs.existsSync(filePath) ? url : null;
+}
+
+function relDate(d: Date | string, lang: string): string {
+  const days = Math.floor((Date.now() - new Date(d).getTime()) / 86400000);
+  if (lang === 'fr') {
+    if (days <= 0) return "aujourd'hui";
+    if (days === 1) return 'hier';
+    if (days < 7) return `il y a ${days} jours`;
+    if (days < 30) return `il y a ${Math.floor(days / 7)} sem.`;
+    if (days < 365) return `il y a ${Math.floor(days / 30)} mois`;
+    return `il y a ${Math.floor(days / 365)} an${Math.floor(days / 365) > 1 ? 's' : ''}`;
+  }
+  if (days <= 0) return 'today';
+  if (days === 1) return 'yesterday';
+  if (days < 7) return `${days} days ago`;
+  if (days < 30) return `${Math.floor(days / 7)} wk ago`;
+  if (days < 365) return `${Math.floor(days / 30)} mo ago`;
+  return `${Math.floor(days / 365)} yr ago`;
+}
+
+function readTime(body: string | undefined, lang: string): string {
+  const mins = Math.max(1, Math.round(readingTime(body ?? '').minutes));
+  return lang === 'fr' ? `${mins} min de lecture` : `${mins} min read`;
+}
 
 const t = {
   fr: {
-    label: 'BLOG — NOTES',
-    heroLead: 'Un carnet de bord sur',
-    heroAccent: 'le code, les machines et l\'open-source',
-    heroEnd: '— construire des outils simples, beaux et libres.',
-    metaCount: 'Articles',
-    metaSince: 'Depuis',
-    sectionWriting: 'Écrits récents',
-    sectionWritingDesc: 'Notes de terrain, expérimentations et réflexions sur la tech autonome.',
-    sectionWork: 'Projets',
-    sectionWorkDesc: 'Outils que je construis, en cours ou archivés.',
-    readMore: 'Lire l\'article',
-    viewAll: 'Tout voir',
+    hello: 'Salut, moi c\u2019est DD',
+    heroA: 'Bienvenue dans',
+    heroB: 'mon carnet.',
+    intro: 'J\u2019y note ce que je teste, ce que je bricole et ce qui casse : gadgets, bagagerie, self-hosting, code. Des trucs vécus, écrits à la main. Pas de pub, et quand un lien est affilié, c\u2019est toujours indiqué.',
+    ctaNotes: 'Feuilleter les notes',
+    ctaTest: 'Proposer un produit à tester',
+    metaLine: `${allBlog.length} pages gribouillées depuis ${oldestYear}`,
+    avatarCaption: 'DD, version dessinée. L\u2019original préfère rester discret.',
+    notesHand: 'au fil des pages',
+    notesTitle: 'Les dernières notes',
+    notesCount: `${allBlog.length} pages au total`,
+    viewAll: 'feuilleter tout le carnet',
+    newHand: 'par où commencer',
+    newTitle: 'Nouveau ici ?',
+    newCards: [
+      { hand: 'qui est DD ?', title: 'Le manifeste', desc: 'Pourquoi ce carnet, pourquoi anonyme, et comment je teste ce qu\u2019on m\u2019envoie.', href: '/manifeste' },
+      { hand: 'le journal', title: 'Toutes les notes', desc: 'Le carnet complet, de la page la plus fraîche à la plus ancienne.', href: '/blog' },
+      { hand: 'un produit ?', title: 'Proposer un test', desc: 'Tu fabriques un truc ? Je le teste pour de vrai, et j\u2019en écris une page.', href: '/manifeste' },
+    ],
   },
   en: {
-    label: 'BLOG — NOTES',
-    heroLead: 'A field journal on',
-    heroAccent: 'code, machines, and open-source',
-    heroEnd: '— building simple, beautiful, and free tools.',
-    metaCount: 'Articles',
-    metaSince: 'Since',
-    sectionWriting: 'Recent writing',
-    sectionWritingDesc: 'Field notes, experiments, and reflections on independent tech.',
-    sectionWork: 'Works',
-    sectionWorkDesc: 'Tools I build — in progress or archived.',
-    readMore: 'Read article',
-    viewAll: 'View all',
+    hello: 'Hey, I\u2019m DD',
+    heroA: 'Welcome to',
+    heroB: 'my notebook.',
+    intro: 'I write down what I test, what I tinker with and what breaks: gadgets, bags, self-hosting, code. Real things, handwritten. No ads, and affiliate links are always disclosed.',
+    ctaNotes: 'Browse the notes',
+    ctaTest: 'Send a product for review',
+    metaLine: `${allBlog.length} scribbled pages since ${oldestYear}`,
+    avatarCaption: 'DD, drawn version. The original prefers to stay discreet.',
+    notesHand: 'along the pages',
+    notesTitle: 'Latest notes',
+    notesCount: `${allBlog.length} pages so far`,
+    viewAll: 'browse the whole notebook',
+    newHand: 'where to start',
+    newTitle: 'New here?',
+    newCards: [
+      { hand: 'who is DD?', title: 'The manifesto', desc: 'Why this notebook, why anonymous, and how I test what people send me.', href: '/manifeste' },
+      { hand: 'the journal', title: 'All the notes', desc: 'The full notebook, from the freshest page to the oldest.', href: '/blog' },
+      { hand: 'a product?', title: 'Propose a review', desc: 'You make something? I test it for real, and write a page about it.', href: '/manifeste' },
+    ],
   },
 }[currentLang];
 
-const oldestYear = allBlog.length > 0 ? Math.min(...allBlog.map(p => new Date(p.data.date).getFullYear())) : new Date().getFullYear();
-
-function fmtDate(d: Date | string, lang: string) {
-  return new Date(d).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {
-    day: '2-digit', month: 'short', year: 'numeric',
-  });
-}
+const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
 ---
 
-<Layout title="DigitalDream — Blog & Notes">
-  <main class="min-h-screen">
+<Layout title={`DigitalDream · ${currentLang === 'en' ? 'The notebook' : 'Le carnet de DD'}`}>
+  <main class="min-h-screen text-ink overflow-hidden">
 
-    <!-- BARRE MÉTA — fine, juste label + année/langue -->
-    <section class="px-6 md:px-12 pt-10 md:pt-14 pb-6">
-      <div class="max-w-7xl mx-auto flex items-center justify-between">
-        <span class="inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.2em] text-neutral-600 dark:text-neutral-400">
-          <span class="relative inline-flex w-2 h-2">
-            <span class="absolute inset-0 rounded-full bg-[var(--color-accent-500)] pulse-ring"></span>
-            <span class="relative inline-block w-2 h-2 rounded-full bg-[var(--color-accent-500)] pulse-dot"></span>
-          </span>
-          {t.label}
-        </span>
-        <span class="font-mono text-[11px] tracking-[0.2em] text-neutral-500 dark:text-neutral-500">
-          {new Date().getFullYear()} / {currentLang.toUpperCase()}
-        </span>
+    <!-- Marge rouge façon cahier -->
+    <div class="hidden lg:block absolute top-0 bottom-0 left-10 w-px bg-pen/25 pointer-events-none" aria-hidden="true"></div>
+    <div class="hidden lg:block absolute top-0 bottom-0 left-[42px] w-px bg-pen/25 pointer-events-none" aria-hidden="true"></div>
+
+    <!-- ============ HERO ============ -->
+    <section class="relative max-w-6xl mx-auto px-6 md:px-12 pt-16 md:pt-24 pb-14 md:pb-20">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+
+        <!-- Texte -->
+        <div class="lg:col-span-7 relative z-10">
+          <p class="hand text-2xl md:text-3xl text-pen -rotate-2 mb-5">{t.hello}</p>
+
+          <h1 class="font-display font-extrabold tracking-tight leading-[1.02] text-5xl sm:text-6xl md:text-7xl text-ink mb-7">
+            {t.heroA}<br />
+            <span class="u-hand">{t.heroB}</span>
+          </h1>
+
+          <p class="font-serif text-lg md:text-xl leading-relaxed text-ink-soft max-w-xl mb-9">
+            {t.intro}
+          </p>
+
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-4 mb-9">
+            <a
+              href="/blog"
+              class="paper-card hoverable inline-flex items-center gap-2.5 px-7 py-3.5 font-display font-semibold text-sm tracking-wide text-ink no-underline"
+            >
+              {t.ctaNotes}
+              <svg class="doodle-arrow" width="22" height="11" viewBox="0 0 26 12" fill="none" aria-hidden="true">
+                <path d="M1.5 6.5 C 8 4.5, 15 8, 22.5 6 M19.5 2.5 C 21 4, 22.6 5.2, 24.2 6.3 C 22.6 7.2, 21 8.6, 19.6 10.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+              </svg>
+            </a>
+            <a href="/manifeste" class="link-hand hand text-xl md:text-2xl">
+              {t.ctaTest}
+              <svg class="doodle-arrow ml-1" width="22" height="11" viewBox="0 0 26 12" fill="none" aria-hidden="true">
+                <path d="M1.5 6.5 C 8 4.5, 15 8, 22.5 6 M19.5 2.5 C 21 4, 22.6 5.2, 24.2 6.3 C 22.6 7.2, 21 8.6, 19.6 10.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+              </svg>
+            </a>
+          </div>
+
+          <p class="hand text-lg md:text-xl text-ink-faint rotate-[-0.5deg]">
+            ✎ {t.metaLine}
+          </p>
+        </div>
+
+        <!-- Avatar scotché -->
+        <div class="lg:col-span-5 relative flex justify-center lg:justify-end">
+          <div class="relative paper-card tilt-2 p-5 md:p-6 pb-3 max-w-[320px] md:max-w-[360px]">
+            <span class="tape tape-c" aria-hidden="true"></span>
+            <img
+              src="/avatar-dd.webp"
+              alt="Avatar dessiné de DD"
+              width="640"
+              height="777"
+              class="w-full h-auto block dark:hidden"
+            />
+            <img
+              src="/avatar-dd-white.svg"
+              alt="Avatar dessiné de DD"
+              width="640"
+              height="777"
+              class="w-full h-auto hidden dark:block"
+              loading="eager"
+              decoding="async"
+            />
+            <p class="hand text-xl text-ink-soft text-center pt-2 pb-1 rotate-[-1deg]">
+              {t.avatarCaption}
+            </p>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <!-- ARTICLES — magazine stack, direct -->
-    <section class="border-t border-neutral-300/70 dark:border-neutral-700/70">
-      <div class="max-w-7xl mx-auto">
-        <ul class="divide-y divide-neutral-300/70 dark:divide-neutral-700/70">
-          {blog.map((post, idx) => (
+    <!-- ============ LES NOTES ============ -->
+    <section class="relative max-w-6xl mx-auto px-6 md:px-12 pb-16 md:pb-24">
+      <div class="flex flex-wrap items-end justify-between gap-4 mb-10 md:mb-14">
+        <div>
+          <p class="hand text-2xl md:text-3xl text-pen rotate-[-1.5deg] mb-2">{t.notesHand}</p>
+          <h2 class="font-display font-extrabold tracking-tight text-3xl md:text-5xl text-ink">{t.notesTitle}</h2>
+        </div>
+        <p class="hand text-xl text-ink-faint rotate-1">{t.notesCount}</p>
+      </div>
+
+      <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-8 list-none p-0 m-0">
+        {notes.map((post, i) => {
+          const img = cardImage(post);
+          const tilt = tilts[i % tilts.length];
+          return (
             <li>
               <a
                 href={`/blog/${post.id}`}
-                class="group block px-6 md:px-12 py-10 md:py-14 hover:bg-stone-100/60 dark:hover:bg-neutral-800/40 transition-colors"
+                class:list={['paper-card group relative flex h-full flex-col p-5 md:p-6 no-underline', tilt]}
               >
-                <article class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start">
+                <span class:list={['tape', i % 2 === 0 ? 'tape-c' : 'tape-r']} aria-hidden="true"></span>
 
-                  <!-- Numéro + Date (mobile compact, desktop sidebar) -->
-                  <div class="md:col-span-2 md:order-1 order-2 flex md:flex-col gap-4 md:gap-1 items-baseline md:items-start font-mono text-[11px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500">
-                    <span class="text-neutral-400 dark:text-neutral-600 group-hover:text-[var(--color-accent-600)] dark:group-hover:text-[var(--color-accent-500)] transition-colors">
-                      {String(idx + 1).padStart(2, '0')}
-                    </span>
-                    <span>{fmtDate(post.data.date, currentLang)}</span>
-                    {post.data.category && (
-                      <span class="hidden md:block mt-2 text-neutral-400 dark:text-neutral-600">
-                        — {post.data.category}
-                      </span>
-                    )}
+                {img ? (
+                  <div class="mb-4 overflow-hidden rounded-md border border-[var(--paper-edge)] bg-white p-1.5 rotate-[-0.6deg]">
+                    <img
+                      src={img}
+                      alt=""
+                      width="640"
+                      height="360"
+                      class="w-full h-40 md:h-44 object-cover rounded-[3px]"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
-
-                  <!-- Titre + description -->
-                  <div class={post.data.cover ? 'md:col-span-6 md:order-2 order-3' : 'md:col-span-10 md:order-2 order-3'}>
-                    <h2 class={
-                      idx === 0
-                        ? 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05] text-neutral-900 dark:text-neutral-50'
-                        : 'text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight leading-[1.1] text-neutral-900 dark:text-neutral-100'
-                    }>
-                      <span class="link-hover">{post.data.title}</span>
-                    </h2>
-                    {post.data.description && (
-                      <p class="mt-4 text-sm md:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed line-clamp-3 max-w-2xl">
-                        {post.data.description}
-                      </p>
-                    )}
-                    <div class="mt-6 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.2em] uppercase text-neutral-700 dark:text-neutral-300 group-hover:gap-4 group-hover:text-[var(--color-accent-700)] dark:group-hover:text-[var(--color-accent-500)] transition-all">
-                      <span>{currentLang === 'fr' ? 'Lire' : 'Read'}</span>
-                      <span class="text-[var(--color-accent-600)] dark:text-[var(--color-accent-500)]">→</span>
-                    </div>
+                ) : (
+                  <div class="mb-4 h-40 md:h-44 rounded-md border border-dashed border-[var(--paper-edge)] flex items-center justify-center rotate-[0.4deg]" aria-hidden="true">
+                    <svg width="72" height="52" viewBox="0 0 72 52" fill="none" class="text-[var(--ink-faint)] opacity-70">
+                      <path d="M6 44 C 14 30, 20 24, 26 30 C 30 34, 34 40, 38 36 C 44 30, 50 18, 56 22 C 61 25.5, 64 34, 67 44" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                      <circle cx="54" cy="12" r="5" stroke="currentColor" stroke-width="2.2"/>
+                      <path d="M8 48 C 24 46, 48 50, 64 47" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 5"/>
+                    </svg>
                   </div>
+                )}
 
-                  <!-- Image cover à droite (desktop) / haut (mobile) — N&B → couleur au hover -->
-                  {post.data.cover && (
-                    <div class="md:col-span-4 md:order-3 order-1">
-                      <div class="aspect-[4/3] overflow-hidden bg-stone-200 dark:bg-neutral-800 rounded-sm">
-                        <img
-                          src={post.data.cover}
-                          alt={post.data.title}
-                          loading={idx === 0 ? 'eager' : 'lazy'}
-                          class="w-full h-full object-cover grayscale contrast-[1.05] transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-[1.03]"
-                        />
-                      </div>
-                    </div>
-                  )}
+                <p class="hand text-xl text-pen leading-none mb-2.5">
+                  {relDate(post.data.date, currentLang)}
+                </p>
 
-                </article>
+                <h3 class="font-display font-semibold tracking-tight text-xl text-ink leading-snug mb-2 group-hover:text-pen transition-colors">
+                  {post.data.title}
+                </h3>
+
+                {post.data.description && (
+                  <p class="font-serif text-[15px] leading-relaxed text-ink-soft line-clamp-3 mb-4">
+                    {post.data.description}
+                  </p>
+                )}
+
+                <span class="mt-auto flex items-center justify-between pt-2">
+                  <span class="font-sans text-xs tracking-wide text-ink-faint">
+                    {readTime(post.body, currentLang)}
+                  </span>
+                  <svg class="text-pen transition-transform duration-300 group-hover:translate-x-1.5 group-hover:-rotate-6" width="24" height="11" viewBox="0 0 26 12" fill="none" aria-hidden="true">
+                    <path d="M1.5 6.5 C 8 4.5, 15 8, 22.5 6 M19.5 2.5 C 21 4, 22.6 5.2, 24.2 6.3 C 22.6 7.2, 21 8.6, 19.6 10.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+                  </svg>
+                </span>
               </a>
             </li>
-          ))}
-        </ul>
+          );
+        })}
 
-        <!-- Voir tout -->
-        <div class="px-6 md:px-12 py-12 border-t border-neutral-300/70 dark:border-neutral-700/70 flex items-center justify-between font-mono text-[11px] tracking-[0.2em] uppercase">
-          <span class="text-neutral-500 dark:text-neutral-500">
-            {blog.length} / {allBlog.length} {t.metaCount.toLowerCase()}
-          </span>
-          <a href="/blog" class="text-neutral-900 dark:text-neutral-100 link-hover">
-            {t.viewAll} →
+        <!-- Carte "voir tout" -->
+        <li>
+          <a
+            href="/blog"
+            class="paper-card tilt-3 group relative flex h-full min-h-[180px] flex-col items-center justify-center gap-3 p-6 text-center no-underline"
+          >
+            <span class="tape tape-l" aria-hidden="true"></span>
+            <p class="hand text-2xl md:text-3xl text-pen leading-tight">
+              {t.viewAll}
+            </p>
+            <svg class="text-pen transition-transform duration-300 group-hover:translate-x-1.5" width="30" height="13" viewBox="0 0 26 12" fill="none" aria-hidden="true">
+              <path d="M1.5 6.5 C 8 4.5, 15 8, 22.5 6 M19.5 2.5 C 21 4, 22.6 5.2, 24.2 6.3 C 22.6 7.2, 21 8.6, 19.6 10.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+            </svg>
           </a>
-        </div>
-      </div>
+        </li>
+      </ul>
     </section>
 
-    <!-- SECTION PROJETS -->
-    {projects.length > 0 && (
-      <section class="px-6 md:px-12 py-16 md:py-28 border-t border-neutral-300/70 dark:border-neutral-700/70 bg-stone-100/50 dark:bg-neutral-800/30">
-        <div class="max-w-7xl mx-auto">
+    <!-- ============ NOUVEAU ICI ? ============ -->
+    <section class="relative max-w-6xl mx-auto px-6 md:px-12 pb-24 md:pb-32">
+      <div class="mb-10 md:mb-14">
+        <p class="hand text-2xl md:text-3xl text-pen rotate-1 mb-2">{t.newHand}</p>
+        <h2 class="font-display font-extrabold tracking-tight text-3xl md:text-5xl text-ink">{t.newTitle}</h2>
+      </div>
 
-          <ul class="grid grid-cols-1 md:grid-cols-2 gap-px bg-neutral-300/70 dark:bg-neutral-700/70 border border-neutral-300/70 dark:border-neutral-700/70">
-            {projects.map((project, idx) => (
-              <li class="bg-stone-50 dark:bg-neutral-900">
-                <a href={`/projects/${project.id}`} class="block p-8 md:p-10 hover:bg-white dark:hover:bg-neutral-950 transition-colors h-full">
-                  <div class="flex items-start justify-between mb-6">
-                    <span class="font-mono text-[11px] tracking-widest text-neutral-500 dark:text-neutral-500">
-                      ({String(idx + 1).padStart(2, '0')})
-                    </span>
-                    <span class="font-mono text-[11px] tracking-widest text-neutral-500 dark:text-neutral-500">
-                      {fmtDate(project.data.date, currentLang)}
-                    </span>
-                  </div>
-                  <h3 class="text-2xl md:text-3xl font-medium tracking-tight text-neutral-900 dark:text-neutral-100 leading-tight mb-3">
-                    <span class="link-hover">{project.data.title}</span>
-                  </h3>
-                  {project.data.description && (
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-6 max-w-md">
-                      {project.data.description}
-                    </p>
-                  )}
-                  <div class="flex gap-4 text-[11px] font-mono tracking-widest uppercase text-neutral-500 dark:text-neutral-500">
-                    {project.data.repoURL && <span>↗ Code</span>}
-                    {project.data.demoURL && <span>↗ Demo</span>}
-                  </div>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-    )}
+      <ul class="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-8 list-none p-0 m-0">
+        {t.newCards.map((card, i) => (
+          <li>
+            <a
+              href={card.href}
+              class:list={['paper-card group relative flex h-full flex-col p-6 md:p-7 no-underline', tilts[(i + 1) % tilts.length]]}
+            >
+              <span class:list={['tape', i === 1 ? 'tape-c' : i === 0 ? 'tape-l' : 'tape-r']} aria-hidden="true"></span>
+              <p class="hand text-xl text-pen leading-none mb-3">{card.hand}</p>
+              <h3 class="font-display font-semibold tracking-tight text-xl text-ink mb-2.5 group-hover:text-pen transition-colors">
+                {card.title}
+              </h3>
+              <p class="font-serif text-[15px] leading-relaxed text-ink-soft mb-4">
+                {card.desc}
+              </p>
+              <span class="mt-auto self-end">
+                <svg class="text-pen transition-transform duration-300 group-hover:translate-x-1.5 group-hover:-rotate-6" width="24" height="11" viewBox="0 0 26 12" fill="none" aria-hidden="true">
+                  <path d="M1.5 6.5 C 8 4.5, 15 8, 22.5 6 M19.5 2.5 C 21 4, 22.6 5.2, 24.2 6.3 C 22.6 7.2, 21 8.6, 19.6 10.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <Newsletter lang={currentLang} />
 
   </main>
-  <Footer />
+  <Footer lang={currentLang} />
 </Layout>

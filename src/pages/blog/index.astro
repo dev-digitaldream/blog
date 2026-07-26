@@ -1,74 +1,151 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
+import Newsletter from '../../components/Newsletter.astro';
 import { getCollection } from 'astro:content';
 import { getCurrentLanguage } from '../../lib/i18n';
+import readingTime from 'reading-time';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const currentLang = getCurrentLanguage();
 
-const blog = (await getCollection('blog'))
-  .filter((post: any) => !post.data.draft && post.data.lang === currentLang)
-  .sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf());
+type BlogEntry = Awaited<ReturnType<typeof getCollection<'blog'>>>[number];
+
+const blog: BlogEntry[] = (await getCollection('blog'))
+  .filter((post: BlogEntry) => !post.data.draft && post.data.lang === currentLang)
+  .sort((a: BlogEntry, b: BlogEntry) => b.data.date.valueOf() - a.data.date.valueOf());
+
+function firstImage(body: string | undefined): string | null {
+  if (!body) return null;
+  const m = body.match(/!\[[^\]]*\]\(([^)\s"]+)/);
+  if (!m) return null;
+  const url = m[1];
+  if (!url.startsWith('/')) return null;
+  const filePath = path.join(process.cwd(), 'public', decodeURIComponent(url));
+  return fs.existsSync(filePath) ? url : null;
+}
+
+function cardImage(post: { data: { cover?: string }, body?: string }): string | null {
+  if (post.data.cover) return post.data.cover;
+  return firstImage(post.body);
+}
+
+function relDate(d: Date | string, lang: string): string {
+  const days = Math.floor((Date.now() - new Date(d).getTime()) / 86400000);
+  if (lang === 'fr') {
+    if (days <= 0) return "aujourd'hui";
+    if (days === 1) return 'hier';
+    if (days < 7) return `il y a ${days} jours`;
+    if (days < 30) return `il y a ${Math.floor(days / 7)} sem.`;
+    if (days < 365) return `il y a ${Math.floor(days / 30)} mois`;
+    return `il y a ${Math.floor(days / 365)} an${Math.floor(days / 365) > 1 ? 's' : ''}`;
+  }
+  if (days <= 0) return 'today';
+  if (days === 1) return 'yesterday';
+  if (days < 7) return `${days} days ago`;
+  if (days < 30) return `${Math.floor(days / 7)} wk ago`;
+  if (days < 365) return `${Math.floor(days / 30)} mo ago`;
+  return `${Math.floor(days / 365)} yr ago`;
+}
+
+function readTime(body: string | undefined, lang: string): string {
+  const mins = Math.max(1, Math.round(readingTime(body ?? '').minutes));
+  return lang === 'fr' ? `${mins} min de lecture` : `${mins} min read`;
+}
 
 const t = {
-  fr: { label: 'BLOG — TOUS LES ARTICLES', title: 'Tous les articles', sub: 'Notes, expérimentations et réflexions.', read: 'Lire' },
-  en: { label: 'BLOG — ALL ARTICLES', title: 'All articles', sub: 'Notes, experiments, and reflections.', read: 'Read' },
+  fr: {
+    hand: 'toutes les pages',
+    title: 'Le journal complet',
+    sub: `${blog.length} notes gribouillées, de la plus fraîche à la plus ancienne.`,
+  },
+  en: {
+    hand: 'every page',
+    title: 'The full journal',
+    sub: `${blog.length} scribbled notes, from freshest to oldest.`,
+  },
 }[currentLang];
 
-function fmtDate(d: Date | string, lang: string) {
-  return new Date(d).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {
-    day: '2-digit', month: 'short', year: 'numeric',
-  });
-}
+const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
 ---
 
-<Layout title={`${t.title} — DigitalDream`}>
-  <main class="min-h-screen">
-    <section class="px-6 md:px-12 pt-20 md:pt-32 pb-12 md:pb-20">
-      <div class="max-w-7xl mx-auto">
-        <span class="font-mono text-[11px] tracking-[0.2em] text-neutral-500 dark:text-neutral-500 block mb-6">
-          {t.label}
-        </span>
-        <h1 class="text-4xl sm:text-5xl md:text-7xl font-medium tracking-tight leading-[1.05] text-neutral-900 dark:text-neutral-50">
-          <span class="font-serif italic font-normal">{t.title}</span>
-        </h1>
-        <p class="mt-6 text-base text-neutral-600 dark:text-neutral-400 max-w-md">{t.sub}</p>
-      </div>
+<Layout title={`${t.title} · DigitalDream`}>
+  <main class="min-h-screen text-ink">
+
+    <section class="relative max-w-6xl mx-auto px-6 md:px-12 pt-16 md:pt-24 pb-12 md:pb-16">
+      <p class="hand text-2xl md:text-3xl text-pen rotate-[-1.5deg] mb-3">{t.hand}</p>
+      <h1 class="font-display font-extrabold tracking-tight text-4xl sm:text-5xl md:text-6xl text-ink mb-4">
+        {t.title}
+      </h1>
+      <p class="hand text-xl md:text-2xl text-ink-faint rotate-[0.5deg]">{t.sub}</p>
     </section>
 
-    <section class="border-t border-neutral-300/70 dark:border-neutral-700/70">
-      <ul class="max-w-7xl mx-auto divide-y divide-neutral-300/70 dark:divide-neutral-700/70">
-        {blog.map((post: any, idx: number) => (
-          <li>
-            <a href={`/blog/${post.id}`} class="group block px-6 md:px-12 py-8 md:py-10 hover:bg-stone-100/60 dark:hover:bg-neutral-800/40 transition-colors">
-              <article class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-10 items-start">
-                <div class="md:col-span-2 md:order-1 order-2 flex md:flex-col gap-4 md:gap-1 font-mono text-[11px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500">
-                  <span class="text-neutral-400 dark:text-neutral-600">{String(idx + 1).padStart(2, '0')}</span>
-                  <span>{fmtDate(post.data.date, currentLang)}</span>
-                </div>
-                <div class={post.data.cover ? 'md:col-span-7 md:order-2 order-3' : 'md:col-span-10 md:order-2 order-3'}>
-                  <h2 class="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight leading-[1.1] text-neutral-900 dark:text-neutral-100">
-                    <span class="link-hover">{post.data.title}</span>
-                  </h2>
-                  {post.data.description && (
-                    <p class="mt-3 text-sm md:text-base text-neutral-600 dark:text-neutral-400 line-clamp-2 max-w-2xl">
-                      {post.data.description}
-                    </p>
-                  )}
-                </div>
-                {post.data.cover && (
-                  <div class="md:col-span-3 md:order-3 order-1">
-                    <div class="aspect-[4/3] overflow-hidden bg-stone-200 dark:bg-neutral-800 rounded-sm">
-                      <img src={post.data.cover} alt={post.data.title} loading="lazy" class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-[1.03]" />
-                    </div>
+    <section class="relative max-w-6xl mx-auto px-6 md:px-12 pb-20 md:pb-28">
+      <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-8 list-none p-0 m-0">
+        {blog.map((post, i) => {
+          const img = cardImage(post);
+          const tilt = tilts[i % tilts.length];
+          return (
+            <li>
+              <a
+                href={`/blog/${post.id}`}
+                class:list={['paper-card group relative flex h-full flex-col p-5 md:p-6 no-underline', tilt]}
+              >
+                <span class:list={['tape', i % 2 === 0 ? 'tape-c' : 'tape-r']} aria-hidden="true"></span>
+
+                {img ? (
+                  <div class="mb-4 overflow-hidden rounded-md border border-[var(--paper-edge)] bg-white p-1.5 rotate-[-0.6deg]">
+                    <img
+                      src={img}
+                      alt=""
+                      width="640"
+                      height="360"
+                      class="w-full h-40 md:h-44 object-cover rounded-[3px]"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                ) : (
+                  <div class="mb-4 h-40 md:h-44 rounded-md border border-dashed border-[var(--paper-edge)] flex items-center justify-center rotate-[0.4deg]" aria-hidden="true">
+                    <svg width="72" height="52" viewBox="0 0 72 52" fill="none" class="text-[var(--ink-faint)] opacity-70">
+                      <path d="M6 44 C 14 30, 20 24, 26 30 C 30 34, 34 40, 38 36 C 44 30, 50 18, 56 22 C 61 25.5, 64 34, 67 44" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                      <circle cx="54" cy="12" r="5" stroke="currentColor" stroke-width="2.2"/>
+                      <path d="M8 48 C 24 46, 48 50, 64 47" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 5"/>
+                    </svg>
                   </div>
                 )}
-              </article>
-            </a>
-          </li>
-        ))}
+
+                <p class="hand text-xl text-pen leading-none mb-2.5">
+                  {relDate(post.data.date, currentLang)}
+                </p>
+
+                <h2 class="font-display font-semibold tracking-tight text-xl text-ink leading-snug mb-2 group-hover:text-pen transition-colors">
+                  {post.data.title}
+                </h2>
+
+                {post.data.description && (
+                  <p class="font-serif text-[15px] leading-relaxed text-ink-soft line-clamp-3 mb-4">
+                    {post.data.description}
+                  </p>
+                )}
+
+                <span class="mt-auto flex items-center justify-between pt-2">
+                  <span class="font-sans text-xs tracking-wide text-ink-faint">
+                    {readTime(post.body, currentLang)}
+                  </span>
+                  <svg class="text-pen transition-transform duration-300 group-hover:translate-x-1.5 group-hover:-rotate-6" width="24" height="11" viewBox="0 0 26 12" fill="none" aria-hidden="true">
+                    <path d="M1.5 6.5 C 8 4.5, 15 8, 22.5 6 M19.5 2.5 C 21 4, 22.6 5.2, 24.2 6.3 C 22.6 7.2, 21 8.6, 19.6 10.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+                  </svg>
+                </span>
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </section>
+    <Newsletter lang={currentLang} />
+
   </main>
-  <Footer />
+  <Footer lang={currentLang} />
 </Layout>

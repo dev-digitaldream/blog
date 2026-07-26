@@ -9,6 +9,7 @@ metaTitle: "Faire tourner Windows 11 sur un Mac Apple Silicon avec VMware Fusion
 metaDescription: "Guide complet pour installer et utiliser Windows 11 ARM sur un Mac Apple Silicon avec VMware Fusion Pro gratuit. Comparaison avec Parallels et UTM, performances, limites et cas d’usage réels."
 cover: ""
 lang: fr
+translation: running-windows-11-on-apple-silicon-mac-vmware-fusion
 ---
 
 *Quand un vieux monde du logiciel d’entreprise fait encore une surprise*
@@ -48,7 +49,7 @@ Concrètement, on peut créer autant de machines virtuelles que nécessaire, all
 
 La contrepartie concerne surtout le support. Il n’y a pas de hotline dédiée ni de tickets prioritaires, et on s’appuie sur la documentation et les forums communautaires. Pour un usage personnel, éducatif ou de test, ce n’est généralement pas un problème. Il faut simplement accepter qu’un compte Broadcom soit requis pour télécharger Fusion, ce qui n’est pas très élégant, mais une fois le logiciel installé, il sait se faire discret.
 
-![vmware](https://alaoui.be/grav/blog/faire-tourner-windows-11-sur-un-mac-apple-silicon-avec-vmware-fusion/vmware.webp "vmware")
+![vmware](/blog/faire-tourner-windows-11-sur-un-mac-apple-silicon-avec-vmware-fusion/vmware.webp "vmware")
 
 
 

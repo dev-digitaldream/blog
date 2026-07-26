@@ -9,12 +9,13 @@ metaTitle: "Protégez vos données : l’hygiène numérique à la portée de to
 metaDescription: "L’hygiène numérique expliquée simplement : mots de passe, 2FA, gestionnaires, clés de sécurité physiques et bonnes pratiques pour protéger ses données sans devenir parano."
 cover: ""
 lang: fr
+translation: protect-your-data-digital-hygiene-for-everyone
 ---
 
 Quand on parle d’hygiène numérique, on a souvent l’impression que ça concerne uniquement les experts ou les entreprises. En réalité, c’est beaucoup plus simple que ça. C’est juste un ensemble de bonnes habitudes qui permettent d’éviter les problèmes les plus courants, ceux qui arrivent non pas parce que quelqu’un est très fort, mais parce qu’on a laissé une porte ouverte sans s’en rendre compte.
 
 
-![2fa](https://alaoui.be/grav/blog/protegez-vos-donnees-lhygiene-numerique-a-la-portee-de-tous/2fa.webp "2fa")
+![2fa](/blog/protegez-vos-donnees-lhygiene-numerique-a-la-portee-de-tous/2fa.webp "2fa")
 
 
 Si je devais résumer mon approche, je dirais que je cherche surtout à me compliquer la vie le moins possible tout en réduisant les risques au maximum. Pas de solution miracle, pas de parano, juste des outils fiables et des choix cohérents.

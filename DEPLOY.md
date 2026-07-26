@@ -67,8 +67,10 @@ cover: "/uploads/mon-image.webp"
 
 | Nom | Description |
 |---|---|
-| `WEB3FORMS_KEY` | Clé Web3Forms pour le formulaire de contact (à brancher dans `Footer.astro`) |
+| `PUBLIC_NEWSLETTER_URL` | Endpoint de la newsletter (Buttondown ou listmonk). Si absent, fallback mailto. |
 | `PUBLIC_SITE_URL` | URL canonique du site (ex: `https://blog.digitaldream.work`) |
+
+Le formulaire de contact utilise Formbricks auto-hébergé (`formbricks.dev.digitaldream.work`), configuré directement dans `Footer.astro` (IDs publics, côté client).
 
 À renseigner dans **Cloudflare Pages → Settings → Environment variables**.
 

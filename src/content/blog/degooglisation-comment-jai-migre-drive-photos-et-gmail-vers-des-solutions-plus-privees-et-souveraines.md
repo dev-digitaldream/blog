@@ -9,6 +9,7 @@ metaTitle: "Dégooglisation : migrer Drive, Photos et Gmail vers des alternative
 metaDescription: "Tutoriel détaillé pour quitter Google : backup, migration, nouvelles solutions cloud, DNS, confidentialité..."
 cover: ""
 lang: fr
+translation: degoogling-migrating-from-google-to-private-solutions
 ---
 
 La dégooglisation n’est plus un sujet marginal. De plus en plus d’utilisateurs cherchent à réduire leur dépendance aux services Google, non pas par idéologie, mais par besoin de contrôle, de confidentialité et de cohérence à long terme. Centraliser documents, photos, mails et habitudes chez un seul acteur finit toujours par poser question.
@@ -69,4 +70,4 @@ La dégooglisation n’est pas un grand saut dans le vide. C’est une suite de 
 Chaque étape vise le même objectif : garder le contrôle sans sacrifier complètement le confort. Ce n’est pas parfait, mais c’est cohérent, et surtout durable.
 
 
-![degoogl](https://alaoui.be/grav/blog/degooglisation-comment-jai-migre-drive-photos-et-gmail-vers-des-solutions-plus-privees-et-souveraines/degoogl.webp "degoogl")
+![degoogl](/blog/degooglisation-comment-jai-migre-drive-photos-et-gmail-vers-des-solutions-plus-privees-et-souveraines/degoogl.webp "degoogl")

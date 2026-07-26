@@ -1,0 +1,70 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Footer from '../../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const currentLang = 'en';
+
+const projects = (await getCollection('projects'))
+  .filter((p: any) => !p.data.draft && p.data.lang === currentLang)
+  .sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const t = {
+  fr: {
+    hand: 'le coin des bricolages',
+    title: 'Projets',
+    sub: 'Outils construits, en cours ou archiv\u00e9s.',
+    empty: 'Encore rien de rang\u00e9 ici. Les bricolages arrivent bient\u00f4t.',
+  },
+  en: {
+    hand: 'the tinkering corner',
+    title: 'Works',
+    sub: 'Tools built, in progress or archived.',
+    empty: 'Nothing filed here yet. Tinkerings coming soon.',
+  },
+}[currentLang];
+
+const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
+---
+
+<Layout title={`${t.title} · DigitalDream`}>
+  <main class="min-h-screen text-ink">
+    <section class="relative max-w-6xl mx-auto px-6 md:px-12 pt-16 md:pt-24 pb-12 md:pb-16">
+      <p class="hand text-2xl md:text-3xl text-pen rotate-[-1.5deg] mb-3">{t.hand}</p>
+      <h1 class="font-display font-extrabold tracking-tight text-4xl sm:text-5xl md:text-6xl text-ink mb-4">
+        {t.title}
+      </h1>
+      <p class="hand text-xl md:text-2xl text-ink-faint rotate-[0.5deg]">{t.sub}</p>
+    </section>
+
+    <section class="relative max-w-6xl mx-auto px-6 md:px-12 pb-24 md:pb-32">
+      {projects.length === 0 ? (
+        <div class="paper-card tilt-2 relative max-w-md mx-auto p-8 md:p-10 text-center">
+          <span class="tape tape-c" aria-hidden="true"></span>
+          <p class="hand text-2xl text-ink-soft leading-snug">{t.empty}</p>
+        </div>
+      ) : (
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-7 md:gap-8 list-none p-0 m-0">
+          {projects.map((project: any, i: number) => (
+            <li>
+              <a href={`/projects/${project.id}`} class:list={['paper-card group relative flex h-full flex-col p-6 md:p-8 no-underline', tilts[i % tilts.length]]}>
+                <span class:list={['tape', i % 2 === 0 ? 'tape-c' : 'tape-r']} aria-hidden="true"></span>
+                <h3 class="font-display font-semibold tracking-tight text-2xl text-ink leading-tight mb-3 group-hover:text-pen transition-colors">
+                  {project.data.title}
+                </h3>
+                {project.data.description && (
+                  <p class="font-serif text-[15px] leading-relaxed text-ink-soft mb-4">{project.data.description}</p>
+                )}
+                <span class="mt-auto flex gap-4 font-sans text-xs tracking-wide text-ink-faint">
+                  {project.data.repoURL && <span>↗ Code</span>}
+                  {project.data.demoURL && <span>↗ Demo</span>}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  </main>
+  <Footer lang={currentLang} />
+</Layout>

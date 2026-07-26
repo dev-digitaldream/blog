@@ -1,14 +1,17 @@
 ---
-import { LANGUAGES, getCurrentLanguage, setLanguage, type Language } from '../lib/i18n';
-
-const currentLang = getCurrentLanguage();
+export interface Props {
+  translationSlug?: string;
+}
+const { translationSlug } = Astro.props;
+const currentLang = Astro.url.pathname.startsWith('/en') ? 'en' : 'fr';
+import { LANGUAGES } from '../lib/i18n';
 ---
 
-<div class="flex items-center gap-2">
-  <select 
+<div class="flex items-center gap-2" data-translation={translationSlug ?? ''}>
+  <select
     id="language-selector"
-    class="bg-transparent border border-neutral-200 dark:border-neutral-800 rounded-lg px-3 py-2 text-sm text-neutral-900 dark:text-white focus:outline-none focus:border-neutral-400 dark:focus:border-neutral-600"
-    onchange="changeLanguage(this.value)"
+    class="bg-transparent border border-neutral-200 dark:border-neutral-800 rounded-lg px-3 py-2 text-sm font-sans text-neutral-700 dark:text-neutral-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--pen)]/40"
+    onchange="switchLang(this.value)"
   >
     {Object.entries(LANGUAGES).map(([code, name]) => (
       <option value={code} selected={code === currentLang}>
@@ -19,8 +22,23 @@ const currentLang = getCurrentLanguage();
 </div>
 
 <script is:inline>
-  function changeLanguage(lang) {
-    localStorage.setItem('lang', lang);
-    window.location.reload();
+  function switchLang(lang) {
+    const el = document.querySelector('[data-translation]');
+    const t = el?.dataset.translation;
+    const current = window.location.pathname;
+    const isArticle = current.startsWith('/blog/') && current !== '/blog/' && current !== '/blog';
+    if (isArticle && t) {
+      if (lang === 'en') {
+        window.location.href = '/blog/' + t;
+      } else {
+        window.location.href = '/blog/' + t;
+      }
+      return;
+    }
+    if (lang === 'en' && !current.startsWith('/en')) {
+      window.location.href = '/en' + current;
+    } else if (lang === 'fr' && current.startsWith('/en')) {
+      window.location.href = current.replace(/^\/en/, '') || '/';
+    }
   }
 </script>

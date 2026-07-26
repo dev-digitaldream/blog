@@ -1,60 +1,47 @@
 ---
-import { getCurrentLanguage } from '../lib/i18n';
-
-const currentLang = getCurrentLanguage();
+export interface Props {
+  lang?: 'fr' | 'en';
+}
+const { lang: _lang } = Astro.props;
+const currentLang = _lang || 'fr';
 
 const translations = {
   fr: {
-    contactTitle: "Une question, une idée, ou juste l'envie d'échanger ?",
-    contactSubtitle: "Pas de réseaux sociaux. Juste un formulaire direct — je réponds à chaque message personnellement.",
-    contactLabel: "Contact",
-    contactDesc: "Pour parler d'un projet, signaler une erreur dans un article, proposer une collaboration ou juste discuter tech et maker culture.",
+    hand: 'écris-moi',
     nameLabel: "Nom",
     emailLabel: "Email",
     messageLabel: "Message",
     sendButton: "Envoyer",
     copyright: "Tous droits réservés.",
-    poweredBy: "Propulsé par Astro + TailwindCSS v4",
-    successMessage: "Message envoyé, merci !",
-    errorMessage: "Erreur lors de l'envoi. Réessayez.",
-    sending: "Envoi…",
+    handWritten: "écrit à la main par DD",
   },
   en: {
-    contactTitle: "A question, an idea, or just want to chat?",
-    contactSubtitle: "No social media. Just a direct form — I respond to every message personally.",
-    contactLabel: "Contact",
-    contactDesc: "To discuss a project, report an error in an article, propose a collaboration, or just chat about tech and maker culture.",
+    hand: 'write to me',
     nameLabel: "Name",
     emailLabel: "Email",
     messageLabel: "Message",
     sendButton: "Send",
     copyright: "All rights reserved.",
-    poweredBy: "Powered by Astro + TailwindCSS v4",
-    successMessage: "Message sent, thank you!",
-    errorMessage: "Error sending message. Please try again.",
-    sending: "Sending…",
+    handWritten: "handwritten by DD",
   },
 };
 
 const t = translations[currentLang];
 ---
 
-<footer id="contact" class="mt-0 border-t border-neutral-300/70 dark:border-neutral-700/70">
+<footer id="contact" class="bg-notebook text-ink border-t border-[var(--paper-edge)]">
 
   <!-- CTA + Formulaire -->
-  <div class="bg-stone-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100">
-    <div class="px-6 md:px-12 py-20 md:py-32 max-w-7xl mx-auto">
+  <div class="px-6 md:px-12 py-20 md:py-28 max-w-6xl mx-auto">
 
-      <!-- Label + grand titre éditorial -->
-      <div class="mb-16 md:mb-20">
-        <span class="font-mono text-[11px] tracking-[0.2em] text-neutral-500 dark:text-neutral-500 block mb-6">
-          III — {currentLang === 'fr' ? 'CONTACT' : 'CONTACT'}
-        </span>
-        <h2 class="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.05] max-w-4xl">
+      <!-- Label + grand titre -->
+      <div class="mb-14 md:mb-20">
+        <p class="hand text-2xl md:text-3xl text-pen rotate-[-1.5deg] mb-4">{t.hand}</p>
+        <h2 class="font-display font-extrabold tracking-tight text-4xl md:text-6xl leading-[1.05] max-w-4xl text-ink">
           {currentLang === 'fr' ? (
-            <>Une question, une idée, ou juste<br /><span class="font-serif italic font-normal">l'envie d'échanger</span> ?</>
+            <>Une question, une idée,<br />ou juste <span class="u-hand">envie d'échanger&nbsp;?</span></>
           ) : (
-            <>A question, an idea, or just<br /><span class="font-serif italic font-normal">want to chat</span>?</>
+            <>A question, an idea,<br />or just <span class="u-hand">want to chat</span>?</>
           )}
         </h2>
       </div>
@@ -63,19 +50,21 @@ const t = translations[currentLang];
       <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
 
         <!-- Colonne gauche : description -->
-        <div class="md:col-span-4 space-y-6">
+        <div class="md:col-span-4 space-y-8">
           <div>
-            <span class="font-mono text-[10px] tracking-widest text-neutral-500 dark:text-neutral-500 block mb-2">— 01</span>
-            <p class="text-base leading-relaxed text-neutral-700 dark:text-neutral-300 max-w-sm">
+            <p class="hand text-xl text-pen mb-2">01.</p>
+            <p class="font-serif text-base leading-relaxed text-ink-soft max-w-sm">
               {currentLang === 'fr'
-                ? "Pas de réseaux sociaux. Juste un formulaire direct — je réponds à chaque message personnellement."
-                : "No social media. Just a direct form — I respond to every message personally."}
+                ? "Pas de réseaux sociaux. Juste un formulaire direct. Je réponds à chaque message personnellement."
+                : "No social media. Just a direct form. I respond to every message personally."}
             </p>
           </div>
           <div>
-            <span class="font-mono text-[10px] tracking-widest text-neutral-500 dark:text-neutral-500 block mb-2">— 02</span>
-            <p class="text-sm text-neutral-600 dark:text-neutral-400 max-w-sm">
-              {t.contactDesc}
+            <p class="hand text-xl text-pen mb-2">02.</p>
+            <p class="font-serif text-sm leading-relaxed text-ink-faint max-w-sm">
+              {currentLang === 'fr'
+                ? "Pour parler d'un projet, signaler une erreur dans un article, proposer un produit à tester, ou juste discuter."
+                : "To discuss a project, report an error in an article, propose a product for review, or just chat."}
             </p>
           </div>
         </div>
@@ -83,7 +72,7 @@ const t = translations[currentLang];
         <!-- Colonne droite : formulaire -->
         <form
           id="footer-contact-form"
-          class="md:col-span-8 space-y-0 border-t border-neutral-300/70 dark:border-neutral-700/70"
+          class="md:col-span-8 space-y-0 border-t border-[var(--paper-edge)]"
           onsubmit="handleFooterForm(event)"
         >
           <!-- Honeypot (invisible aux humains, visible aux bots) -->
@@ -108,61 +97,62 @@ const t = translations[currentLang];
           <input type="hidden" name="form_loaded_at" id="form_loaded_at" />
 
           <div class="grid grid-cols-1 sm:grid-cols-2">
-            <label class="group block py-5 border-b border-neutral-300/70 dark:border-neutral-700/70 sm:border-r">
-              <span class="font-mono text-[10px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500 block mb-2">— {t.nameLabel}</span>
+            <label class="group block py-5 border-b border-[var(--paper-edge)] sm:border-r">
+              <span class="font-sans text-[10px] font-semibold tracking-[0.18em] uppercase text-ink-faint block mb-2">{t.nameLabel}</span>
               <input
                 type="text"
                 name="name"
                 required
-                placeholder={currentLang === 'fr' ? "Jane Doe" : "Jane Doe"}
-                class="w-full bg-transparent border-0 p-0 text-lg md:text-xl text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-600 focus:outline-none focus:ring-0"
+                placeholder="Jane Doe"
+                class="w-full bg-transparent border-0 p-0 font-serif text-lg md:text-xl text-ink placeholder-[var(--ink-faint)] focus:outline-none focus:ring-0"
               />
             </label>
-            <label class="group block py-5 border-b border-neutral-300/70 dark:border-neutral-700/70 sm:pl-6">
-              <span class="font-mono text-[10px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500 block mb-2">— {t.emailLabel}</span>
+            <label class="group block py-5 border-b border-[var(--paper-edge)] sm:pl-6">
+              <span class="font-sans text-[10px] font-semibold tracking-[0.18em] uppercase text-ink-faint block mb-2">{t.emailLabel}</span>
               <input
                 type="email"
                 name="email"
                 required
                 placeholder="hello@email.com"
-                class="w-full bg-transparent border-0 p-0 text-lg md:text-xl text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-600 focus:outline-none focus:ring-0"
+                class="w-full bg-transparent border-0 p-0 font-serif text-lg md:text-xl text-ink placeholder-[var(--ink-faint)] focus:outline-none focus:ring-0"
               />
             </label>
           </div>
-          <label class="group block py-5 border-b border-neutral-300/70 dark:border-neutral-700/70">
-            <span class="font-mono text-[10px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500 block mb-2">— {t.messageLabel}</span>
+          <label class="group block py-5 border-b border-[var(--paper-edge)]">
+            <span class="font-sans text-[10px] font-semibold tracking-[0.18em] uppercase text-ink-faint block mb-2">{t.messageLabel}</span>
             <textarea
               name="message"
               required
               rows="4"
               placeholder={currentLang === 'fr' ? "Dites-moi tout..." : "Tell me everything..."}
-              class="w-full bg-transparent border-0 p-0 text-lg md:text-xl text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-600 focus:outline-none focus:ring-0 resize-none"
+              class="w-full bg-transparent border-0 p-0 font-serif text-lg md:text-xl text-ink placeholder-[var(--ink-faint)] focus:outline-none focus:ring-0 resize-none"
             ></textarea>
           </label>
-          <div class="flex items-center justify-between gap-4 pt-6">
-            <p id="footer-form-status" class="font-mono text-[11px] tracking-widest uppercase text-neutral-500 hidden"></p>
+          <div class="flex items-center justify-between gap-4 pt-7">
+            <p id="footer-form-status" class="hand text-xl hidden"></p>
             <button
               type="submit"
-              class="group ml-auto inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.2em] uppercase text-neutral-900 dark:text-neutral-100 border-b border-neutral-900 dark:border-neutral-100 pb-1 hover:gap-5 transition-all"
+              class="ml-auto px-7 py-3.5 rounded-full font-display font-semibold text-sm bg-[var(--pen)] text-[var(--paper-raised)] hover:bg-[var(--pen-deep)] transition-colors disabled:opacity-50"
             >
-              {t.sendButton}
-              <span class="text-base">→</span>
+              {t.sendButton} →
             </button>
           </div>
         </form>
 
       </div>
     </div>
-  </div>
 
   <!-- Barre basse -->
-  <div class="bg-stone-100 dark:bg-neutral-900 border-t border-neutral-300/70 dark:border-neutral-700/70 px-6 md:px-12">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 py-6 font-mono text-[11px] tracking-widest uppercase text-neutral-500 dark:text-neutral-500">
-      <div>
-        © {new Date().getFullYear()} — DigitalDream
+  <div class="border-t border-[var(--paper-edge)] px-6 md:px-12">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 py-6 text-xs text-ink-faint">
+      <div class="flex items-center gap-2">
+        © {new Date().getFullYear()} digitaldream.work · <a href="/rss.xml" class="underline decoration-dotted underline-offset-4 hover:text-[var(--pen)] transition-colors">rss</a>
       </div>
-      <div class="flex items-center gap-4">
-              </div>
+      <div class="flex items-center gap-2.5">
+        <img src="/avatar-dd-96.webp" alt="" width="20" height="24" class="w-5 h-auto -rotate-3 block dark:hidden" />
+        <img src="/avatar-dd-white.svg" alt="" width="20" height="24" class="w-5 h-auto -rotate-3 hidden dark:block" />
+        <span class="hand text-lg text-ink-soft">{t.handWritten}</span>
+      </div>
     </div>
   </div>
 </footer>

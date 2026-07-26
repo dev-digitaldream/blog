@@ -1,0 +1,125 @@
+---
+export interface Props {
+  lang?: 'fr' | 'en';
+}
+const { lang: _lang } = Astro.props;
+const currentLang = _lang || 'fr';
+const ENDPOINT = import.meta.env.PUBLIC_NEWSLETTER_URL ?? '';
+
+const t = {
+  fr: {
+    hand: 'une note par mois',
+    title: 'Que du terrain, rien d\u2019autre.',
+    sub: 'Gadgets, bagagerie, self-hosting, code : ce que je teste vraiment, résumé une fois par mois. Zéro spam, désinscription en un clic.',
+    placeholder: 'ton@email.com',
+    button: "S'abonner",
+    sending: 'Envoi…',
+    success: 'Inscription confirmée. Bienvenue.',
+    error: "Erreur lors de l'inscription. Réessayez.",
+  },
+  en: {
+    hand: 'one note a month',
+    title: 'Field notes only, nothing else.',
+    sub: 'Gadgets, bags, self-hosting, code: what I actually test, summed up once a month. Zero spam, one-click unsubscribe.',
+    placeholder: 'you@email.com',
+    button: 'Subscribe',
+    sending: 'Sending…',
+    success: 'Subscription confirmed. Welcome.',
+    error: 'Subscription failed. Please retry.',
+  },
+}[currentLang];
+---
+
+<section class="relative max-w-6xl mx-auto px-6 md:px-12 pb-24 md:pb-32">
+  <div class="paper-card tilt-2 relative px-7 py-10 md:px-14 md:py-14">
+    <span class="tape tape-c" aria-hidden="true"></span>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
+      <div class="md:col-span-6">
+        <p class="hand text-2xl md:text-3xl text-pen rotate-[-1.5deg] mb-3">{t.hand}</p>
+        <h2 class="font-display font-extrabold tracking-tight text-2xl md:text-4xl text-ink mb-4">
+          {t.title}
+        </h2>
+        <p class="font-serif text-[15px] md:text-base leading-relaxed text-ink-soft max-w-md">{t.sub}</p>
+      </div>
+
+      <div class="md:col-span-6">
+        <form
+          id="newsletter-form"
+          class="flex flex-col sm:flex-row gap-3 sm:gap-0 sm:items-center sm:rounded-full sm:border sm:border-[var(--paper-edge)] sm:bg-[var(--paper)] sm:p-1.5"
+          data-endpoint={ENDPOINT}
+          data-lang={currentLang}
+        >
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder={t.placeholder}
+            class="flex-1 rounded-xl sm:rounded-full border border-[var(--paper-edge)] sm:border-0 bg-[var(--paper)] sm:bg-transparent px-5 py-3.5 font-sans text-sm text-ink placeholder-[var(--ink-faint)] focus:outline-none focus:ring-2 focus:ring-[var(--pen)]/40"
+          />
+          <button
+            type="submit"
+            class="rounded-full px-7 py-3.5 font-display font-semibold text-sm bg-[var(--pen)] text-[var(--paper-raised)] hover:bg-[var(--pen-deep)] transition-colors disabled:opacity-50"
+          >
+            {t.button} →
+          </button>
+        </form>
+        <p id="newsletter-status" class="mt-3 hand text-xl hidden"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    function initNewsletter() {
+      const form = document.getElementById('newsletter-form');
+      if (!form || form.dataset.bound) return;
+      form.dataset.bound = '1';
+      const status = document.getElementById('newsletter-status');
+      const lang = form.dataset.lang || 'fr';
+      const msg = {
+        fr: { sending: 'Envoi…', success: 'Inscription confirmée. Bienvenue.', error: "Erreur lors de l'inscription. Réessayez." },
+        en: { sending: 'Sending…', success: 'Subscription confirmed. Welcome.', error: 'Subscription failed. Please retry.' },
+      }[lang];
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = form.email.value.trim();
+        if (!email) return;
+        const endpoint = form.dataset.endpoint;
+        const btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true;
+
+        if (!endpoint) {
+          // Fallback : pas d'endpoint configuré → mailto
+          window.location.href = `mailto:contact@digitaldream.work?subject=${encodeURIComponent('Newsletter · inscription')}&body=${encodeURIComponent('Email: ' + email)}`;
+          btn.disabled = false;
+          return;
+        }
+
+        status.textContent = msg.sending;
+        status.classList.remove('hidden', 'text-green-600', 'text-red-600');
+        try {
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ email }),
+          });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          status.textContent = msg.success;
+          status.classList.add('text-green-600');
+          form.reset();
+        } catch (err) {
+          console.error('[newsletter] failed:', err);
+          status.textContent = msg.error;
+          status.classList.add('text-red-600');
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', initNewsletter);
+    document.addEventListener('astro:page-load', initNewsletter);
+  })();
+</script>

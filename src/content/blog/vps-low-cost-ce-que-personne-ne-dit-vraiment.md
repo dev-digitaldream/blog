@@ -9,6 +9,7 @@ metaTitle: "VPS low cost. Ce que personne ne dit vraiment"
 metaDescription: "Avis sur les VPS low cost, fournisseurs peu fiables, retour d’expérience et recommandation RackNerd"
 cover: ""
 lang: fr
+translation: low-cost-vps-what-nobody-tells-you
 ---
 
 Pendant longtemps, je me suis laissé tenter par les VPS low cost. Quand on voit des offres à dix euros par an pour un serveur avec un giga de RAM et trente giga de disque, difficile de résister. Sur le papier, c’est parfait pour tester une stack, déployer rapidement un petit service ou jouer avec CapRover ou Dokploy.
@@ -70,7 +71,7 @@ Surtout, on ne passe pas son temps à tout réinstaller.
 Pour mes besoins actuels, notamment pour tester CapRover, Dokploy ou des stacks Docker rapides, c’est aujourd’hui le seul fournisseur low cost que je garde dans ma liste.
 
 ⸻
-![vps](https://alaoui.be/grav/blog/vps-low-cost-ce-que-personne-ne-dit-vraiment/vps.webp "vps")
+![vps](/blog/vps-low-cost-ce-que-personne-ne-dit-vraiment/vps.webp "vps")
 
 Je ne cherche pas le parfait. Je cherche le fonctionnel
 

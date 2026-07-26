@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+
+const blog = await getCollection('blog');
+const slugs = blog
+  .filter(p => !p.data.draft)
+  .map(p => p.id);
+---
+
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex, follow" />
+  <title>Redirection… · DigitalDream</title>
+</head>
+<body>
+  <script define:vars={{ slugs }}>
+    const slug = slugs[Math.floor(Math.random() * slugs.length)];
+    window.location.replace('/blog/' + slug);
+  </script>
+  <p>Redirection vers un article au hasard…</p>
+</body>
+</html>

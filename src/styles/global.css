@@ -4,17 +4,69 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-serif: 'Playfair Display', ui-serif, Georgia, serif;
+  --font-sans: 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Fraunces Variable', Georgia, serif;
+  --font-hand: 'Caveat', 'Segoe Script', cursive;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
-  /* Accent terracotta — touche de couleur subtile */
-  --color-accent-50:  oklch(0.97 0.02 45);
-  --color-accent-100: oklch(0.93 0.04 45);
-  --color-accent-300: oklch(0.78 0.10 40);
-  --color-accent-500: oklch(0.65 0.15 38);
-  --color-accent-600: oklch(0.58 0.16 36);
-  --color-accent-700: oklch(0.50 0.16 35);
+  /* Accent lime signal — legacy (pages non migrées) */
+  --color-accent-50:  oklch(0.97 0.03 128);
+  --color-accent-100: oklch(0.94 0.08 126);
+  --color-accent-300: oklch(0.87 0.17 125);
+  --color-accent-500: oklch(0.86 0.24 122);
+  --color-accent-600: oklch(0.60 0.19 122);
+  --color-accent-700: oklch(0.48 0.16 120);
+}
+
+/* ============================================================
+   CARNET DE DD — design system
+   Papier jaune pâle, encre stylo-bille, annotations rouge,
+   réglure pointillée, scotch, tracés main.
+   ============================================================ */
+
+/* Couleurs du carnet exposées à Tailwind, réactives au dark via cascade */
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-paper-edge: var(--paper-edge);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-pen: var(--pen);
+  --color-pen-deep: var(--pen-deep);
+}
+
+:root {
+  --paper: #f5eeda;
+  --paper-raised: #fdf9ec;
+  --paper-edge: #e6dab6;
+  --ink: #2c3252;
+  --ink-soft: #5d637f;
+  --ink-faint: #9ca1b9;
+  --pen: #c2452e;
+  --pen-deep: #a83521;
+  --tape: rgba(226, 208, 152, 0.72);
+  --dot: rgba(44, 50, 82, 0.10);
+  --shadow-ink: rgba(45, 36, 12, 1);
+  --grain-opacity: 0.045;
+  --grain-blend: multiply;
+}
+
+.dark {
+  --paper: #1b1f31;
+  --paper-raised: #262c46;
+  --paper-edge: #3a4266;
+  --ink: #ece8d8;
+  --ink-soft: #aeb2c9;
+  --ink-faint: #6b7294;
+  --pen: #e5715a;
+  --pen-deep: #ec8a74;
+  --tape: rgba(96, 103, 148, 0.42);
+  --dot: rgba(236, 232, 216, 0.07);
+  --shadow-ink: rgba(0, 0, 0, 1);
+  --grain-opacity: 0.06;
+  --grain-blend: screen;
 }
 
 html {
@@ -25,10 +77,133 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "ss01", "cv01";
 }
 
-/* Hover underline animé */
+::selection {
+  background: var(--pen);
+  color: var(--paper-raised);
+}
+
+/* --- Fond carnet : papier + pointillés + grain ------------ */
+
+.bg-notebook {
+  background-color: var(--paper);
+  background-image: radial-gradient(var(--dot) 1px, transparent 1.7px);
+  background-size: 22px 22px;
+  position: relative;
+}
+
+/* Grain papier — overlay fixed, très subtil */
+.grain::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: var(--grain-blend);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* --- Papier cartonné -------------------------------------- */
+
+.paper-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--paper-edge);
+  border-radius: 6px 18px 8px 20px / 18px 8px 20px 10px;
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--shadow-ink) 6%, transparent),
+    0 14px 34px -18px color-mix(in srgb, var(--shadow-ink) 28%, transparent);
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+a.paper-card:hover,
+.paper-card.hoverable:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 2px 3px color-mix(in srgb, var(--shadow-ink) 7%, transparent),
+    0 26px 44px -18px color-mix(in srgb, var(--shadow-ink) 34%, transparent);
+}
+
+/* Inclinaisons légères — pages posées */
+.tilt-1 { rotate: -0.9deg; }
+.tilt-2 { rotate: 0.7deg; }
+.tilt-3 { rotate: -0.5deg; }
+.tilt-4 { rotate: 1.1deg; }
+
+/* --- Scotch (washi tape) ---------------------------------- */
+
+.tape {
+  position: absolute;
+  width: 92px;
+  height: 26px;
+  background: var(--tape);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.20) 0 7px,
+    transparent 7px 14px
+  );
+  border-left: 2px dashed rgba(255, 255, 255, 0.35);
+  border-right: 2px dashed rgba(255, 255, 255, 0.35);
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--shadow-ink) 18%, transparent);
+  pointer-events: none;
+  z-index: 2;
+}
+.tape-c { top: -13px; left: 50%; translate: -50% 0; rotate: -2deg; }
+.tape-l { top: -11px; left: 14px; rotate: -8deg; }
+.tape-r { top: -11px; right: 14px; rotate: 6deg; left: auto; }
+
+/* --- Écriture main ---------------------------------------- */
+
+.hand {
+  font-family: var(--font-hand);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* --- Souligné tracé main ---------------------------------- */
+
+.u-hand {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='10' viewBox='0 0 120 10' preserveAspectRatio='none'%3E%3Cpath d='M2 7 C 22 3, 42 9, 62 5.5 S 102 3, 118 6.5' fill='none' stroke='%23C2452E' stroke-width='2.8' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 0.34em;
+  padding-bottom: 0.22em;
+}
+.dark .u-hand {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='10' viewBox='0 0 120 10' preserveAspectRatio='none'%3E%3Cpath d='M2 7 C 22 3, 42 9, 62 5.5 S 102 3, 118 6.5' fill='none' stroke='%23E5715A' stroke-width='2.8' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* Surlignage marqueur — pour mots clés */
+.mark {
+  background-image: linear-gradient(100deg, rgba(244, 208, 63, 0.42), rgba(244, 208, 63, 0.30) 95%, transparent);
+  border-radius: 0.3em 0.6em 0.4em 0.2em;
+  padding: 0 0.14em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.dark .mark {
+  background-image: linear-gradient(100deg, rgba(214, 168, 40, 0.30), rgba(214, 168, 40, 0.20) 95%, transparent);
+}
+
+/* --- Lien main (flèche gribouillée au hover) --------------- */
+
+.link-hand {
+  position: relative;
+  color: var(--pen);
+  transition: color 0.25s ease;
+}
+.link-hand:hover { color: var(--pen-deep); }
+.link-hand .doodle-arrow {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.link-hand:hover .doodle-arrow { transform: translateX(5px) rotate(-6deg); }
+
+/* --- Hover underline animé (legacy) ------------------------ */
+
 .link-hover {
   background-image: linear-gradient(currentColor, currentColor);
   background-position: 0% 100%;
@@ -40,7 +215,18 @@ body {
   background-size: 100% 1px;
 }
 
-/* Apparition au scroll */
+/* --- Curseur terminal clignotant (legacy) ------------------ */
+
+@keyframes blink-caret {
+  0%, 45%  { opacity: 1; }
+  50%, 95% { opacity: 0; }
+}
+.caret-blink {
+  animation: blink-caret 1.1s steps(1) infinite;
+}
+
+/* --- Apparition au scroll ---------------------------------- */
+
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
@@ -49,7 +235,8 @@ body {
   animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
-/* Pulsing dot — indicateur "live" terracotta */
+/* --- Pulsing dot (legacy) ---------------------------------- */
+
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.4; transform: scale(0.85); }
@@ -71,38 +258,15 @@ body {
   100% { transform: scale(2.5); opacity: 0;   }
 }
 
-/* Marquee / ticker subtil */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-.marquee-track {
-  animation: marquee 40s linear infinite;
-}
-.marquee-track:hover {
-  animation-play-state: paused;
+/* Grille technique de fond (legacy) */
+.bg-blueprint {
+  background-image:
+    linear-gradient(to right, color-mix(in oklch, currentColor 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklch, currentColor 5%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
-/* Bounce vertical pour le scroll indicator */
-@keyframes bounce-down {
-  0%, 100% { transform: translateY(0); opacity: 0.6; }
-  50%      { transform: translateY(8px); opacity: 1; }
-}
-.bounce-down {
-  animation: bounce-down 2s ease-in-out infinite;
-}
-
-/* Float subtil pour les blobs décoratifs */
-@keyframes float-blob {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33%      { transform: translate(20px, -30px) scale(1.05); }
-  66%      { transform: translate(-15px, 20px) scale(0.95); }
-}
-.float-blob {
-  animation: float-blob 18s ease-in-out infinite;
-}
-
-/* Underline accent au hover */
+/* Underline accent au hover (legacy) */
 .link-accent {
   background-image: linear-gradient(var(--color-accent-500), var(--color-accent-500));
   background-position: 0% 100%;
@@ -112,4 +276,188 @@ body {
 }
 .link-accent:hover {
   background-size: 100% 1.5px;
+}
+
+/* ============================================================
+   PROSE CARNET — corps des articles
+   ============================================================ */
+
+.prose-notebook {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--ink-soft);
+}
+.prose-notebook > *:first-child { margin-top: 0; }
+
+.prose-notebook p { margin: 0 0 1.5em; }
+
+.prose-notebook h2,
+.prose-notebook h3,
+.prose-notebook h4 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  scroll-margin-top: 6.5rem;
+}
+.prose-notebook h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 2.4em 0 0.8em;
+}
+.prose-notebook h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 2em 0 0.6em;
+}
+.prose-notebook h4 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 1.8em 0 0.5em;
+}
+
+.prose-notebook a {
+  color: var(--pen);
+  transition: color 0.2s ease;
+}
+.prose-notebook a:hover {
+  color: var(--pen-deep);
+}
+
+/* Heading anchor links */
+.prose-notebook h2 a, .prose-notebook h3 a, .prose-notebook h4 a {
+  color: inherit;
+  text-decoration: none;
+}
+.prose-notebook h2 a:hover, .prose-notebook h3 a:hover, .prose-notebook h4 a:hover {
+  color: inherit;
+}
+.heading-anchor {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  margin-left: 0.3em;
+  font-size: 0.75em;
+  text-decoration: none;
+  color: var(--ink-faint);
+}
+.prose-notebook h2:hover .heading-anchor,
+.prose-notebook h3:hover .heading-anchor,
+.prose-notebook h4:hover .heading-anchor {
+  opacity: 1;
+}
+.heading-anchor:hover {
+  color: var(--pen) !important;
+}
+
+.prose-notebook strong { color: var(--ink); font-weight: 650; }
+
+.prose-notebook ul {
+  margin: 0 0 1.5em;
+  padding-left: 1.3em;
+  list-style: none;
+}
+.prose-notebook ul li { position: relative; margin: 0.35em 0; }
+.prose-notebook ul li::before {
+  content: '';
+  position: absolute;
+  left: -1.05em;
+  top: 0.62em;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 9999px 9999px 9999px 2px;
+  background: var(--pen);
+  opacity: 0.85;
+  rotate: -8deg;
+}
+
+.prose-notebook ol {
+  margin: 0 0 1.5em;
+  padding-left: 1.4em;
+}
+.prose-notebook ol li { margin: 0.35em 0; }
+.prose-notebook ol li::marker { color: var(--pen); font-family: var(--font-hand); font-size: 1.25em; }
+
+.prose-notebook blockquote {
+  margin: 2em 0;
+  padding: 1.1em 1.4em;
+  background: var(--paper-raised);
+  border-left: 3px solid var(--pen);
+  border-radius: 0 14px 14px 4px;
+  font-style: italic;
+  color: var(--ink-soft);
+  rotate: -0.3deg;
+  box-shadow: 0 8px 24px -16px color-mix(in srgb, var(--shadow-ink) 30%, transparent);
+}
+.prose-notebook blockquote p:last-child { margin-bottom: 0; }
+
+.prose-notebook code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: color-mix(in srgb, var(--paper-edge) 45%, transparent);
+  color: var(--pen-deep);
+  padding: 0.15em 0.45em;
+  border-radius: 6px;
+}
+.dark .prose-notebook code { color: var(--pen); }
+
+.prose-notebook pre {
+  margin: 2em 0;
+  padding: 1.2em 1.4em;
+  background: #232842;
+  color: #ece8d8;
+  border-radius: 14px;
+  border: 1px solid var(--paper-edge);
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+.prose-notebook pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.prose-notebook img {
+  background: #fff;
+  padding: 10px;
+  border: 1px solid var(--paper-edge);
+  border-radius: 10px;
+  rotate: -0.4deg;
+  box-shadow: 0 12px 30px -18px color-mix(in srgb, var(--shadow-ink) 35%, transparent);
+  margin: 2.2em auto;
+}
+.dark .prose-notebook img { background: var(--paper-raised); }
+
+.prose-notebook figure { margin: 2.2em 0; }
+.prose-notebook figcaption {
+  margin-top: 0.8em;
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: 1.35rem;
+  color: var(--ink-faint);
+}
+
+.prose-notebook hr {
+  margin: 3em auto;
+  border: none;
+  border-top: 2px dashed var(--paper-edge);
+  width: 60%;
+}
+
+.prose-notebook table {
+  width: 100%;
+  margin: 2em 0;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+.prose-notebook th,
+.prose-notebook td {
+  padding: 0.6em 0.9em;
+  border-bottom: 1px solid var(--paper-edge);
+  text-align: left;
+}
+.prose-notebook th {
+  font-family: var(--font-display);
+  color: var(--ink);
+  font-weight: 600;
 }

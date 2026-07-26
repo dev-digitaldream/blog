@@ -15,6 +15,7 @@ const blog = defineCollection({
     metaDescription: z.string().optional(),
     cover: z.string().optional(),
     lang: z.enum(['fr', 'en']).default('fr'),
+    translation: z.string().optional(),
   }),
 });
 

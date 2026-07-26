@@ -9,6 +9,7 @@ metaTitle: "Plaud Note en 2026 : l’IA a grandi, les promesses aussi"
 metaDescription: "En 2026, Plaud Note reste un bon produit, mais l’IA audio locale a rattrapé le cloud. Comparatif honnête entre Plaud et Whisper local."
 cover: ""
 lang: fr
+translation: plaud-note-2026-ai-grew-up
 ---
 
 > Update du poste de 2024
@@ -17,7 +18,7 @@ Je vais être direct, comme toujours.
 
 En 2024, Plaud Note m’avait réellement bluffé. Pas dans le sens gadget ou nouveauté sympa, mais dans ce moment précis où tu te dis que quelque chose vient de te simplifier la vie. Un petit boîtier posé sur la table, j’appuie sur un bouton, je participe à ma réunion normalement, et à la fin j’ai un résumé propre, structuré, immédiatement exploitable. Pas besoin de sortir le PC, pas besoin de lancer une application, pas besoin d’y penser. Tout était fluide, presque reposant, comme si la charge mentale liée à la prise de notes disparaissait d’un coup.
 
-![ChatGPT%20Image%20Jan%201%202026%20%281%29](https://alaoui.be/grav/blog/plaud-notes-lenregistreur-qui-promet-de-penser-a-ta-place/ChatGPT%20Image%20Jan%201%202026%20%281%29.webp "ChatGPT%20Image%20Jan%201%202026%20%281%29")
+![ChatGPT%20Image%20Jan%201%202026%20%281%29](/blog/plaud-notes-lenregistreur-qui-promet-de-penser-a-ta-place/ChatGPT%20Image%20Jan%201%202026%20%281%29.webp "ChatGPT%20Image%20Jan%201%202026%20%281%29")
 
 En 2026, Plaud n’a pas régressé. Loin de là. Mais ce n’est plus lui qui impressionne. C’est le reste du monde qui l’a rattrapé.
 
@@ -27,7 +28,7 @@ Mais en 2026, ce niveau de “bien” n’a plus rien d’exceptionnel.
 
 Ce qui a vraiment changé, ce n’est pas Plaud. C’est ma manière de travailler. Entre-temps, j’ai testé Whisper en local, puis des modèles de langage qui tournent directement sur ma machine, puis des workflows maison, parfois bricolés, parfois plus aboutis. Et j’ai fini par réaliser une chose simple : la transcription automatique n’est plus un luxe. Aujourd’hui, un modèle local peut transcrire du français avec une précision impressionnante, parfois même hors ligne. Les résumés générés sont souvent plus sobres, moins bavards, moins marqués par un ton marketing. Et surtout, mes fichiers audio ne quittent pas mon ordinateur.
 
-![SCR-20260102-qtig](https://alaoui.be/grav/blog/plaud-notes-lenregistreur-qui-promet-de-penser-a-ta-place/SCR-20260102-qtig.webp "SCR-20260102-qtig")
+![SCR-20260102-qtig](/blog/plaud-notes-lenregistreur-qui-promet-de-penser-a-ta-place/SCR-20260102-qtig.webp "SCR-20260102-qtig")
 
 À partir de ce moment-là, Plaud a changé de statut. Avant, c’était une évidence. Aujourd’hui, c’est un confort.
 

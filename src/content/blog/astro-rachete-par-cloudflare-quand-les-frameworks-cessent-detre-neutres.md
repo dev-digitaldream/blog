@@ -9,9 +9,10 @@ metaTitle: "Astro racheté par Cloudflare, quand les frameworks cessent d’êtr
 metaDescription: "Analyse pragmatique du rachat d’Astro par Cloudflare et de ce que cette convergence entre framework et infrastructure change réellement pour les développeurs."
 cover: ""
 lang: fr
+translation: astro-bought-by-cloudflare-when-frameworks-stop-being-neutral
 ---
 
-![SCR-20260118-ptii](https://alaoui.be/grav/blog/astro-rachete-par-cloudflare-quand-les-frameworks-cessent-detre-neutres/SCR-20260118-ptii.webp "SCR-20260118-ptii")
+![SCR-20260118-ptii](/blog/astro-rachete-par-cloudflare-quand-les-frameworks-cessent-detre-neutres/SCR-20260118-ptii.webp "SCR-20260118-ptii")
 
 Le rachat d'Astro par Cloudflare n'a rien d'un coup de tonnerre médiatique. Il n'y a pas eu d'annonces tapageuses, pas de promesses démesurées, pas de changement immédiat dans les outils que les développeurs utilisent au quotidien. Et pourtant, cette acquisition dit quelque chose de très profond sur l'évolution du web moderne, bien au-delà du sort d'un framework ou d'une équipe en particulier.
 
