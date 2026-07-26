@@ -1,11 +1,11 @@
 ---
 title: Quand l’IA débloque enfin des systèmes industriels fermés
-slug: quand-lia-debloque-enfin-des-systemes-industriels-fermes
 description: Retour d’expérience sur l’usage de l’IA, des LLM, de Ghidra, de
   Codex et d’outils modernes pour comprendre et moderniser des systèmes
   industriels fermés.
 date: 2026-05-24
-published: true
+lang: fr
+draft: false
 tags:
   - ia
   - llm
@@ -15,7 +15,6 @@ tags:
   - codex
   - automatisation
   - gmkteck
-translation: when-ai-finally-unlocked-industrial-systems
 ---
 Pendant plus de dix ans, certaines parties de notre infrastructure semblaient impossibles à faire évoluer sans dépendre entièrement d’un fabricant externe.
 
@@ -35,8 +34,6 @@ Pendant longtemps, j’ai vu l’intelligence artificielle comme beaucoup de mon
 Dans mon environnement professionnel, c’était souvent limité à ça. Quelques collègues l’utilisaient pour reformuler un message ou gagner du temps sur des tâches administratives, mais rarement pour aller plus loin.
 
 
-
-![Illustration IA et systèmes industriels](/uploads/ia-industrie/hero.webp)
 
 Et puis quelque chose a changé.
 
@@ -159,9 +156,7 @@ C’est une énorme différence.
 
 ---
 
-
-
-![Obsidian comme mémoire de travail](/uploads/ia-industrie/obsidian.webp)
+![](</uploads/Obsidian from Astroplux Clean.webp>)
 
 ## Quand les conversations deviennent impossibles à suivre
 
