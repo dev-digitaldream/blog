@@ -1,8 +1,10 @@
 ---
 title: When AI Finally Unlocked Locked-Down Industrial Systems
-description: Hands-on experience using LLMs, Ghidra, Codex and modern tools to understand and modernize closed industrial systems.
+description: Hands-on experience using LLMs, Ghidra, Codex and modern tools to
+  understand and modernize closed industrial systems.
 date: 2026-05-24
-published: true
+lang: en
+draft: false
 tags:
   - ia
   - llm
@@ -12,10 +14,8 @@ tags:
   - codex
   - automatisation
   - gmkteck
-lang: en
-translation: quand-lia-debloque-enfin-des-systemes-industriels-fermes
+cover: /uploads/Hero Image from Astroplux Clean.webp
 ---
-
 For more than ten years, some parts of our infrastructure felt impossible to evolve without being completely dependent on an outside vendor.
 
 Every change was expensive.  
