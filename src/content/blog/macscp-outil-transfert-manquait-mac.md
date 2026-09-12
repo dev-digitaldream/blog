@@ -7,7 +7,7 @@ translation: macscp-file-transfer-tool-missing-on-mac
 draft: false
 category: "blog"
 tags: ["macOS", "SCP", "SFTP", "développement", "IA"]
-cover: ""
+cover: "/blog/macscp/macscp-desktop.webp"
 excerpt: "Je travaille désormais à 99 % sous macOS. macSCP a comblé un besoin très concret : retrouver une interface simple pour transférer mes fichiers vers mes machines Linux."
 metaTitle: "macSCP : l'outil de transfert qui me manquait sur Mac"
 metaDescription: "Mon passage de Windows à macOS, la création de macSCP avec Claude Code puis Codex, en passant par les modèles chinois via le super OpenCode, et son usage pour transférer des fichiers vers mes machines Linux."
