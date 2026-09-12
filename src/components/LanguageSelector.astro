@@ -1,9 +1,10 @@
 ---
 export interface Props {
   translationSlug?: string;
+  lang?: 'fr' | 'en';
 }
 const { translationSlug } = Astro.props;
-const currentLang = Astro.url.pathname.startsWith('/en') ? 'en' : 'fr';
+const currentLang = Astro.props.lang ?? (Astro.url.pathname.startsWith('/en') ? 'en' : 'fr');
 import { LANGUAGES } from '../lib/i18n';
 ---
 

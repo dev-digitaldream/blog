@@ -418,6 +418,9 @@ a.paper-card:hover,
 }
 
 .prose-notebook img {
+  max-width: 100%;
+  height: auto;
+  box-sizing: border-box;
   background: #fff;
   padding: 10px;
   border: 1px solid var(--paper-edge);
@@ -461,3 +464,20 @@ a.paper-card:hover,
   color: var(--ink);
   font-weight: 600;
 }
+
+/* Keep article screenshots inside the reading column, including portrait captures. */
+.prose-notebook figure.article-screenshot {
+  width: 100%;
+  max-width: 100%;
+  margin: 2.2em auto;
+}
+.prose-notebook .article-screenshot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  rotate: none;
+}
+.prose-notebook figure.article-screenshot-phone { max-width: 320px; }
+.prose-notebook figure.article-screenshot-tablet-portrait { max-width: 420px; }

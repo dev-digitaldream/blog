@@ -1,6 +1,6 @@
 ---
-import { getCurrentLanguage } from '../lib/i18n';
-const currentLang = getCurrentLanguage();
+interface Props { lang?: 'fr' | 'en' }
+const currentLang = Astro.props.lang ?? (Astro.url.pathname.startsWith('/en') ? 'en' : 'fr');
 const placeholder = currentLang === 'en' ? 'Search articles...' : 'Rechercher dans les articles...';
 const emptyMsg = currentLang === 'en' ? 'Type a few characters to search.' : 'Tapez quelques caractères pour rechercher.';
 ---
@@ -56,7 +56,8 @@ const emptyMsg = currentLang === 'en' ? 'Type a few characters to search.' : 'Ta
       pagefindReady = (async () => {
         try {
           // @ts-ignore
-          const pf = await import(/* @vite-ignore */ '/pagefind/pagefind.js');
+          const modulePath = '/pagefind/pagefind.js';
+        const pf = await import(/* @vite-ignore */ modulePath);
           await pf.options({ ranking: { termFrequency: 1 } });
           return pf;
         } catch (e) {

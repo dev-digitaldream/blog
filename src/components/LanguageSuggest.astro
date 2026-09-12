@@ -1,17 +1,17 @@
 ---
 export interface Props {
   translationSlug?: string;
+  lang?: 'fr' | 'en';
 }
 const { translationSlug } = Astro.props;
-const lang = Astro.url.pathname.startsWith('/en') ? 'en' : 'fr';
-const dataSlug = translationSlug ? `data-translation="${translationSlug}"` : '';
+const lang = Astro.props.lang ?? (Astro.url.pathname.startsWith('/en') ? 'en' : 'fr');
 ---
 
 <div
   id="lang-suggest"
   role="status"
   aria-live="polite"
-  {dataSlug}
+  data-translation={translationSlug}
   data-current={lang}
   class="hidden fixed top-0 left-0 right-0 z-[999] px-4 py-3 bg-[var(--paper)] border-b-2 border-[var(--pen)] shadow-lg"
 >

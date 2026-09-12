@@ -3,11 +3,10 @@ import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
 import ReadingProgress from '../../components/ReadingProgress.astro';
 import { getCollection, render } from 'astro:content';
-import { getCurrentLanguage } from '../../lib/i18n';
 import readingTime from 'reading-time';
 
 export async function getStaticPaths() {
-  const blog = await getCollection('blog');
+  const blog = await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft);
   return blog.map((post: any) => ({
     params: { id: post.id },
     props: { post },
@@ -16,7 +15,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
-const currentLang = getCurrentLanguage();
+const currentLang = post.data.lang;
 
 const stats = readingTime(post.body || '');
 const readMinutes = Math.max(1, Math.round(stats.minutes));
@@ -67,8 +66,9 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3'];
 ---
 
 <Layout
-  title={`${post.data.title} · DigitalDream`}
-  description={post.data.description}
+  lang={currentLang}
+  title={`${post.data.metaTitle || post.data.title} · DigitalDream`}
+  description={post.data.metaDescription || post.data.description}
   image={post.data.cover}
   type="article"
   publishedTime={post.data.date}
@@ -90,7 +90,7 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3'];
     >
       <!-- Retour + méta -->
       <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mb-10">
-        <a href="/blog" class="link-hand hand text-xl md:text-2xl inline-flex items-center">
+        <a href={currentLang === 'en' ? '/en/blog' : '/blog'} class="link-hand hand text-xl md:text-2xl inline-flex items-center">
           <svg class="rotate-180 mr-1.5" width="20" height="10" viewBox="0 0 26 12" fill="none" aria-hidden="true">
             <path d="M1.5 6.5 C 8 4.5, 15 8, 22.5 6 M19.5 2.5 C 21 4, 22.6 5.2, 24.2 6.3 C 22.6 7.2, 21 8.6, 19.6 10.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
           </svg>
