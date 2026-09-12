@@ -15,7 +15,7 @@ Turnstile se charge au premier focus du formulaire. Validation serveur du jeton,
 
 1. Utiliser le compte Cloudflare `160f96a41efd2629170558cb351d8972` (compte du blog, pas OpenPark).
 2. Créer un widget Turnstile Managed pour `blog.digitaldream.work`.
-3. Mettre la clé publique dans `PUBLIC_TURNSTILE_SITE_KEY` des variables de build du projet Pages **blog-digitaldream**.
+3. Clé publique du widget intégrée dans Footer.astro. `PUBLIC_TURNSTILE_SITE_KEY` permet de la remplacer au build si nécessaire. Le secret Turnstile a été enregistré dans le Worker selon confirmation utilisateur ; cela reste à vérifier côté Cloudflare.
 4. Enregistrer `SMTP_PASSWORD` et `TURNSTILE_SECRET_KEY` comme secrets du Worker **carnet-dd-contact**. Aucun secret dans Git ou dans la conversation. Avec le CLI authentifié au bon compte, utiliser `npx wrangler secret put NOM` depuis ce dossier ; saisie interactive par l'utilisateur.
 5. Terminer la compilation Worker et un test SMTP dans le runtime Cloudflare. La connexion TLS locale est vérifiée ; cela ne prouve pas l'authentification SMTP ni l'accessibilité depuis Cloudflare.
 6. Déployer le Worker puis le frontend ensemble, avec les secrets et la clé publique en place. Ne pas fusionner ce frontend avant : sans clé il refusera les envois.
