@@ -4,6 +4,7 @@ export interface Props {
 }
 const { lang: _lang } = Astro.props;
 const currentLang = _lang || 'fr';
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
 
 const translations = {
   fr: {
@@ -73,7 +74,9 @@ const t = translations[currentLang];
         <form
           id="footer-contact-form"
           class="md:col-span-8 space-y-0 border-t border-[var(--paper-edge)]"
-          onsubmit="handleFooterForm(event)"
+          data-contact-form
+          data-lang={currentLang}
+          data-sitekey={turnstileSiteKey}
         >
           <!-- Honeypot (invisible aux humains, visible aux bots) -->
           <input
@@ -93,8 +96,6 @@ const t = translations[currentLang];
             aria-hidden="true"
             style="position:absolute;left:-9999px;opacity:0;pointer-events:none"
           />
-          <!-- Timestamp pour détecter soumission trop rapide (bots remplissent en <2s) -->
-          <input type="hidden" name="form_loaded_at" id="form_loaded_at" />
 
           <div class="grid grid-cols-1 sm:grid-cols-2">
             <label class="group block py-5 border-b border-[var(--paper-edge)] sm:border-r">
@@ -102,6 +103,7 @@ const t = translations[currentLang];
               <input
                 type="text"
                 name="name"
+                maxlength="100"
                 required
                 placeholder="Jane Doe"
                 class="w-full bg-transparent border-0 p-0 font-serif text-lg md:text-xl text-ink placeholder-[var(--ink-faint)] focus:outline-none focus:ring-0"
@@ -112,6 +114,7 @@ const t = translations[currentLang];
               <input
                 type="email"
                 name="email"
+                maxlength="254"
                 required
                 placeholder="hello@email.com"
                 class="w-full bg-transparent border-0 p-0 font-serif text-lg md:text-xl text-ink placeholder-[var(--ink-faint)] focus:outline-none focus:ring-0"
@@ -122,14 +125,18 @@ const t = translations[currentLang];
             <span class="font-sans text-[10px] font-semibold tracking-[0.18em] uppercase text-ink-faint block mb-2">{t.messageLabel}</span>
             <textarea
               name="message"
+              minlength="10"
+              maxlength="5000"
               required
               rows="4"
               placeholder={currentLang === 'fr' ? "Dites-moi tout..." : "Tell me everything..."}
               class="w-full bg-transparent border-0 p-0 font-serif text-lg md:text-xl text-ink placeholder-[var(--ink-faint)] focus:outline-none focus:ring-0 resize-none"
             ></textarea>
           </label>
+          <div data-contact-challenge class="pt-4"></div>
+          <noscript><p>JavaScript est nécessaire pour envoyer ce formulaire. / JavaScript is required to send this form.</p></noscript>
           <div class="flex items-center justify-between gap-4 pt-7">
-            <p id="footer-form-status" class="hand text-xl hidden"></p>
+            <p id="footer-form-status" role="status" aria-live="polite" class="hand text-xl hidden"></p>
             <button
               type="submit"
               class="ml-auto px-7 py-3.5 rounded-full font-display font-semibold text-sm bg-[var(--pen)] text-[var(--paper-raised)] hover:bg-[var(--pen-deep)] transition-colors disabled:opacity-50"
@@ -158,118 +165,95 @@ const t = translations[currentLang];
 </footer>
 
 <script is:inline>
-  const translations = {
-    fr: {
-      successMessage: "Message envoyé, merci !",
-      errorMessage: "Erreur lors de l'envoi. Réessayez.",
-      sending: "Envoi…",
-      tooFast: "Merci de prendre un instant pour rédiger votre message.",
-      botDetected: "Une erreur est survenue.",
-    },
-    en: {
-      successMessage: "Message sent, thank you!",
-      errorMessage: "Error sending message. Please try again.",
-      sending: "Sending…",
-      tooFast: "Please take a moment to write your message.",
-      botDetected: "An error occurred.",
-    },
-  };
-
-  const currentLang = localStorage.getItem('lang') || 'fr';
-  const t = translations[currentLang] || translations.fr;
-
-  // Marque le moment où le formulaire est chargé (anti-spam timing)
-  function stampLoadedAt() {
-    const ts = document.getElementById('form_loaded_at');
-    if (ts) ts.value = String(Date.now());
-  }
-  document.addEventListener('DOMContentLoaded', stampLoadedAt);
-  // Re-stamp après navigation ClientRouter
-  document.addEventListener('astro:page-load', stampLoadedAt);
-
-  async function handleFooterForm(event) {
-    event.preventDefault();
-    const form = event.target;
-    const status = document.getElementById('footer-form-status');
+(() => {
+  function initContact() {
+    const form = document.querySelector('[data-contact-form]');
+    if (!form || form.dataset.ready) return;
+    form.dataset.ready = 'true';
+    const en = form.dataset.lang === 'en';
+    const status = form.querySelector('[role="status"]');
     const button = form.querySelector('button[type="submit"]');
-
-    // === ANTI-SPAM ===
-    // 1. Honeypot : si rempli, c'est un bot
-    if (form.botcheck && form.botcheck.checked) {
-      status.textContent = t.botDetected;
-      status.classList.remove('hidden');
-      return;
-    }
-    if (form.website && form.website.value !== '') {
-      status.textContent = t.botDetected;
-      status.classList.remove('hidden');
-      return;
-    }
-
-    // 2. Délai minimum de 3 secondes (les bots soumettent instantanément)
-    const loadedAt = parseInt(form.form_loaded_at?.value || '0', 10);
-    const elapsed = Date.now() - loadedAt;
-    if (loadedAt && elapsed < 3000) {
-      status.textContent = t.tooFast;
-      status.classList.remove('hidden');
-      return;
-    }
-
-    // 3. Validation basique des champs
-    if (!form.name.value.trim() || !form.email.value.trim() || !form.message.value.trim()) return;
-    if (form.message.value.trim().length < 10) {
-      status.textContent = currentLang === 'fr' ? 'Votre message est trop court.' : 'Your message is too short.';
-      status.classList.remove('hidden');
-      return;
-    }
-
-    button.disabled = true;
-    button.textContent = t.sending;
-
-    // === FORMBRICKS ===
-    const FB_URL = 'https://formbricks.dev.digitaldream.work';
-    const FB_ENV = 'cmk12myhj0009qz019fi6vmdm';
-    const FB_SURVEY = 'cmk16vox50000kj0175n4djy7';
-
-    try {
-      const res = await fetch(`${FB_URL}/api/v1/client/${FB_ENV}/responses`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          surveyId: FB_SURVEY,
-          finished: true,
-          data: {
-            name: form.name.value,
-            email: form.email.value,
-            message: form.message.value,
-          },
-          meta: {
-            source: 'blog.digitaldream.work',
-            url: window.location.href,
-          },
-        }),
-      });
-      const json = await res.json().catch(() => ({}));
-      if (res.ok && json?.data?.id) {
-        status.textContent = t.successMessage;
-        status.classList.remove('hidden', 'text-red-400');
-        status.classList.add('text-green-400');
-        form.reset();
-        const ts = document.getElementById('form_loaded_at');
-        if (ts) ts.value = String(Date.now());
-      } else {
-        console.error('[contact] Formbricks error:', res.status, json);
-        throw new Error(json?.message || `HTTP ${res.status}`);
+    const buttonText = button.textContent;
+    let widget;
+    let loading;
+    let busy = false;
+    const show = (text, ok = false) => {
+      status.textContent = text;
+      status.classList.remove('hidden', 'text-red-400', 'text-green-400');
+      status.style.color = ok ? 'var(--ink)' : 'var(--pen)';
+    };
+    const loadChallenge = () => {
+      if (loading) return loading;
+      loading = (async () => {
+        if (!form.dataset.sitekey) throw new Error('unconfigured');
+        if (!window.turnstile) {
+          if (!window.contactTurnstileLoading) {
+            window.contactTurnstileLoading = new Promise((resolve, reject) => {
+              const script = document.createElement('script');
+              script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+              script.async = true;
+              script.onload = resolve;
+              script.onerror = () => { script.remove(); reject(new Error('load')); };
+              document.head.appendChild(script);
+            }).catch(error => { window.contactTurnstileLoading = null; throw error; });
+          }
+          await window.contactTurnstileLoading;
+        }
+        if (!form.isConnected) return;
+        widget = window.turnstile.render(form.querySelector('[data-contact-challenge]'), {
+          sitekey: form.dataset.sitekey, action: 'contact', theme: 'auto',
+          language: en ? 'en' : 'fr', size: 'flexible',
+        });
+      })().catch(error => { loading = null; throw error; });
+      return loading;
+    };
+    // Only load the anti-bot script when someone uses the form.
+    form.addEventListener('focusin', () => { loadChallenge().catch(() => {}); });
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (busy) return;
+      busy = true;
+      button.disabled = true;
+      button.textContent = en ? 'Sending…' : 'Envoi…';
+      try {
+        await loadChallenge();
+        const token = window.turnstile.getResponse(widget);
+        if (!token) {
+          show(en ? 'Please complete the anti-spam verification.' : 'Merci de terminer la vérification antispam.');
+          return;
+        }
+        const fields = new FormData(form);
+        const response = await fetch('/api/contact', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: fields.get('name'), email: fields.get('email'),
+            message: fields.get('message'), website: fields.get('website'),
+            botcheck: fields.has('botcheck'), token }),
+          signal: AbortSignal.timeout(45000),
+        });
+        const result = await response.json();
+        if (response.status === 429) {
+          show(en ? 'Please wait a minute before trying again.' : 'Merci de patienter une minute avant de réessayer.');
+        } else if (response.ok && result.ok) {
+          form.reset();
+          show(en ? 'Message sent, thank you!' : 'Message envoyé, merci !', true);
+        } else { throw new Error('send'); }
+      } catch {
+        show(en ? 'The message could not be sent. Please try again.' : "Le message n’a pas pu être envoyé. Merci de réessayer.");
+      } finally {
+        if (widget !== undefined) window.turnstile?.reset(widget);
+        busy = false;
+        button.disabled = false;
+        button.textContent = buttonText;
       }
-    } catch (err) {
-      console.error('[contact] Submit failed:', err);
-      status.textContent = `${t.errorMessage} (${err?.message || 'network'})`;
-      status.classList.remove('hidden', 'text-green-400');
-      status.classList.add('text-red-400');
-    } finally {
-      button.disabled = false;
-      button.textContent = currentLang === 'fr' ? 'Envoyer' : 'Send';
-      status.classList.remove('hidden');
-    }
+    });
+    document.addEventListener('astro:before-swap', () => {
+      if (widget !== undefined) window.turnstile?.remove(widget);
+    }, { once: true });
   }
+  initContact();
+  if (!window.contactInitRegistered) {
+    document.addEventListener('astro:page-load', initContact);
+    window.contactInitRegistered = true;
+  }
+})();
 </script>
