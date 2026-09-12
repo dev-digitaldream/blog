@@ -481,3 +481,8 @@ a.paper-card:hover,
 }
 .prose-notebook figure.article-screenshot-phone { max-width: 320px; }
 .prose-notebook figure.article-screenshot-tablet-portrait { max-width: 420px; }
+
+/* Warm mat around transparent screenshots in the notebook's light theme. */
+html:not(.dark) .prose-notebook .article-screenshot img {
+  background: var(--paper-edge);
+}
