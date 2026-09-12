@@ -17,6 +17,7 @@ import LanguageSuggest from '../components/LanguageSuggest.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import Search from '../components/Search.astro';
 import { ClientRouter } from 'astro:transitions';
+import { getCollection } from 'astro:content';
 
 interface Props {
   title: string;
@@ -49,7 +50,16 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL(image, Astro.site).toString();
+const ogImage = new URL(image || '/og-default.png', Astro.site).toString();
+const publishedPosts = type === 'article' ? await getCollection('blog', ({ data }) => !data.draft) : [];
+const currentPostId = Astro.url.pathname.replace(/^\/blog\//, '').replace(/\/$/, '');
+const counterpart = publishedPosts.find((post) =>
+  post.id === translationSlug && post.data.lang !== lang && post.data.translation === currentPostId
+);
+const languageAlternates = counterpart ? [
+  { lang, url: canonicalURL },
+  { lang: counterpart.data.lang, url: new URL(`/blog/${counterpart.id}/`, Astro.site) },
+] : [];
 
 // JSON-LD structured data
 const jsonLD = type === 'article'
@@ -57,6 +67,7 @@ const jsonLD = type === 'article'
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
       headline: title,
+      inLanguage: lang,
       description,
       image: ogImage,
       datePublished: publishedTime,
@@ -88,6 +99,9 @@ const jsonLD = type === 'article'
     <meta name="viewport" content="width=device-width" />
     <link id="favicon" rel="icon" type="image/svg+xml" href="/favicon-light.svg" />
     <link rel="canonical" href={canonicalURL} />
+    {languageAlternates.map((alternate) => (
+      <link rel="alternate" hreflang={alternate.lang} href={alternate.url} />
+    ))}
     <link rel="alternate" type="application/rss+xml" title="DigitalDream Blog" href="/rss.xml" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
