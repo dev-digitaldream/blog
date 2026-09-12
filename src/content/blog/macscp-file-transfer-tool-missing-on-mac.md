@@ -77,6 +77,21 @@ The mobile version started from macSCP’s transfer engine, in a separate projec
   <figcaption>MobileSCP on an iPhone with an RJ45 Ethernet adapter: setting up a connection from the phone.</figcaption>
 </figure>
 
+<figure class="article-screenshot article-screenshot-phone">
+  <img src="/blog/macscp/mobilescp-iphone-dev.webp" alt="MobileSCP home screen in the iPhone simulator before a server has been added" width="640" height="1206" loading="lazy" decoding="async" />
+  <figcaption>MobileSCP in the iPhone simulator. Development version.</figcaption>
+</figure>
+
+<figure class="article-screenshot article-screenshot-tablet-portrait">
+  <img src="/blog/macscp/mobilescp-ipad-portrait-dev.webp" alt="MobileSCP in the portrait iPad simulator, with remote test files above local files" width="840" height="1212" loading="lazy" decoding="async" />
+  <figcaption>On iPad in portrait orientation, the two file areas are stacked. Development version connected to a local test server.</figcaption>
+</figure>
+
+<figure class="article-screenshot">
+  <img src="/blog/macscp/mobilescp-ipad-landscape-dev.webp" alt="MobileSCP in the landscape iPad simulator, showing remote and local files side by side" width="1200" height="911" loading="lazy" decoding="async" />
+  <figcaption>On iPad in landscape orientation, the panes sit side by side. Development version.</figcaption>
+</figure>
+
 ## What I am still missing
 
 Right now, I have a small makeshift terminal for sending commands. It helps with simple actions, such as rebooting a machine. But I would like to go further with a more modern, more capable terminal.

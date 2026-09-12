@@ -77,6 +77,21 @@ Cette version reprend la base du moteur de transfert de macSCP, dans un projet d
   <figcaption>MobileSCP sur iPhone, avec un adaptateur Ethernet RJ45 : préparer une connexion depuis le téléphone.</figcaption>
 </figure>
 
+<figure class="article-screenshot article-screenshot-phone">
+  <img src="/blog/macscp/mobilescp-iphone-dev.webp" alt="Écran d’accueil de MobileSCP dans le simulateur iPhone, avant l’ajout d’un serveur" width="640" height="1206" loading="lazy" decoding="async" />
+  <figcaption>MobileSCP sur simulateur iPhone, version en développement.</figcaption>
+</figure>
+
+<figure class="article-screenshot article-screenshot-tablet-portrait">
+  <img src="/blog/macscp/mobilescp-ipad-portrait-dev.webp" alt="MobileSCP sur simulateur iPad en portrait, avec les fichiers de test distants au-dessus des fichiers locaux" width="840" height="1212" loading="lazy" decoding="async" />
+  <figcaption>Sur iPad en portrait, les deux espaces sont superposés. Version en développement, avec un serveur de test local.</figcaption>
+</figure>
+
+<figure class="article-screenshot">
+  <img src="/blog/macscp/mobilescp-ipad-landscape-dev.webp" alt="MobileSCP sur simulateur iPad en paysage, avec les fichiers distants et locaux côte à côte" width="1200" height="911" loading="lazy" decoding="async" />
+  <figcaption>Sur iPad en paysage, les panneaux s’affichent côte à côte. Version en développement.</figcaption>
+</figure>
+
 ## Ce qui me manque encore
 
 Aujourd’hui, j’ai un petit pseudo-terminal pour envoyer des commandes. Il me rend service pour des actions simples, comme rebooter une machine. Mais j’aimerais aller plus loin avec un terminal plus moderne et plus complet.
