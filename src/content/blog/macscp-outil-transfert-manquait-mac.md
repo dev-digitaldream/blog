@@ -38,7 +38,7 @@ Se connecter à une machine Linux, parcourir ses dossiers, récupérer des logs,
 
 macSCP affiche les fichiers locaux et distants dans deux panneaux. Je peux parcourir les dossiers, envoyer un fichier ou en récupérer un en gardant les deux côtés sous les yeux. Le principe est familier, et ça me convient très bien. Pour cette partie de mon travail, j’aime autant retrouver mes repères.
 
-![macSCP sur Mac, avec les fichiers locaux à gauche et les fichiers distants à droite](blog/macscp/macscp-desktop.webp)
+![macSCP sur Mac, avec les fichiers locaux à gauche et les fichiers distants à droite](/blog/macscp/macscp-desktop.webp)
 
 macSCP sur Mac : les fichiers locaux et distants dans deux panneaux.
 
@@ -80,19 +80,19 @@ C’est ce quotidien qui me donne envie de faire évoluer la version mobile : me
 
 Cette version reprend la base du moteur de transfert de macSCP, dans un projet distinct qui évolue séparément. Les deux applications n’ont donc pas automatiquement les mêmes fonctions ni les mêmes comportements. La modernisation sert justement à avancer sur ces besoins communs.
 
-![iPhone connecté à un adaptateur Ethernet RJ45 UGREEN sur un établi, avec le formulaire de connexion à un serveur ouvert dans MobileSCP](blog/macscp/mobilescp-iphone-ethernet.webp)
+![iPhone connecté à un adaptateur Ethernet RJ45 UGREEN sur un établi, avec le formulaire de connexion à un serveur ouvert dans MobileSCP](/blog/macscp/mobilescp-iphone-ethernet.webp)
 
 MobileSCP sur iPhone, avec un adaptateur Ethernet RJ45 : préparer une connexion depuis le téléphone.
 
-![Écran d’accueil de MobileSCP dans le simulateur iPhone, avant l’ajout d’un serveur](blog/macscp/mobilescp-iphone-dev.webp)
+![Écran d’accueil de MobileSCP dans le simulateur iPhone, avant l’ajout d’un serveur](/blog/macscp/mobilescp-iphone-dev.webp)
 
 MobileSCP sur simulateur iPhone, version en développement.
 
-![MobileSCP sur simulateur iPad en portrait, avec les fichiers de test distants au-dessus des fichiers locaux](blog/macscp/mobilescp-ipad-portrait-dev.webp)
+![MobileSCP sur simulateur iPad en portrait, avec les fichiers de test distants au-dessus des fichiers locaux](/blog/macscp/mobilescp-ipad-portrait-dev.webp)
 
 Sur iPad en portrait, les deux espaces sont superposés. Version en développement, avec un serveur de test local.
 
-![MobileSCP sur simulateur iPad en paysage, avec les fichiers distants et locaux côte à côte](blog/macscp/mobilescp-ipad-landscape-dev.webp)
+![MobileSCP sur simulateur iPad en paysage, avec les fichiers distants et locaux côte à côte](/blog/macscp/mobilescp-ipad-landscape-dev.webp)
 
 Sur iPad en paysage, les panneaux s’affichent côte à côte. Version en développement.
 
