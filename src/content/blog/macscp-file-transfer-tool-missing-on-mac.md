@@ -72,19 +72,9 @@ That everyday situation drives the mobile version: connecting to a Linux machine
 
 The mobile version started from macSCP’s transfer engine, in a separate project that evolves independently. The two applications do not automatically have identical features or behavior. Modernizing the mobile app is part of addressing those shared needs.
 
-<figure class="article-screenshot article-screenshot-phone">
-  <img src="/blog/macscp/mobilescp-iphone-dev.webp" alt="MobileSCP home screen in the iPhone simulator before a server has been added" width="640" height="1206" loading="lazy" decoding="async" />
-  <figcaption>MobileSCP in the iPhone simulator. Development version.</figcaption>
-</figure>
-
-<figure class="article-screenshot article-screenshot-tablet-portrait">
-  <img src="/blog/macscp/mobilescp-ipad-portrait-dev.webp" alt="MobileSCP in the portrait iPad simulator, with remote test files above local files" width="840" height="1212" loading="lazy" decoding="async" />
-  <figcaption>On iPad in portrait orientation, the two file areas are stacked. Development version connected to a local test server.</figcaption>
-</figure>
-
 <figure class="article-screenshot">
-  <img src="/blog/macscp/mobilescp-ipad-landscape-dev.webp" alt="MobileSCP in the landscape iPad simulator, showing remote and local files side by side" width="1200" height="911" loading="lazy" decoding="async" />
-  <figcaption>On iPad in landscape orientation, the panes sit side by side. Development version.</figcaption>
+  <img src="/blog/macscp/mobilescp-iphone-ethernet.webp" alt="iPhone connected to a UGREEN RJ45 Ethernet adapter on a workbench, with the MobileSCP server connection form open" width="640" height="480" loading="lazy" decoding="async" style="max-width: 640px" />
+  <figcaption>MobileSCP on an iPhone with an RJ45 Ethernet adapter: setting up a connection from the phone.</figcaption>
 </figure>
 
 ## What I am still missing
