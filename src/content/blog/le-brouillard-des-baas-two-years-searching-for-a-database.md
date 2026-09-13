@@ -2,6 +2,7 @@
 title: "The BaaS Fog: Two Years Searching for a Database"
 description: "Firebase, Supabase, Neon, Convex: two years testing BaaS for a real-time app. What nobody tells you about the trade-offs."
 date: "2026-03-29"
+updated: 2026-09-13
 tags: ["baas", "supabase", "firebase", "architecture", "backend"]
 cover: "https://pub-8d35cf03c12f4e258a891dd5fc8f9fe4.r2.dev/blog/baas-cover.webp"
 lang: en
@@ -11,44 +12,59 @@ excerpt: ""
 metaTitle: "The BaaS Fog: Two Years Searching for a Database"
 metaDescription: "Firebase, Supabase, Neon, Convex: two years testing BaaS for a real-time app. What nobody tells you about the trade-offs."
 ---
+Two years ago, I left the safety of traditional hosting to build a real-time application across several platforms. The business logic was moderate and the original requirement sounded simple: store the data, keep it synchronized, and spend my time on the interface.
 
-![The BaaS Fog: Two Years Searching for a Database](https://pub-8d35cf03c12f4e258a891dd5fc8f9fe4.r2.dev/blog/baas-cover.webp)
+The backend choice ended up shaping the entire project. What looked like a database decision became a broader question: how much infrastructure should be delegated, and how much control is reasonable to lose in exchange?
 
-Two years ago, I left the safety of traditional hosting and started a new adventure. The requirements were simple, on the surface: a real-time, multi-platform application with moderate business logic. Choosing a database and associated services (the "Backend-as-a-Service" or BaaS thing) would become a decision that weighed heavily on the project's trajectory. What I thought was a simple question of data storage turned into a deep reflection on the philosophy of software development.
+BaaS platforms promise to remove server configuration, API maintenance, and database migrations. That promise is real, but every service fulfills it through a different set of trade-offs.
 
-I wanted to focus on the front end, on the user experience. I did not want to set up servers, manage database migrations, or secure APIs. That is the dream these platforms sell. But between the promise and reality, there is a gulf of trade-offs.
+## Firebase: the immediate power of a black box
 
-## Firebase: The Seductive Power of the Black Box
+I started with Firebase. Its real-time model quickly makes much of the backend feel unnecessary. A listener on a collection is enough to display live data in the application without building an intermediate server.
 
-The starting point of my search was Firebase. It was, and still is, the reference. The real-time API is incredibly powerful. Writing a listener on a collection and watching data appear live in the app, without ever touching a line of backend code, gives you an immediate sense of power.
+That speed is extremely effective when moving from an idea to a prototype. It can also become a dependency. Once a query no longer fits the model expected by Firestore, the architecture can become awkward. I found myself moving some data processing to the client, which was not a satisfying answer for sensitive or larger datasets.
 
-But Firebase is a closed ecosystem. For months, I lived with that feeling of lightness, but also unease. What happens when I need a complex query that does not fit the Firestore query mold? I found myself doing data processing on the client side, which is never a good idea for sensitive or large data. And then there is the cost question. The bill can spiral if you are not watching reads and writes like a hawk.
+Costs require the same attention. A simple interface can hide a large number of reads and writes. Without monitoring those operations carefully, predicting the bill becomes difficult.
 
-That is when I started looking for alternatives. I wanted the simplicity of Firebase, but with the robustness of a real relational database. I wanted SQL.
+Firebase saved me a great deal of time at the beginning. It also taught me that a comfortable abstraction remains a black box until a project reaches its boundaries.
 
-## Supabase: The Best Balance
+## Supabase: recovering SQL without recovering every server
 
-**Supabase** was my first serious attempt. The pitch is appealing: "Open source, a Firebase alternative." You create a project, and in a few minutes you have a Postgres database, an auto-generated API, and authentication.
+I then looked for Firebase’s convenience with the strength of a relational database. Supabase became my first serious alternative.
 
-I spent several weeks building a prototype. The feel is different from Firebase. You feel less like you are in a walled garden. Being able to write SQL views, stored functions, and use Postgres's powerful security rules (RLS) is a relief. You have control. But that freedom comes at a cost in complexity. The auto-generated API is handy, but it is sometimes less intuitive than Firebase's very high-level SDK.
+Within minutes, a project has a Postgres database, a generated API, and authentication. After spending several weeks on a prototype, the difference from Firebase was clear. I could write views, use stored functions, and define row-level security policies with RLS.
 
-## Neon: The Foundation for Tinkerers
+That freedom creates a much stronger sense of control. It also requires a better understanding of the database. The generated API removes some work, but it can feel less intuitive than a highly abstracted SDK such as Firebase’s.
 
-**Neon** is a serverless Postgres engine. It separates storage from compute, which enables interesting features like branching databases, similar to Git. It is a fascinating technology, very performant, but at this stage it is more of a foundation than a complete solution. If you go with Neon, you still need to assemble the other bricks yourself.
+For my use case, Supabase offers the most natural balance between a managed service and a SQL foundation. It does not eliminate complexity. It makes that complexity more visible and easier to control.
 
-## Convex: Effortless Sync at the Cost of Freedom
+## Neon: a Postgres foundation that needs other pieces
 
-**Convex** is the most different of all. It does not give you direct access to a SQL database. It is a document-oriented data synchronization system where you define mutations and queries in a TypeScript backend.
+Neon approaches the problem differently. It provides serverless Postgres by separating storage from compute. Database branches resemble a Git workflow and create useful possibilities for development environments.
 
-The development experience is incredibly smooth. Typing is everywhere, from backend to frontend. Data updates in real time without me having to think about it. But you have to go through mutations, losing direct flexibility in exchange for simplicity and safety. It is a conscious trade-off.
+The approach is attractive, but Neon is primarily a foundation. Authentication, APIs, and synchronization still need to be selected and assembled around it.
 
-## The Lesson Learned
+That provides a great deal of freedom when the additional work is acceptable. Neon fits a project with an already defined architecture better than an application looking for a complete backend out of the box.
 
-After two years of experimentation, there is no "best" service. There are tools for different project philosophies.
+## Convex: smooth synchronization within its own model
 
-- **Firebase**: from concept to product in record time, if you accept the closed ecosystem.
-- **Supabase**: if you like SQL, want to keep control, and do not want to manage infrastructure.
-- **Convex**: if you are a TypeScript team that wants seamless backend/frontend synchronization.
-- **Neon**: if you have the expertise to build the missing pieces on a serverless Postgres foundation.
+Convex is the most different service in this group. It does not provide direct access to a SQL database. Data is handled through queries and mutations defined in a TypeScript backend.
 
-The choice is not about technology, but about pragmatism. It is about weighing what you are willing to sacrifice: your development time, your control over data, the simplicity of the architecture, or cost predictability. The real win is not picking the right tool, but understanding the trade-offs you make when you choose it.
+The development experience is remarkably smooth. Types connect the backend to the frontend, and real-time updates arrive without adding a separate synchronization layer.
+
+That simplicity depends on Convex’s framework. Every operation goes through its functions. I gain consistency and safety, but lose the freedom to work directly with a conventional relational database.
+
+The trade-off can work very well for a TypeScript team that wants to move quickly. It is less suitable when portability and direct access to the data are priorities.
+
+## No service wins every criterion
+
+After two years of experiments, I did not find one universally better BaaS. I learned which kind of project each service suits.
+
+- **Firebase** moves from concept to product very quickly when a closed ecosystem is acceptable.
+- **Supabase** fits projects that value SQL, Postgres, and data control without wanting to operate all the infrastructure.
+- **Neon** provides a strong serverless Postgres foundation when a team already knows which additional pieces it wants to assemble.
+- **Convex** gives TypeScript projects coherent synchronization when its data and execution model are acceptable.
+
+The decision is ultimately less about a feature list than about what the project can sacrifice: development time, control, architectural simplicity, or predictable costs.
+
+The right choice is not the platform that promises to remove everything. It is the one whose constraints remain acceptable when the prototype becomes a real product.
