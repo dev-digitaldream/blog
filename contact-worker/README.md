@@ -6,7 +6,7 @@ Branche `feat/contact-cranemail`. Worker déployé le 12 septembre 2026, version
 
 Astro sur Pages, Worker séparé sur la route `blog.digitaldream.work/api/contact*`.
 Ce Worker permet les bindings de limitation de fréquence sans base de données.
-CraneMail SMTP `eu1.workspace.org:465`, TLS vérifié, compte et expéditeur `blog@digitaldream.work`, destinataire fixe `dev@digitaldream.work`. Le visiteur devient Reply-To uniquement.
+CraneMail SMTP `eu1.workspace.org:465`, TLS vérifié, compte et expéditeur `blog@digitaldream.work`, destinataire fixe `dev@digitaldream.work`. Le visiteur devient Reply-To uniquement. L'envoi utilise directement l'API TCP/TLS native de Cloudflare Workers ; aucune bibliothèque SMTP Node n'est embarquée.
 Turnstile se charge au premier focus du formulaire. Validation serveur du jeton, du domaine et de l'action `contact`. Aucune voie de secours sans vérification.
 
 3 tentatives/minute/IP avant validation, 10 envois/minute au total après validation. Les compteurs Cloudflare sont approximatifs et locaux à chaque datacenter : ils ne constituent pas un plafond mondial ni une garantie de zéro spam. Aucun message ou IP n'est journalisé par notre code. Cloudflare et CraneMail traitent néanmoins les données nécessaires au service.
