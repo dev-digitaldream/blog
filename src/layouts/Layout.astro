@@ -48,7 +48,7 @@ const {
   type = 'website',
   publishedTime,
   modifiedTime,
-  author = 'DigitalDream',
+  author = 'DD',
   tags = [],
   translationSlug,
   headline,
@@ -84,6 +84,30 @@ const staticAlternates = staticPair ? [
 ] : [];
 const languageAlternates = articleAlternates.length > 0 ? articleAlternates : staticAlternates;
 const defaultLanguageURL = languageAlternates.find((alternate) => alternate.lang === 'fr-FR')?.url;
+const siteURL = Astro.site?.toString() ?? 'https://blog.digitaldream.work/';
+const organizationId = `${siteURL}#organization`;
+const authorId = `${siteURL}#author`;
+const websiteId = `${siteURL}#website`;
+const organizationNode = {
+  '@type': 'Organization',
+  '@id': organizationId,
+  name: 'DigitalDream',
+  url: siteURL,
+  logo: {
+    '@type': 'ImageObject',
+    url: new URL('/avatar-dd.png', Astro.site).toString(),
+    width: 800,
+    height: 972,
+  },
+};
+const authorNode = {
+  '@type': 'Person',
+  '@id': authorId,
+  name: author,
+  url: new URL('/manifeste/', Astro.site).toString(),
+  image: new URL('/avatar-dd.png', Astro.site).toString(),
+  worksFor: { '@id': organizationId },
+};
 
 // JSON-LD structured data
 const jsonLD = type === 'article'
@@ -99,12 +123,8 @@ const jsonLD = type === 'article'
           image: ogImage,
           datePublished: publishedTime,
           dateModified: modifiedTime || publishedTime,
-          author: { '@type': 'Person', name: author },
-          publisher: {
-            '@type': 'Organization',
-            name: 'DigitalDream',
-            logo: { '@type': 'ImageObject', url: new URL('/avatar-dd.png', Astro.site).toString() },
-          },
+          author: { '@id': authorId },
+          publisher: { '@id': organizationId },
           mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalURL.toString() },
           keywords: tags.join(', '),
           ...(category ? { articleSection: category } : {}),
@@ -135,15 +155,35 @@ const jsonLD = type === 'article'
             },
           ],
         },
+        authorNode,
+        organizationNode,
       ],
     }
   : {
       '@context': 'https://schema.org',
-      '@type': 'WebSite',
-      name: 'DigitalDream',
-      url: Astro.site?.toString(),
-      description,
-      inLanguage: lang === 'en' ? 'en-US' : 'fr-FR',
+      '@graph': [
+        {
+          '@type': 'WebSite',
+          '@id': websiteId,
+          name: 'DigitalDream',
+          url: siteURL,
+          description: fallbackDesc,
+          inLanguage: ['fr-FR', 'en-US'],
+          publisher: { '@id': organizationId },
+        },
+        {
+          '@type': 'WebPage',
+          '@id': canonicalURL.toString(),
+          url: canonicalURL.toString(),
+          name: title,
+          description,
+          inLanguage: lang === 'en' ? 'en-US' : 'fr-FR',
+          isPartOf: { '@id': websiteId },
+          author: { '@id': authorId },
+        },
+        authorNode,
+        organizationNode,
+      ],
     };
 ---
 
@@ -152,11 +192,13 @@ const jsonLD = type === 'article'
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
+    <meta name="author" content={author} />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="viewport" content="width=device-width" />
     <LanguageSuggest lang={lang} />
     <link id="favicon" rel="icon" type="image/svg+xml" href="/favicon-light.svg" />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="author" href={lang === 'en' ? '/en/manifeste/' : '/manifeste/'} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     {languageAlternates.map((alternate) => (
       <link rel="alternate" hreflang={alternate.lang} href={alternate.url} />
