@@ -36,6 +36,7 @@ export default defineConfig({
     }),
     pagefind(),
     sitemap({
+      filter: (page) => new URL(page).pathname !== '/random/',
       i18n: {
         defaultLocale: 'fr',
         locales: { fr: 'fr-FR', en: 'en-US' },
