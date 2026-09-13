@@ -1,6 +1,8 @@
 ---
 title: "When AI Finally Unlocked Locked-Down Industrial Systems"
 description: "Ten years of roadblocks, poorly documented protocols, and plenty of trial and error. How AI changed our work with closed industrial systems."
+metaTitle: "How AI Unlocked Closed Industrial Systems"
+metaDescription: "How LLMs, Ghidra, and reverse engineering helped us understand and modernize closed industrial systems after ten years of roadblocks."
 date: 2026-05-24
 lang: en
 draft: false

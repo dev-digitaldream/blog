@@ -2,6 +2,8 @@
 title: "Quand l’IA débloque enfin des systèmes industriels fermés"
 slug: quand-lia-debloque-enfin-des-systemes-industriels-fermes
 description: "Dix ans de blocages, des protocoles peu documentés et beaucoup d’essais. Mon retour sur ce que l’IA a changé dans notre travail sur des systèmes industriels fermés."
+metaTitle: "IA et systèmes industriels fermés : retour de terrain"
+metaDescription: "Comment les LLM, Ghidra et le reverse engineering nous ont aidés à comprendre et moderniser des systèmes industriels fermés après dix ans de blocages."
 date: 2026-05-24
 lang: fr
 draft: false
