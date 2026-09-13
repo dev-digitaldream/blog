@@ -29,6 +29,7 @@ async function readBody(request) {
 
 export function createHandler(sendMail, verifyFetch = fetch) {
   return async function handle(request, env) {
+    let stage = 'request';
     if (new URL(request.url).pathname !== '/api/contact') return reply(404, 'not_found');
     if (request.method !== 'POST') return reply(405, 'method');
     if (request.headers.get('Origin') !== ORIGIN) return reply(403, 'origin');
@@ -49,19 +50,40 @@ export function createHandler(sendMail, verifyFetch = fetch) {
           email.length > 254 || !/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email) ||
           message.trim().length < 10 || message.length > 5000 || /\x00/.test(message) ||
           token.length < 1 || token.length > 2048) return reply(400, 'invalid');
+      stage = 'turnstile_request';
       const verification = await verifyFetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
         method: 'POST', body: new URLSearchParams({ secret: env.TURNSTILE_SECRET_KEY, response: token, remoteip: ip }),
         signal: AbortSignal.timeout(8000),
       });
-      if (!verification.ok) return reply(503, 'unavailable');
+      if (!verification.ok) {
+        console.error(JSON.stringify({ event: 'contact_failed', stage, status: verification.status }));
+        return reply(503, 'unavailable');
+      }
       const result = await verification.json();
-      if (!result.success || result.hostname !== 'blog.digitaldream.work' || result.action !== 'contact') return reply(400, 'verification');
+      if (!result.success || result.hostname !== 'blog.digitaldream.work' || result.action !== 'contact') {
+        console.error(JSON.stringify({
+          event: 'contact_failed',
+          stage: 'turnstile_validation',
+          hostnameMatches: result.hostname === 'blog.digitaldream.work',
+          actionMatches: result.action === 'contact',
+          errorCodes: Array.isArray(result['error-codes']) ? result['error-codes'] : [],
+        }));
+        return reply(400, 'verification');
+      }
       if (!(await env.GLOBAL_LIMIT.limit({ key: 'contact' })).success) return reply(429, 'rate_limit');
+      stage = 'smtp';
       await sendMail(env, { name: name.trim(), email, message: message.trim() });
       return reply(200, 'sent');
-    } catch {
+    } catch (error) {
       // Never log SMTP credentials, message contents, or visitor addresses.
-      console.error(JSON.stringify({ event: 'contact_delivery_failed' }));
+      console.error(JSON.stringify({
+        event: 'contact_failed',
+        stage,
+        errorName: error instanceof Error ? error.name : 'UnknownError',
+        errorCode: typeof error?.code === 'string' ? error.code : undefined,
+        command: typeof error?.command === 'string' ? error.command : undefined,
+        responseCode: Number.isInteger(error?.responseCode) ? error.responseCode : undefined,
+      }));
       return reply(503, 'unavailable');
     }
   };
