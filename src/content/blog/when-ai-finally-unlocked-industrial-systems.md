@@ -4,6 +4,8 @@ description: "Ten years of roadblocks, poorly documented protocols, and plenty o
 metaTitle: "How AI Unlocked Closed Industrial Systems"
 metaDescription: "How LLMs, Ghidra, and reverse engineering helped us understand and modernize closed industrial systems after ten years of roadblocks."
 date: 2026-05-24
+updated: 2026-09-13
+updateNote: "The roles of Ghidra, MCP connectors, and OpenCode were clarified. The article now separates model-generated leads more explicitly from results verified in the field."
 lang: en
 draft: false
 translation: quand-lia-debloque-enfin-des-systemes-industriels-fermes
@@ -27,9 +29,9 @@ There were entire evenings when we thought we had finally understood a structure
 
 At the time, I mainly saw AI as a tool for editing emails, translating, or summarizing documents. Around me, its professional uses often stopped there. Early versions of ChatGPT could explain a piece of code or suggest a lead, but struggled with our technical context.
 
-Gradually, the models and the tools around them evolved. DeepSeek, GLM, MiniMax, Codex, and MCP connections to [Ghidra](https://github.com/NationalSecurityAgency/ghidra) changed how we approached the work. We could compare data flows, look for recurring structures, connect behaviors, and discuss hypotheses with an assistant that followed the reasoning better.
+Gradually, the models and the tools around them evolved. DeepSeek, GLM, MiniMax, Codex, and community MCP connectors for [Ghidra](https://github.com/NationalSecurityAgency/ghidra) changed how we approached the work. Ghidra remains the analysis tool; the connector mainly makes some of its information accessible to the model. We could compare data flows, look for recurring structures, connect behaviors, and discuss hypotheses with an assistant that followed the reasoning better.
 
-Sessions we had been observing for a long time started to reveal their logic. Some structures finally made sense. We still had to check the proposed leads, but spent less time figuring out where to start on our own.
+Sessions we had been observing for a long time started to reveal their logic. Some structures finally made sense. A model suggestion was never evidence on its own: it still had to be checked against captures, the binary, and the system’s behavior. We nevertheless spent less time figuring out where to start on our own.
 
 I am deliberately keeping the protocols and procedures vague. Some systems are still in production, and I want to respect the people and organizations involved. What I want to describe here is the change in our work, without exposing the details of the infrastructure.
 
@@ -37,7 +39,7 @@ I am deliberately keeping the protocols and procedures vague. Some systems are s
 
 No single model was really enough. I ended up using several tools in parallel, each with its strengths, limitations, and sometimes completely invented reasoning.
 
-I use [OpenCode](https://opencode.ai/) a lot, with a whole fleet of Chinese models: DeepSeek, GLM, MiniMax, and others that are less well known. With the plans I was using, about ten dollars a month already provided capabilities that felt almost absurd for the price.
+I use [OpenCode](https://opencode.ai/) a lot. It lets me select different providers and models, including DeepSeek, GLM, MiniMax, and others that are less well known. With the plans I was using, about ten dollars a month already provided capabilities that felt almost absurd for the price. Models and pricing change quickly; that amount describes my experience at the time, not a lasting price promise.
 
 That did not make the results reliable by default. After several thousand lines, some models started making things up or lost the original technical context. On work spread over several days, those limits became obvious quickly. We also lost hours following reasoning that had been invented from start to finish.
 

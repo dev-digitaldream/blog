@@ -5,6 +5,8 @@ description: "Dix ans de blocages, des protocoles peu documentés et beaucoup d�
 metaTitle: "IA et systèmes industriels fermés : retour de terrain"
 metaDescription: "Comment les LLM, Ghidra et le reverse engineering nous ont aidés à comprendre et moderniser des systèmes industriels fermés après dix ans de blocages."
 date: 2026-05-24
+updated: 2026-09-13
+updateNote: "Le rôle de Ghidra, des connecteurs MCP et d’OpenCode a été précisé. Le billet distingue désormais plus clairement les pistes proposées par les modèles des résultats vérifiés sur le terrain."
 lang: fr
 draft: false
 translation: when-ai-finally-unlocked-industrial-systems
@@ -28,9 +30,9 @@ Il y a eu des soirées entières où nous pensions avoir enfin compris une struc
 
 À l’époque, je voyais surtout l’IA comme un outil pour corriger des emails, traduire ou résumer des documents. Autour de moi, ses usages professionnels s’arrêtaient souvent là. Les premières versions de ChatGPT pouvaient expliquer un bout de code ou suggérer une piste, mais elles restaient limitées face à notre contexte technique.
 
-Progressivement, les modèles et les outils autour ont évolué. DeepSeek, GLM, MiniMax, Codex, mais aussi les connexions MCP à [Ghidra](https://github.com/NationalSecurityAgency/ghidra), ont changé notre façon d’aborder le travail. Nous pouvions comparer des flux, chercher des structures récurrentes, rapprocher des comportements et discuter des hypothèses avec un assistant qui suivait mieux le raisonnement.
+Progressivement, les modèles et les outils autour ont évolué. DeepSeek, GLM, MiniMax, Codex, mais aussi des connecteurs MCP communautaires vers [Ghidra](https://github.com/NationalSecurityAgency/ghidra), ont changé notre façon d’aborder le travail. Ghidra reste l’outil d’analyse ; le connecteur sert surtout à rendre certaines informations accessibles au modèle. Nous pouvions comparer des flux, chercher des structures récurrentes, rapprocher des comportements et discuter des hypothèses avec un assistant qui suivait mieux le raisonnement.
 
-Des sessions observées depuis longtemps ont commencé à révéler leur logique. Certaines structures ont enfin pris du sens. Il restait à vérifier les pistes proposées, mais nous passions moins de temps à chercher seuls par quel bout commencer.
+Des sessions observées depuis longtemps ont commencé à révéler leur logique. Certaines structures ont enfin pris du sens. Une suggestion du modèle ne constituait jamais une preuve : il fallait la confronter aux captures, au binaire et au comportement du système. Nous passions néanmoins moins de temps à chercher seuls par quel bout commencer.
 
 Je reste volontairement vague sur les protocoles et les manipulations. Certains systèmes sont toujours en production, et je tiens à respecter les acteurs concernés. Ce que je souhaite raconter ici, c’est ce changement dans notre travail, sans exposer les détails de l’infrastructure.
 
@@ -38,7 +40,7 @@ Je reste volontairement vague sur les protocoles et les manipulations. Certains 
 
 Aucun modèle ne suffisait vraiment seul. J’ai fini par utiliser plusieurs outils en parallèle, avec leurs qualités, leurs limites et parfois leurs raisonnements complètement inventés.
 
-J’utilise beaucoup [OpenCode](https://opencode.ai/), avec toute une armada de modèles chinois : DeepSeek, GLM, MiniMax et d’autres moins connus. Avec les offres que j’utilisais, une dizaine de dollars par mois donnait déjà accès à des possibilités que je trouvais assez absurdes pour ce prix.
+J’utilise beaucoup [OpenCode](https://opencode.ai/), qui permet de choisir différents fournisseurs et modèles : DeepSeek, GLM, MiniMax et d’autres moins connus. Avec les offres que j’utilisais, une dizaine de dollars par mois donnait déjà accès à des possibilités que je trouvais assez absurdes pour ce prix. Les modèles et leurs tarifs changent vite ; ce montant décrit mon expérience à ce moment-là, pas une promesse tarifaire.
 
 Cela ne rendait pas les résultats fiables par défaut. Après plusieurs milliers de lignes, certains modèles commençaient à délirer ou perdaient le contexte technique initial. Sur un travail étalé sur plusieurs jours, ces limites se sentaient vite. Nous avons aussi perdu plusieurs heures à suivre des raisonnements inventés de toutes pièces.
 
