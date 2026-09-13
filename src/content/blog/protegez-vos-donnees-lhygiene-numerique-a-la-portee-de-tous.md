@@ -4,9 +4,9 @@ description: "L’hygiène numérique expliquée simplement : mots de passe, 2FA
 date: "2024-04-16"
 updated: 2026-09-13
 category: "blog"
-tags: []
+tags: ["sécurité", "vie privée", "2FA", "passkeys", "mots de passe"]
 excerpt: ""
-metaTitle: "Protégez vos données : l’hygiène numérique à la portée de tous"
+metaTitle: "Hygiène numérique : protéger simplement ses données"
 metaDescription: "Mots de passe uniques, gestionnaire, 2FA et clés de sécurité : des habitudes simples et réalistes pour mieux protéger ses données au quotidien."
 cover: ""
 lang: fr

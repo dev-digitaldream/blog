@@ -4,7 +4,7 @@ description: "Step by step: how I went from Google (Drive, Photos, Gmail) to mor
 date: "2025-11-16"
 updated: 2026-09-13
 category: "blog"
-tags: []
+tags: ["degoogling", "privacy", "self-hosting", "Immich", "kDrive", "rclone"]
 excerpt: ""
 metaTitle: "De-Googling: Leaving Drive, Photos, and Gmail"
 metaDescription: "Step by step: how I went from Google (Drive, Photos, Gmail) to more private, self-hosted, and European alternatives."

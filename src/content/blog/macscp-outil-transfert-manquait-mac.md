@@ -21,9 +21,7 @@ excerpt: "Je travaille désormais à 99 % sous macOS. macSCP a comblé un besoin
   très concret : retrouver une interface simple pour transférer mes fichiers
   vers mes machines Linux."
 metaTitle: "macSCP : l'outil de transfert qui me manquait sur Mac"
-metaDescription: Mon passage de Windows à macOS, la création de macSCP avec
-  Claude Code puis Codex, en passant par les modèles chinois via le super
-  OpenCode, et son usage pour transférer des fichiers vers mes machines Linux.
+metaDescription: "Pourquoi j’ai créé macSCP pour transférer des fichiers entre mon Mac, mes appareils mobiles et mes machines Linux."
 ---
 Avant d’abandonner Windows comme système principal en pro (en privé, je suis appliste depuis les bêta-tests Intel et les premiers Hackintosh ; oui, je suis assez vieux, mon petit), il me restait un besoin à régler : retrouver sur macOS ce que je faisais avec WinSCP. Mes fichiers d’un côté, une machine distante de l’autre, et une interface graphique pour faire passer les uns vers l’autre sans passer par le terminal. Je voulais changer de système sans renoncer à toutes mes habitudes.
 

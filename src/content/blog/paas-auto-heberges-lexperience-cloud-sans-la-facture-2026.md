@@ -4,7 +4,7 @@ description: "Un tour d’horizon des PaaS auto-hébergés pour retrouver l’ex
 date: "2026-01-01"
 updated: 2026-09-13
 category: "blog"
-tags: []
+tags: ["PaaS", "auto-hébergement", "Docker", "Dokploy", "Coolify", "CapRover"]
 excerpt: ""
 metaTitle: "PaaS auto-hébergés : l’expérience cloud sans la facture"
 metaDescription: "Un tour d’horizon des PaaS auto-hébergés pour retrouver l’expérience du cloud public sans la facture"

@@ -4,7 +4,7 @@ description: "An overview of self-hosted PaaS solutions to get the public cloud 
 date: "2026-01-01"
 updated: 2026-09-13
 category: "blog"
-tags: []
+tags: ["PaaS", "self-hosting", "Docker", "Dokploy", "Coolify", "CapRover"]
 excerpt: ""
 metaTitle: "Self-Hosted PaaS: The Cloud Experience Without the Bill"
 metaDescription: "An overview of self-hosted PaaS solutions to get the public cloud developer experience without the invoice shock."

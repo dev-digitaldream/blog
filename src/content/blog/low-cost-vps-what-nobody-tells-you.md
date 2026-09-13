@@ -4,7 +4,7 @@ description: "Honest review of cheap VPS providers, unreliable hosts, real-world
 date: "2025-11-16"
 updated: 2026-09-13
 category: "blog"
-tags: []
+tags: ["VPS", "hosting", "self-hosting", "Docker", "RackNerd"]
 excerpt: ""
 metaTitle: "Low Cost VPS. What Nobody Really Tells You"
 metaDescription: "Honest review of cheap VPS providers, unreliable hosts, real-world experience, and why RackNerd is the exception."

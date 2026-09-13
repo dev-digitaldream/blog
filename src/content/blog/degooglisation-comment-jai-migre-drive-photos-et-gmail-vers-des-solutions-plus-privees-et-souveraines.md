@@ -4,7 +4,7 @@ description: "Comment je suis passé de Google (Drive, Photos, Gmail) à des ser
 date: "2025-11-16"
 updated: 2026-09-13
 category: "blog"
-tags: []
+tags: ["dégooglisation", "vie privée", "auto-hébergement", "Immich", "kDrive", "rclone"]
 excerpt: ""
 metaTitle: "Dégooglisation : quitter Drive, Photos et Gmail"
 metaDescription: "Tutoriel détaillé pour quitter Google : backup, migration, nouvelles solutions cloud, DNS, confidentialité..."

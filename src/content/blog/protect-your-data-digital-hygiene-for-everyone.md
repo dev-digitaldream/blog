@@ -4,7 +4,7 @@ description: "Digital hygiene explained simply: passwords, 2FA, password manager
 date: "2024-04-16"
 updated: 2026-09-13
 category: "blog"
-tags: []
+tags: ["security", "privacy", "2FA", "passkeys", "passwords"]
 excerpt: ""
 metaTitle: "Protect Your Data: Digital Hygiene for Everyone"
 metaDescription: "Digital hygiene explained simply: passwords, 2FA, password managers, physical security keys, and good privacy habits without the paranoia."

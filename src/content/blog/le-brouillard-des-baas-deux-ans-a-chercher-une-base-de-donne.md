@@ -11,7 +11,7 @@ lang: fr
 translation: le-brouillard-des-baas-two-years-searching-for-a-database
 category: "blog"
 excerpt: ""
-metaTitle: "Le Brouillard des BaaS : Deux Ans à Chercher une Base de Données"
+metaTitle: "BaaS : deux ans à comparer Firebase, Supabase et Neon"
 metaDescription: "Firebase, Supabase, Neon, Convex : deux ans à tester les BaaS pour une app temps réel. Ce que personne ne dit sur les compromis."
 ---
 Il y a deux ans, j’ai quitté la sécurité d’un hébergement traditionnel pour construire une application en temps réel sur plusieurs plateformes. La logique métier restait raisonnable et, au départ, le besoin paraissait simple : stocker les données, les synchroniser et consacrer mon temps à l’interface.

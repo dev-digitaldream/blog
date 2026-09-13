@@ -4,7 +4,7 @@ description: "Avis sur les VPS low cost, fournisseurs peu fiables, retour d’ex
 date: "2025-11-16"
 updated: 2026-09-13
 category: "blog"
-tags: []
+tags: ["VPS", "hébergement", "auto-hébergement", "Docker", "RackNerd"]
 excerpt: ""
 metaTitle: "VPS low cost. Ce que personne ne dit vraiment"
 metaDescription: "Avis sur les VPS low cost, fournisseurs peu fiables, retour d’expérience et recommandation RackNerd"

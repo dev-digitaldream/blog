@@ -4,7 +4,7 @@ description: "En 2026, Plaud Note reste un bon produit, mais l’IA audio locale
 date: "2026-01-01"
 updated: 2026-09-13
 category: "blog"
-tags: []
+tags: ["Plaud Note", "transcription", "IA locale", "Whisper", "vie privée"]
 excerpt: ""
 metaTitle: "Plaud Note en 2026 : l’IA a grandi, les promesses aussi"
 metaDescription: "En 2026, Plaud Note reste un bon produit, mais l’IA audio locale a rattrapé le cloud. Comparatif honnête entre Plaud et Whisper local."
