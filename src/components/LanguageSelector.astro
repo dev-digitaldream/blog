@@ -41,6 +41,7 @@ import { LANGUAGES } from '../lib/i18n';
       if (select.dataset.bound === 'true') return;
       select.dataset.bound = 'true';
       select.addEventListener('change', () => {
+        try { localStorage.setItem('site-language-choice', select.value); } catch {}
         const target = languageTarget(select.value, select);
         if (target !== window.location.pathname) window.location.assign(target);
       });
