@@ -1,0 +1,20 @@
+---
+interface Props {
+  alt: string;
+  actionLabel: string;
+}
+
+const { alt, actionLabel } = Astro.props;
+---
+
+<button type="button" class="avatar-spark" data-avatar-spark aria-label={actionLabel}>
+  <span class="avatar-art">
+    <img src="/avatar-dd-clean-black.svg" alt={alt} width="919" height="872" class="avatar-portrait block dark:hidden" />
+    <img src="/avatar-dd-clean-white.svg" alt={alt} width="919" height="872" class="avatar-portrait hidden dark:block" loading="eager" decoding="async" />
+    <svg class="avatar-rays" viewBox="0 0 209 92" aria-hidden="true">
+      <path class="avatar-ray avatar-ray-left" d="M4.6746 26.0623C10.3341 25.5048 12.0401 25.8188 15.0101 30.9528C20.8216 40.9968 26.4711 51.1078 32.1711 61.2233C35.9461 67.9293 40.0111 74.7333 43.3311 81.6643C45.3361 86.2468 42.4561 89.5998 38.8711 91.7658C36.1911 92.2098 32.3211 92.2048 30.7411 89.5613C20.3296 72.1388 10.4241 54.1438 0.827584 36.2508C-1.48142 31.9458 1.4421 28.5238 4.6746 26.0623Z" />
+      <path class="avatar-ray avatar-ray-right" d="M198.176 26.0356C213.721 24.9051 208.656 37.6711 203.156 45.5066C197.331 53.7971 182.311 87.8171 175.526 91.7801C169.086 92.5641 163.081 87.4781 165.401 83.2886C170.751 73.6496 191.441 30.7986 198.176 26.0356Z" />
+      <path class="avatar-ray avatar-ray-center" d="M102.116 0.031402C106.866 -0.203698 111.366 0.777304 111.531 6.54495C112.051 24.5512 111.641 42.6427 111.721 60.6667C111.751 67.3872 112.681 70.2527 106.581 73.8772C105.441 73.9922 104.151 74.0072 103.031 73.7602C101.151 73.3457 99.1511 72.2077 98.1761 70.4917C96.9261 68.2877 96.4761 8.93245 97.6011 4.717C98.2311 2.3729 100.206 1.2229 102.116 0.031402Z" />
+    </svg>
+  </span>
+</button>
