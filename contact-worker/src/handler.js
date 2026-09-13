@@ -52,14 +52,21 @@ export function createHandler(sendMail, verifyFetch = fetch) {
           token.length < 1 || token.length > 2048) return reply(400, 'invalid');
       stage = 'turnstile_request';
       const verification = await verifyFetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-        method: 'POST', body: new URLSearchParams({ secret: env.TURNSTILE_SECRET_KEY, response: token, remoteip: ip }),
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ secret: env.TURNSTILE_SECRET_KEY, response: token, remoteip: ip }),
         signal: AbortSignal.timeout(8000),
       });
+      const result = await verification.json().catch(() => ({}));
       if (!verification.ok) {
-        console.error(JSON.stringify({ event: 'contact_failed', stage, status: verification.status }));
+        console.error(JSON.stringify({
+          event: 'contact_failed',
+          stage,
+          status: verification.status,
+          errorCodes: Array.isArray(result['error-codes']) ? result['error-codes'] : [],
+        }));
         return reply(503, 'unavailable');
       }
-      const result = await verification.json();
       if (!result.success || result.hostname !== 'blog.digitaldream.work' || result.action !== 'contact') {
         console.error(JSON.stringify({
           event: 'contact_failed',
