@@ -16,7 +16,7 @@ Two years ago, I left the safety of traditional hosting to build a real-time app
 
 The backend choice ended up shaping the entire project. What looked like a database decision became a broader question: how much infrastructure should be delegated, and how much control is reasonable to lose in exchange?
 
-BaaS platforms promise to remove server configuration, API maintenance, and database migrations. That promise is real, but every service fulfills it through a different set of trade-offs.
+BaaS platforms promise to reduce server configuration, API construction, and the work surrounding database migrations. That promise is real, but every service fulfills it through a different set of trade-offs.
 
 ## Firebase: the immediate power of a black box
 
@@ -24,7 +24,7 @@ I started with Firebase. Its real-time model quickly makes much of the backend f
 
 That speed is extremely effective when moving from an idea to a prototype. It can also become a dependency. Once a query no longer fits the model expected by Firestore, the architecture can become awkward. I found myself moving some data processing to the client, which was not a satisfying answer for sensitive or larger datasets.
 
-Costs require the same attention. A simple interface can hide a large number of reads and writes. Without monitoring those operations carefully, predicting the bill becomes difficult.
+Costs require the same attention. A simple interface can hide a large number of document reads, writes, and, depending on the query, index-entry reads. The [Firestore billing documentation](https://firebase.google.com/docs/firestore/pricing) also explains that real-time listeners can read documents again after some reconnections. Without monitoring those operations carefully, predicting the bill becomes difficult.
 
 Firebase saved me a great deal of time at the beginning. It also taught me that a comfortable abstraction remains a black box until a project reaches its boundaries.
 
@@ -42,7 +42,7 @@ For my use case, Supabase offers the most natural balance between a managed serv
 
 Neon approaches the problem differently. It provides serverless Postgres by separating storage from compute. Database branches resemble a Git workflow and create useful possibilities for development environments.
 
-The approach is attractive, but Neon is primarily a foundation. Authentication, APIs, and synchronization still need to be selected and assembled around it.
+The approach is attractive, but Neon remains primarily a Postgres foundation. The service has since added [Neon Auth](https://neon.com/docs/neon-auth/overview) and a [Data API](https://neon.com/docs/data-api/get-started), reducing the amount of assembly required for some projects. That still does not make it an exact equivalent to an all-in-one BaaS: real-time synchronization and the rest of the architecture continue to depend on the product’s needs.
 
 That provides a great deal of freedom when the additional work is acceptable. Neon fits a project with an already defined architecture better than an application looking for a complete backend out of the box.
 
@@ -52,7 +52,7 @@ Convex is the most different service in this group. It does not provide direct a
 
 The development experience is remarkably smooth. Types connect the backend to the frontend, and real-time updates arrive without adding a separate synchronization layer.
 
-That simplicity depends on Convex’s framework. Every operation goes through its functions. I gain consistency and safety, but lose the freedom to work directly with a conventional relational database.
+That simplicity depends on Convex’s framework. Every operation goes through its functions. I gain consistency and safety, but lose the freedom to work directly with a conventional relational database. Convex can now be [self-hosted](https://docs.convex.dev/self-hosting) using its source-available backend under the FSL Apache 2.0 license, but that option does not turn its model into traditional SQL and adds the usual operational responsibilities.
 
 The trade-off can work very well for a TypeScript team that wants to move quickly. It is less suitable when portability and direct access to the data are priorities.
 

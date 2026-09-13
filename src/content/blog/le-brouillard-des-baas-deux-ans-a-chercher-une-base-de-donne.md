@@ -17,7 +17,7 @@ Il y a deux ans, j’ai quitté la sécurité d’un hébergement traditionnel p
 
 Le choix du backend a pourtant pesé sur toute la trajectoire du projet. Ce qui ressemblait à une question de base de données est devenu une question beaucoup plus large : jusqu’où déléguer l’infrastructure, et quel contrôle accepter de perdre en échange ?
 
-Les plateformes BaaS promettent de ne plus configurer de serveur, gérer d’API ni s’occuper des migrations. Cette promesse est réelle, mais chaque service la réalise avec ses propres compromis.
+Les plateformes BaaS promettent de réduire fortement la configuration des serveurs, la construction des API et le travail autour des migrations. Cette promesse est réelle, mais chaque service la réalise avec ses propres compromis.
 
 ## Firebase : la puissance immédiate d’une boîte noire
 
@@ -25,7 +25,7 @@ J’ai commencé avec Firebase. Son fonctionnement en temps réel donne rapideme
 
 Cette fluidité est très efficace pour passer du concept au prototype. Elle devient aussi une forme de dépendance. Dès qu’une requête sort du modèle prévu par Firestore, l’architecture peut se compliquer. Je me suis retrouvé à déplacer certains traitements vers le client, une solution peu satisfaisante lorsque les données deviennent sensibles ou volumineuses.
 
-Le coût demande la même vigilance. Une interface très simple peut cacher un grand nombre de lectures et d’écritures. Sans suivre précisément ces opérations, la facture devient difficile à anticiper.
+Le coût demande la même vigilance. Une interface très simple peut cacher un grand nombre de lectures, d’écritures et, selon les requêtes, de lectures d’index. La [documentation de facturation de Firestore](https://firebase.google.com/docs/firestore/pricing) précise aussi que les listeners temps réel peuvent relire des documents lors de certaines reconnexions. Sans suivre précisément ces opérations, la facture devient difficile à anticiper.
 
 Firebase m’a fait gagner beaucoup de temps au départ. Il m’a aussi appris qu’une abstraction confortable reste une boîte noire tant que le projet ne rencontre pas ses limites.
 
@@ -43,7 +43,7 @@ Pour mon usage, Supabase représente l’équilibre le plus naturel entre servic
 
 Neon aborde le problème différemment. Il fournit une base Postgres serverless en séparant le stockage du calcul. La possibilité de créer des branches de base de données rappelle le fonctionnement de Git et ouvre des usages intéressants pour les environnements de développement.
 
-Cette approche est séduisante, mais Neon reste surtout une fondation. L’authentification, l’API et la synchronisation doivent être ajoutées selon les besoins du projet.
+Cette approche est séduisante, mais Neon reste d’abord une fondation Postgres. Le service a depuis ajouté [Neon Auth](https://neon.com/docs/neon-auth/overview) et une [Data API](https://neon.com/docs/data-api/get-started), ce qui réduit le travail d’assemblage pour certains projets. Il ne devient pas pour autant l’équivalent exact d’un BaaS tout-en-un : la synchronisation temps réel et le reste de l’architecture dépendent toujours des besoins du produit.
 
 Cela laisse beaucoup de liberté à condition d’accepter le travail d’assemblage. Neon correspond davantage à un projet dont l’architecture est déjà claire qu’à une application qui cherche un backend complet prêt à l’emploi.
 
@@ -53,7 +53,7 @@ Convex est le service le plus différent de cette sélection. Il ne donne pas un
 
 L’expérience de développement est très fluide. Le typage relie le backend au frontend et les mises à jour arrivent en temps réel sans ajouter toute une couche de synchronisation.
 
-Cette simplicité repose toutefois sur le cadre de Convex. Toutes les opérations passent par ses fonctions. Je gagne en cohérence et en sécurité, mais je perds la liberté d’intervenir directement sur une base relationnelle classique.
+Cette simplicité repose toutefois sur le cadre de Convex. Toutes les opérations passent par ses fonctions. Je gagne en cohérence et en sécurité, mais je perds la liberté d’intervenir directement sur une base relationnelle classique. Convex peut maintenant être [auto-hébergé](https://docs.convex.dev/self-hosting) avec son backend ouvert sous licence FSL Apache 2.0, mais cette possibilité ne transforme pas son modèle en SQL traditionnel et ajoute les responsabilités habituelles d’exploitation.
 
 Ce compromis peut être excellent pour une équipe TypeScript qui veut avancer rapidement. Il convient moins lorsque la portabilité et l’accès direct aux données sont des priorités.
 
