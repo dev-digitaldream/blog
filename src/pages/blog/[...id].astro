@@ -6,6 +6,7 @@ import { getCollection, render } from 'astro:content';
 import readingTime from 'reading-time';
 import fs from 'node:fs';
 import path from 'node:path';
+import { topicsForPost, topicPath } from '../../lib/topics';
 
 export async function getStaticPaths() {
   const blog = await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft);
@@ -31,14 +32,16 @@ function firstLocalImage(body: string | undefined): string | undefined {
 }
 
 const socialImage = post.data.cover || firstLocalImage(post.body);
+const postTopics = topicsForPost(currentLang, post.id);
+const postTopicSlugs = new Set(postTopics.map((topic) => topic.slug));
 
 const allPosts = await getCollection('blog', ({ data }: any) => !data.draft);
 const related = allPosts
   .filter((p: any) => p.id !== post.id && p.data.lang === post.data.lang)
   .map((p: any) => {
     const sharedTags = (p.data.tags ?? []).filter((t: string) => (post.data.tags ?? []).includes(t)).length;
-    const sameCategory = p.data.category && p.data.category === post.data.category ? 2 : 0;
-    return { post: p, score: sharedTags + sameCategory };
+    const sharedTopics = topicsForPost(currentLang, p.id).filter((topic) => postTopicSlugs.has(topic.slug)).length;
+    return { post: p, score: sharedTopics * 4 + sharedTags };
   })
   .filter((r) => r.score > 0)
   .sort((a, b) => b.score - a.score || b.post.data.date.valueOf() - a.post.data.date.valueOf())
@@ -59,6 +62,7 @@ const strings = {
     relatedHand: 'à lire ensuite',
     relatedTitle: 'D’autres pages du carnet',
     read: 'lire',
+    filedUnder: 'dans les dossiers',
   },
   en: {
     back: 'back to the notebook',
@@ -67,6 +71,7 @@ const strings = {
     relatedHand: 'read next',
     relatedTitle: 'More notebook pages',
     read: 'read',
+    filedUnder: 'filed under',
   },
 };
 const t = strings[post.data.lang as 'fr' | 'en'] ?? strings.fr;
@@ -156,6 +161,17 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3'];
             <span class="hand text-lg text-ink-soft px-3.5 py-0.5 rounded-full border border-[var(--paper-edge)] bg-[var(--paper-raised)]">#{tag}</span>
           ))}
         </div>
+      )}
+
+      {postTopics.length > 0 && (
+        <nav class="mt-8 flex flex-wrap items-center gap-2.5" aria-label={t.filedUnder}>
+          <span class="hand text-lg text-pen mr-1">{t.filedUnder} :</span>
+          {postTopics.map((topic) => (
+            <a href={topicPath(currentLang, topic.slug)} class="font-sans text-xs font-semibold tracking-wide text-ink-soft px-3.5 py-2 rounded-full border border-[var(--paper-edge)] bg-[var(--paper-raised)] no-underline hover:text-pen hover:border-[var(--pen)] transition-colors">
+              {topic.title}
+            </a>
+          ))}
+        </nav>
       )}
     </article>
 

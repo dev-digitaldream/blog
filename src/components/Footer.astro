@@ -16,6 +16,9 @@ const translations = {
     sendButton: "Envoyer",
     copyright: "Tous droits réservés.",
     handWritten: "écrit à la main par DD",
+    start: "Commencer ici",
+    topics: "Sujets",
+    notes: "Toutes les notes",
   },
   en: {
     hand: 'write to me',
@@ -25,6 +28,9 @@ const translations = {
     sendButton: "Send",
     copyright: "All rights reserved.",
     handWritten: "handwritten by DD",
+    start: "Start here",
+    topics: "Topics",
+    notes: "All notes",
   },
 };
 
@@ -152,9 +158,12 @@ const t = translations[currentLang];
 
   <!-- Barre basse -->
   <div class="border-t border-[var(--paper-edge)] px-6 md:px-12">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 py-6 text-xs text-ink-faint">
-      <div class="flex items-center gap-2">
+    <div class="max-w-6xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-4 py-6 text-xs text-ink-faint">
+      <div class="flex flex-wrap justify-center items-center gap-x-4 gap-y-2">
         © {new Date().getFullYear()} digitaldream.work · <a href="/rss.xml" class="underline decoration-dotted underline-offset-4 hover:text-[var(--pen)] transition-colors">rss</a>
+        <a href={currentLang === 'en' ? '/en/start-here/' : '/commencer/'} class="underline decoration-dotted underline-offset-4 hover:text-[var(--pen)] transition-colors">{t.start}</a>
+        <a href={currentLang === 'en' ? '/en/topics/' : '/sujets/'} class="underline decoration-dotted underline-offset-4 hover:text-[var(--pen)] transition-colors">{t.topics}</a>
+        <a href={currentLang === 'en' ? '/en/blog/' : '/blog/'} class="underline decoration-dotted underline-offset-4 hover:text-[var(--pen)] transition-colors">{t.notes}</a>
       </div>
       <div class="flex items-center gap-2.5">
         <img src="/avatar-dd-96.webp" alt="" width="20" height="24" class="w-5 h-auto -rotate-3 block dark:hidden" />

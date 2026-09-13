@@ -139,3 +139,7 @@ export const topics: Record<TopicLanguage, TopicDefinition[]> = {
 export function topicPath(lang: TopicLanguage, slug: string) {
   return lang === 'en' ? `/en/topics/${slug}/` : `/sujets/${slug}/`;
 }
+
+export function topicsForPost(lang: TopicLanguage, postId: string) {
+  return topics[lang].filter((topic) => topic.postIds.includes(postId));
+}
