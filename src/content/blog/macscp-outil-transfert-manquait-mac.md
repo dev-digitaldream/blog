@@ -3,6 +3,8 @@ title: "macSCP : j'ai créé l'outil de transfert qui me manquait sur Mac"
 description: Pour terminer ma migration de Windows vers Mac, il me manquait mon
   usage de WinSCP. J'ai créé macSCP avec l'aide de l'IA.
 date: 2026-09-12
+updated: 2026-09-13
+updateNote: "Le billet précise désormais que macSCP répond à mon flux de travail particulier plutôt qu’à une absence totale de clients Mac. Les fonctions disponibles et celles encore en développement restent clairement séparées."
 lang: fr
 translation: macscp-file-transfer-tool-missing-on-mac
 draft: false
@@ -25,7 +27,7 @@ metaDescription: Mon passage de Windows à macOS, la création de macSCP avec
 ---
 Avant d’abandonner Windows comme système principal en pro (en privé, je suis appliste depuis les bêta-tests Intel et les premiers Hackintosh ; oui, je suis assez vieux, mon petit), il me restait un besoin à régler : retrouver sur macOS ce que je faisais avec WinSCP. Mes fichiers d’un côté, une machine distante de l’autre, et une interface graphique pour faire passer les uns vers l’autre sans passer par le terminal. Je voulais changer de système sans renoncer à toutes mes habitudes.
 
-C’est de là qu’est partie l’idée d’un WinSCP pour Mac. J’ai cherché et j’ai testé plusieurs softs, payants comme gratuits. À ma grande surprise, pas de client SCP pour Mac, ou alors j’ai mal cherché !! Et comme on vit une période formidable, j’ai décidé de le créer avec l’aide de l’IA. D’abord, faire un cahier des charges des fonctionnalités que je désire, et pas un copier-coller de WinSCP : je n’aurais pas l’utilité de toutes les fonctionnalités, c’est une usine à gaz. Puis un début sur Claude Code, à l’époque où il ne m’éjectait pas après deux échanges ; passage ensuite sur les modèles chinois via le super OpenCode. Mais dès la sortie de Codex et depuis la version 5.5, j’ai pris l’abonnement à 100 balles et je ne regrette pas : c’est un monstre ! Et je ne parle pas de la version 6 Astra qui met à terre tout le marché pour mon utilisation, en attendant la relève d’autres concurrents. Et non, je ne jette pas de fleurs à Sam Altman, sauf s’il m’offre un accès illimité pendant quelques années ;) Mais il faut reconnaître que les équipes d’OpenAI ont fait un superbe boulot sur les outils de coding et de test. Mon application n’est pas parfaite, et je suis assez bien placé pour le savoir. Mais je m’en sers vraiment : elle récupère mes logs, envoie ceux dont j’ai besoin et a trouvé sa place dans mon quotidien. Pour un outil que j’ai fabriqué, c’est déjà un plaisir assez particulier.
+C’est de là qu’est partie l’idée d’un WinSCP pour Mac. J’ai cherché et j’ai testé plusieurs softs, payants comme gratuits. Aucun ne retrouvait exactement l’interface et le flux de travail que j’aimais dans WinSCP, ou alors j’ai mal cherché !! Et comme on vit une période formidable, j’ai décidé de le créer avec l’aide de l’IA. D’abord, faire un cahier des charges des fonctionnalités que je désire, et pas un copier-coller de WinSCP : je n’aurais pas l’utilité de toutes les fonctionnalités, c’est une usine à gaz. Puis un début sur Claude Code, à l’époque où il ne m’éjectait pas après deux échanges ; passage ensuite sur les modèles chinois via le super OpenCode. Mais dès la sortie de Codex et depuis la version 5.5, j’ai pris l’abonnement à 100 balles et je ne regrette pas : c’est un monstre ! Et je ne parle pas de la version 6 Astra qui met à terre tout le marché pour mon utilisation, en attendant la relève d’autres concurrents. Et non, je ne jette pas de fleurs à Sam Altman, sauf s’il m’offre un accès illimité pendant quelques années ;) Mais il faut reconnaître que les équipes d’OpenAI ont fait un superbe boulot sur les outils de coding et de test. Mon application n’est pas parfaite, et je suis assez bien placé pour le savoir. Mais je m’en sers vraiment : elle récupère mes logs, envoie ceux dont j’ai besoin et a trouvé sa place dans mon quotidien. Pour un outil que j’ai fabriqué, c’est déjà un plaisir assez particulier.
 
 ## Windows a gardé un double des clés
 
@@ -39,9 +41,10 @@ Se connecter à une machine Linux, parcourir ses dossiers, récupérer des logs,
 
 macSCP affiche les fichiers locaux et distants dans deux panneaux. Je peux parcourir les dossiers, envoyer un fichier ou en récupérer un en gardant les deux côtés sous les yeux. Le principe est familier, et ça me convient très bien. Pour cette partie de mon travail, j’aime autant retrouver mes repères.
 
-![macSCP sur Mac, avec les fichiers locaux à gauche et les fichiers distants à droite](/blog/macscp/macscp-desktop.webp)
-
-macSCP sur Mac : les fichiers locaux et distants dans deux panneaux.
+<figure class="article-screenshot">
+  <img src="/blog/macscp/macscp-desktop.webp" alt="macSCP sur Mac, avec les fichiers locaux à gauche et les fichiers distants à droite" width="1200" height="836" loading="lazy" decoding="async" />
+  <figcaption>macSCP sur Mac : les fichiers locaux et distants dans deux panneaux.</figcaption>
+</figure>
 
 Il y a aussi des machines anciennes avec des versions pas à jour. Celles-là ne deviennent pas plus récentes parce que j’ai changé d’ordinateur, ce qui est assez peu coopératif de leur part. Le transfert SCP et la compatibilité avec certains anciens serveurs SSH comptaient donc dans mon besoin de départ. macSCP possède un réglage de compatibilité qui me permet de travailler avec certaines de ces machines. Je parle bien de celles avec lesquelles il me sert ; je ne l’ai pas confronté à tous les serveurs possibles.
 
@@ -69,7 +72,7 @@ Malgré son nom, macSCP ne se limite plus au SCP. L’application dispose aussi 
 
 L’intérêt pour moi, c’est de retrouver ces accès dans la même interface. Derrière, les usages restent différents : sur une machine Linux, je parcours des dossiers ; avec S3, je travaille dans un espace de stockage d’objets. Les possibilités dépendent du service auquel je me connecte.
 
-Ces fonctions sont présentes, mais toutes les configurations n’ont pas été éprouvées. Mon usage me permet de dire que l’outil me rend service, sans garantir le même résultat dans tous les environnements. Et attention à la sécurité de vos serveurs : je n’ai pas encore abordé cette partie-là. Avant de distribuer l’app, je dois encore mener des tests de failles, etc.
+Ces fonctions sont présentes, mais toutes les configurations n’ont pas été éprouvées. Mon usage me permet de dire que l’outil me rend service, sans garantir le même résultat dans tous les environnements. La sécurité n’est pas encore suffisamment validée pour une distribution publique. Avant d’envisager cette étape, je dois notamment auditer la gestion des identifiants, des clés, des connexions et des erreurs.
 
 ## Sur chantier, l’iPhone est déjà dans la poche
 
@@ -81,21 +84,25 @@ C’est ce quotidien qui me donne envie de faire évoluer la version mobile : me
 
 Cette version reprend la base du moteur de transfert de macSCP, dans un projet distinct qui évolue séparément. Les deux applications n’ont donc pas automatiquement les mêmes fonctions ni les mêmes comportements. La modernisation sert justement à avancer sur ces besoins communs.
 
-![iPhone connecté à un adaptateur Ethernet RJ45 UGREEN sur un établi, avec le formulaire de connexion à un serveur ouvert dans MobileSCP](/blog/macscp/mobilescp-iphone-ethernet.webp)
+<figure class="article-screenshot">
+  <img src="/blog/macscp/mobilescp-iphone-ethernet.webp" alt="iPhone connecté à un adaptateur Ethernet RJ45 UGREEN sur un établi, avec le formulaire de connexion à un serveur ouvert dans MobileSCP" width="640" height="480" loading="lazy" decoding="async" style="max-width: 640px" />
+  <figcaption>MobileSCP sur iPhone, avec un adaptateur Ethernet RJ45 : préparer une connexion depuis le téléphone.</figcaption>
+</figure>
 
-MobileSCP sur iPhone, avec un adaptateur Ethernet RJ45 : préparer une connexion depuis le téléphone.
+<figure class="article-screenshot article-screenshot-phone">
+  <img src="/blog/macscp/mobilescp-iphone-dev.webp" alt="Écran d’accueil de MobileSCP dans le simulateur iPhone, avant l’ajout d’un serveur" width="640" height="1206" loading="lazy" decoding="async" />
+  <figcaption>MobileSCP sur simulateur iPhone, version en développement.</figcaption>
+</figure>
 
-![Écran d’accueil de MobileSCP dans le simulateur iPhone, avant l’ajout d’un serveur](/blog/macscp/mobilescp-iphone-dev.webp)
+<figure class="article-screenshot article-screenshot-tablet-portrait">
+  <img src="/blog/macscp/mobilescp-ipad-portrait-dev.webp" alt="MobileSCP sur simulateur iPad en portrait, avec les fichiers de test distants au-dessus des fichiers locaux" width="840" height="1212" loading="lazy" decoding="async" />
+  <figcaption>Sur iPad en portrait, les deux espaces sont superposés. Version en développement, avec un serveur de test local.</figcaption>
+</figure>
 
-MobileSCP sur simulateur iPhone, version en développement.
-
-![MobileSCP sur simulateur iPad en portrait, avec les fichiers de test distants au-dessus des fichiers locaux](/blog/macscp/mobilescp-ipad-portrait-dev.webp)
-
-Sur iPad en portrait, les deux espaces sont superposés. Version en développement, avec un serveur de test local.
-
-![MobileSCP sur simulateur iPad en paysage, avec les fichiers distants et locaux côte à côte](/blog/macscp/mobilescp-ipad-landscape-dev.webp)
-
-Sur iPad en paysage, les panneaux s’affichent côte à côte. Version en développement.
+<figure class="article-screenshot">
+  <img src="/blog/macscp/mobilescp-ipad-landscape-dev.webp" alt="MobileSCP sur simulateur iPad en paysage, avec les fichiers distants et locaux côte à côte" width="1200" height="911" loading="lazy" decoding="async" />
+  <figcaption>Sur iPad en paysage, les panneaux s’affichent côte à côte. Version en développement.</figcaption>
+</figure>
 
 ## Ce qui me manque encore
 

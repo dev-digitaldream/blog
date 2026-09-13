@@ -3,6 +3,7 @@ title: "macSCP: I built the file transfer tool I was missing on Mac"
 description: "Moving from Windows to Mac left a gap where WinSCP used to be. I built macSCP with AI assistance to handle my everyday file transfers."
 date: 2026-09-12
 updated: 2026-09-13
+updateNote: "The article now clarifies that macSCP addresses my particular workflow rather than a complete absence of Mac clients. Available features and work still in progress remain clearly separated."
 lang: en
 translation: macscp-outil-transfert-manquait-mac
 draft: false
@@ -16,7 +17,7 @@ metaDescription: "How I built macSCP to replace my WinSCP workflow on macOS and 
 
 Before leaving Windows as my main operating system for work (in my personal life, I have been an Apple guy since the Intel beta tests and the first Hackintoshes; yes, I am that old, kid), I had one remaining problem to solve: getting back what I used WinSCP for, on macOS. My files on one side, a remote machine on the other, and a graphical interface to move files between them without going through the terminal. I wanted to change operating systems without giving up all my habits.
 
-That is where the idea of a WinSCP for Mac came from. I searched and tried several apps, both paid and free. Much to my surprise, no SCP client for Mac, or maybe I just did a bad job of looking!! And since we live in an amazing time, I decided to build it with AI assistance. First, put together a specification for the features I wanted, rather than a copy of WinSCP: I would not use all its features; it is a beast of a program. Then I got started with Claude Code, back when it did not kick me out after two exchanges; next came Chinese models through the excellent OpenCode. But once Codex came out, and starting with version 5.5, I went for the subscription for 100, and I have no regrets: it is a monster! And that is before even getting to version 6 Astra, which blows everything else on the market away for my use, while I wait for other competitors to catch up. And no, I am not buttering up Sam Altman, unless he offers me unlimited access for a few years ;) But credit where it is due: the teams at OpenAI have done a fantastic job on the coding and testing tools. My application is not perfect, and I am well placed to know that. But I actually use it: it retrieves my logs, sends the ones I need, and has become part of my daily routine. There is something particularly satisfying about that when it is a tool I built myself.
+That is where the idea of a WinSCP for Mac came from. I searched and tried several apps, both paid and free. None reproduced exactly the interface and workflow I liked in WinSCP, or maybe I just did a bad job of looking!! And since we live in an amazing time, I decided to build it with AI assistance. First, put together a specification for the features I wanted, rather than a copy of WinSCP: I would not use all its features; it is a beast of a program. Then I got started with Claude Code, back when it did not kick me out after two exchanges; next came Chinese models through the excellent OpenCode. But once Codex came out, and starting with version 5.5, I went for the subscription for 100, and I have no regrets: it is a monster! And that is before even getting to version 6 Astra, which blows everything else on the market away for my use, while I wait for other competitors to catch up. And no, I am not buttering up Sam Altman, unless he offers me unlimited access for a few years ;) But credit where it is due: the teams at OpenAI have done a fantastic job on the coding and testing tools. My application is not perfect, and I am well placed to know that. But I actually use it: it retrieves my logs, sends the ones I need, and has become part of my daily routine. There is something particularly satisfying about that when it is a tool I built myself.
 
 ## Windows kept a spare key
 
@@ -61,7 +62,7 @@ Despite its name, macSCP is no longer limited to `SCP`. It also supports `SFTP` 
 
 For me, the benefit is having those connections in the same interface. The underlying workflows are still different: on a Linux machine, I browse directories; with S3, I work with object storage. The available operations depend on the service I connect to.
 
-These features are present, but not every configuration has been tested. My own use establishes that the tool helps me, without guaranteeing the same outcome in every environment. And be careful about the security of your servers: I have not tackled that part yet. Before distributing the app, I still need to test for vulnerabilities and so on.
+These features are present, but not every configuration has been tested. My own use establishes that the tool helps me, without guaranteeing the same outcome in every environment. Security has not yet been validated sufficiently for public distribution. Before considering that step, I still need to audit credential and key handling, connections, and failure states.
 
 ## On a job site, the iPhone is already in my pocket
 
