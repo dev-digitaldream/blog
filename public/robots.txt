@@ -2,7 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-# Bloque les bots IA pour préserver l'éditorial
+# Les robots de recherche et de citation restent autorisés.
+# Les robots d'entraînement restent bloqués pour préserver l'éditorial.
 User-agent: GPTBot
 Disallow: /
 
@@ -19,6 +20,9 @@ User-agent: anthropic-ai
 Disallow: /
 
 User-agent: PerplexityBot
-Disallow: /
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
 
 Sitemap: https://blog.digitaldream.work/sitemap-index.xml
