@@ -7,6 +7,7 @@ import { getCurrentLanguage } from '../../lib/i18n';
 import readingTime from 'reading-time';
 import fs from 'node:fs';
 import path from 'node:path';
+import { cardSizedImage } from '../../lib/card-image';
 
 const currentLang = getCurrentLanguage();
 
@@ -27,8 +28,7 @@ function firstImage(body: string | undefined): string | null {
 }
 
 function cardImage(post: { data: { cover?: string }, body?: string }): string | null {
-  if (post.data.cover) return post.data.cover;
-  return firstImage(post.body);
+  return cardSizedImage(post.data.cover || firstImage(post.body));
 }
 
 function relDate(d: Date | string, lang: string): string {

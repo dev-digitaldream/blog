@@ -5,6 +5,7 @@ import Newsletter from '../../components/Newsletter.astro';
 import AvatarPortrait from '../../components/AvatarPortrait.astro';
 import { getCollection } from 'astro:content';
 import readingTime from 'reading-time';
+import { cardSizedImage } from '../../lib/card-image';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -23,8 +24,7 @@ const oldestYear = allBlog.length > 0
   : new Date().getFullYear();
 
 function cardImage(post: { data: { cover?: string }, body?: string }): string | null {
-  if (post.data.cover) return post.data.cover;
-  return firstImage(post.body);
+  return cardSizedImage(post.data.cover || firstImage(post.body));
 }
 function firstImage(body: string | undefined): string | null {
   if (!body) return null;
