@@ -14,7 +14,15 @@ function normalizeBody(value) {
   return value.replace(/\r?\n/g, '\r\n').replace(/^\./gm, '..');
 }
 
-export async function sendSmtpMail(env, { name, email, message }) {
+function safeHeader(value) {
+  if (typeof value !== 'string' || /[\r\n\x00-\x1f]/.test(value)) throw new Error('invalid_header');
+  return value;
+}
+
+export async function sendMail(env, { to, subject, text, replyTo }) {
+  safeHeader(to);
+  safeHeader(subject);
+  if (replyTo) safeHeader(replyTo);
   const socket = connect(
     { hostname: env.SMTP_HOST, port: 465 },
     { secureTransport: 'on', allowHalfOpen: false },
@@ -70,17 +78,17 @@ export async function sendSmtpMail(env, { name, email, message }) {
     await command(base64(env.SMTP_USER), [334]);
     await command(base64(env.SMTP_PASSWORD), [235]);
     await command(`MAIL FROM:<${env.SMTP_USER}>`, [250]);
-    await command('RCPT TO:<dev@digitaldream.work>', [250, 251]);
+    await command(`RCPT TO:<${to}>`, [250, 251]);
     await command('DATA', [354]);
 
-    const subject = `=?UTF-8?B?${base64('Nouveau message — Le Carnet de DD')}?=`;
-    const body = normalizeBody(`Nom : ${name}\nEmail : ${email}\n\n${message}`);
+    const encodedSubject = `=?UTF-8?B?${base64(subject)}?=`;
+    const body = normalizeBody(text);
     const mail = [
       `Date: ${new Date().toUTCString()}`,
       `From: Le Carnet de DD <${env.SMTP_USER}>`,
-      'To: dev@digitaldream.work',
-      `Reply-To: ${name} <${email}>`,
-      `Subject: ${subject}`,
+      `To: ${to}`,
+      ...(replyTo ? [`Reply-To: ${replyTo}`] : []),
+      `Subject: ${encodedSubject}`,
       'MIME-Version: 1.0',
       'Content-Type: text/plain; charset=UTF-8',
       'Content-Transfer-Encoding: 8bit',
@@ -97,4 +105,13 @@ export async function sendSmtpMail(env, { name, email, message }) {
     writer.releaseLock();
     await socket.close().catch(() => {});
   }
+}
+
+export function sendSmtpMail(env, { name, email, message }) {
+  return sendMail(env, {
+    to: 'dev@digitaldream.work',
+    subject: 'Nouveau message — Le Carnet de DD',
+    text: `Nom : ${name}\nEmail : ${email}\n\n${message}`,
+    replyTo: `${name} <${email}>`,
+  });
 }

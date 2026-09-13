@@ -4,7 +4,7 @@ export interface Props {
 }
 const { lang: _lang } = Astro.props;
 const currentLang = _lang || 'fr';
-const ENDPOINT = import.meta.env.PUBLIC_NEWSLETTER_URL ?? '';
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAEyh64kMQL__QU0W';
 
 const t = {
   fr: {
@@ -14,7 +14,7 @@ const t = {
     placeholder: 'ton@email.com',
     button: "S'abonner",
     sending: 'Envoi…',
-    success: 'Inscription confirmée. Bienvenue.',
+    success: 'Vérifiez votre boîte mail pour confirmer.',
     error: "Erreur lors de l'inscription. Réessayez.",
   },
   en: {
@@ -24,7 +24,7 @@ const t = {
     placeholder: 'you@email.com',
     button: 'Subscribe',
     sending: 'Sending…',
-    success: 'Subscription confirmed. Welcome.',
+    success: 'Check your inbox to confirm your subscription.',
     error: 'Subscription failed. Please retry.',
   },
 }[currentLang];
@@ -47,9 +47,11 @@ const t = {
         <form
           id="newsletter-form"
           class="flex flex-col sm:flex-row gap-3 sm:gap-0 sm:items-center sm:rounded-full sm:border sm:border-[var(--paper-edge)] sm:bg-[var(--paper)] sm:p-1.5"
-          data-endpoint={ENDPOINT}
+          data-endpoint="/api/newsletter"
           data-lang={currentLang}
+          data-sitekey={turnstileSiteKey}
         >
+          <input name="website" type="text" tabindex="-1" autocomplete="off" class="absolute opacity-0 pointer-events-none" aria-hidden="true" />
           <input
             type="email"
             name="email"
@@ -64,7 +66,8 @@ const t = {
             {t.button} →
           </button>
         </form>
-        <p id="newsletter-status" class="mt-3 hand text-xl hidden"></p>
+        <div data-newsletter-challenge class="mt-3 min-h-[1px]"></div>
+        <p id="newsletter-status" role="status" aria-live="polite" class="mt-3 hand text-xl hidden"></p>
       </div>
     </div>
   </div>
@@ -79,9 +82,35 @@ const t = {
       const status = document.getElementById('newsletter-status');
       const lang = form.dataset.lang || 'fr';
       const msg = {
-        fr: { sending: 'Envoi…', success: 'Inscription confirmée. Bienvenue.', error: "Erreur lors de l'inscription. Réessayez." },
-        en: { sending: 'Sending…', success: 'Subscription confirmed. Welcome.', error: 'Subscription failed. Please retry.' },
+        fr: { sending: 'Vérification…', success: 'Vérifiez votre boîte mail pour confirmer.', error: "Erreur lors de l'inscription. Réessayez." },
+        en: { sending: 'Verifying…', success: 'Check your inbox to confirm your subscription.', error: 'Subscription failed. Please retry.' },
       }[lang];
+      let widget;
+
+      async function ensureChallenge() {
+        if (widget !== undefined) return;
+        if (!window.turnstile) {
+          if (!window.turnstileLoading) {
+            window.turnstileLoading = new Promise((resolve, reject) => {
+              const script = document.createElement('script');
+              script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+              script.async = true;
+              script.onload = resolve;
+              script.onerror = reject;
+              document.head.appendChild(script);
+            }).catch(error => { window.turnstileLoading = null; throw error; });
+          }
+          await window.turnstileLoading;
+        }
+        widget = window.turnstile.render(form.parentElement.querySelector('[data-newsletter-challenge]'), {
+          sitekey: form.dataset.sitekey,
+          action: 'newsletter',
+          size: 'flexible',
+          theme: 'auto',
+          language: lang,
+        });
+      }
+      form.addEventListener('focusin', () => ensureChallenge().catch(() => {}), { once: true });
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -91,20 +120,20 @@ const t = {
         const btn = form.querySelector('button[type="submit"]');
         btn.disabled = true;
 
-        if (!endpoint) {
-          // Fallback : pas d'endpoint configuré → mailto
-          window.location.href = `mailto:contact@digitaldream.work?subject=${encodeURIComponent('Newsletter · inscription')}&body=${encodeURIComponent('Email: ' + email)}`;
-          btn.disabled = false;
-          return;
-        }
-
         status.textContent = msg.sending;
         status.classList.remove('hidden', 'text-green-600', 'text-red-600');
         try {
+          await ensureChallenge();
+          const token = window.turnstile.getResponse(widget);
+          if (!token) {
+            status.textContent = lang === 'en' ? 'Please complete the anti-spam verification.' : 'Merci de terminer la vérification antispam.';
+            status.classList.add('text-red-600');
+            return;
+          }
           const res = await fetch(endpoint, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ email }),
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, lang, token, website: form.website.value }),
           });
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           status.textContent = msg.success;
@@ -115,9 +144,13 @@ const t = {
           status.textContent = msg.error;
           status.classList.add('text-red-600');
         } finally {
+          if (widget !== undefined) window.turnstile?.reset(widget);
           btn.disabled = false;
         }
       });
+      document.addEventListener('astro:before-swap', () => {
+        if (widget !== undefined) window.turnstile?.remove(widget);
+      }, { once: true });
     }
     document.addEventListener('DOMContentLoaded', initNewsletter);
     document.addEventListener('astro:page-load', initNewsletter);

@@ -188,17 +188,17 @@ const t = translations[currentLang];
       loading = (async () => {
         if (!form.dataset.sitekey) throw new Error('unconfigured');
         if (!window.turnstile) {
-          if (!window.contactTurnstileLoading) {
-            window.contactTurnstileLoading = new Promise((resolve, reject) => {
+          if (!window.turnstileLoading) {
+            window.turnstileLoading = new Promise((resolve, reject) => {
               const script = document.createElement('script');
               script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
               script.async = true;
               script.onload = resolve;
               script.onerror = () => { script.remove(); reject(new Error('load')); };
               document.head.appendChild(script);
-            }).catch(error => { window.contactTurnstileLoading = null; throw error; });
+            }).catch(error => { window.turnstileLoading = null; throw error; });
           }
-          await window.contactTurnstileLoading;
+          await window.turnstileLoading;
         }
         if (!form.isConnected) return;
         widget = window.turnstile.render(form.querySelector('[data-contact-challenge]'), {
