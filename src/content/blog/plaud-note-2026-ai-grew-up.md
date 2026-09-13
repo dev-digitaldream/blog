@@ -2,6 +2,7 @@
 title: "Plaud Note in 2026: AI Grew Up, and So Did the Promises"
 description: "In 2026, Plaud Note is still a great product, but local AI audio has caught up with the cloud. An honest comparison between Plaud and local Whisper."
 date: "2026-01-01"
+updated: 2026-09-13
 category: "blog"
 tags: []
 excerpt: ""
@@ -11,37 +12,54 @@ cover: ""
 lang: en
 translation: plaud-notes-lenregistreur-qui-promet-de-penser-a-ta-place
 ---
+> Updated from the original 2024 post
 
-> 2024 post update
+In 2024, Plaud Note genuinely impressed me. It was not a novelty that became forgettable after a few days. The small recorder removed a very practical constraint: I could put it on the table, press a button, and take part in a meeting normally. At the end, a transcript and a usable summary were waiting for me.
 
-I'll be direct, as always.
+There was no laptop to open, no application to prepare, and no note-taking workflow to think about. That simplicity made an entire part of the mental load disappear.
 
-In 2024, Plaud Note genuinely blew me away. Not in a trendy gadget kind of way, but in that specific moment when you realize something just made your life easier. A small device sitting on the table, I press a button, attend my meeting normally, and at the end I get a clean, structured summary, immediately usable. No need to pull out a laptop, no need to launch an app, no need to think about it. Everything was smooth, almost relaxing, like the mental load of note-taking suddenly disappeared.
+![Plaud Note on a table](/blog/plaud-notes-lenregistreur-qui-promet-de-penser-a-ta-place/ChatGPT%20Image%20Jan%201%202026%20%281%29.webp "Plaud Note")
 
-![ChatGPT%20Image%20Jan%201%202026%20%281%29](/blog/plaud-notes-lenregistreur-qui-promet-de-penser-a-ta-place/ChatGPT%20Image%20Jan%201%202026%20%281%29.webp "ChatGPT%20Image%20Jan%201%202026%20%281%29")
+## Plaud improved, but the rest of the world did too
 
-In 2026, Plaud hasn't regressed. Far from it. But it's no longer the one doing the impressing. It's the rest of the world that caught up.
+Plaud has not gone backwards in 2026. Speaker recognition is more reliable, summaries are more coherent, professional templates make more sense, and automatically generated mind maps can be useful. Multilingual support has expanded, integrations are cleaner, and battery life remains impressive.
 
-Let's be honest, Plaud has evolved, and a lot. The latest versions show real deep work: speaker recognition is more reliable, summaries are more coherent and better structured, business templates finally make sense in a professional context, auto-generated mind maps are relevant, multilingual support has expanded, integrations with pro tools are smoother, battery life is still impressive, and the software experience is now stable and hassle-free. Plaud does exactly what you ask of it. It records well, it transcribes well, it summarizes well.
+The product records well, transcribes well, and summarizes well. That level of quality is simply no longer exceptional.
 
-But in 2026, that level of "well" isn't exceptional anymore.
+In the meantime, I tried Whisper locally, then language models running directly on my machine, followed by a few home-built workflows. Some were rough experiments and others were more polished. Together, they showed me that automatic transcription was no longer a luxury reserved for a cloud service.
 
-What really changed isn't Plaud. It's how I work. In the meantime, I tried Whisper locally, then language models running directly on my machine, then homegrown workflows, some hacked together, some more polished. And I ended up realizing one simple thing: automatic transcription is no longer a luxury. Today, a local model can transcribe French with impressive accuracy, sometimes even offline. The generated summaries are often more sober, less chatty, less marked by a marketing tone. And most importantly, my audio files never leave my computer.
+A local model can now transcribe French with impressive accuracy, sometimes entirely offline. Its summaries are often more restrained and less shaped by a marketing tone. More importantly, the audio files stay on my computer.
 
-![SCR-20260102-qtig](/blog/plaud-notes-lenregistreur-qui-promet-de-penser-a-ta-place/SCR-20260102-qtig.webp "SCR-20260102-qtig")
+![Plaud transcription interface](/blog/plaud-notes-lenregistreur-qui-promet-de-penser-a-ta-place/SCR-20260102-qtig.webp "Plaud interface")
 
-From that point on, Plaud's status changed. Before, it was a no-brainer. Today, it's a convenience.
+## From an obvious choice to a convenience
 
-Plaud's real advantage isn't really its AI anymore. Everyone has AI now, even locally, even for free. Plaud's real advantage is that radical simplicity: I press a button and it works. No setup, no dependency on a personal configuration, no prior thinking. That's exactly why Plaud remains relevant for certain profiles, especially those who want to fully offload the technical burden.
+Plaud then changed status in my workflow. It used to feel like the obvious choice. Today, it is a convenience.
 
-But using Plaud also means accepting a clear trade-off. Audio goes through the cloud, privacy depends on a third party, and the subscription quickly becomes necessary if you record a lot. It's neither good nor bad, it's a choice. Personally, as soon as audio becomes sensitive, I'm no longer comfortable. At that point, I'd rather take back control.
+Its main advantage is no longer the artificial intelligence itself. AI is now available everywhere, including locally and at no cost. Plaud’s strength remains its radical simplicity: I press a button and it works. There is no setup, no dependency on a personal configuration, and almost no decision to make before recording.
 
-Comparing Plaud to local Whisper doesn't really make sense from a technical standpoint. You're not comparing two tools, but two philosophies. Plaud bets on turnkey simplicity, local Whisper on deliberate control. One saves mental time, the other saves on ownership and, in the long run, cost. In pure quality terms, honestly, it's often a wash, and sometimes Whisper even does better on certain accents or in trickier environments.
+That is exactly why it remains relevant for people who want to delegate the technical part entirely.
 
-Today, I'd still recommend Plaud to people who want zero friction, who travel often, for whom the subscription isn't an issue, and whose data isn't critical. Journalists, trainers, highly mobile profiles: in those cases, Plaud is still nearly unbeatable. On the other hand, if privacy matters, if you like owning your stack, if you're allergic to subscriptions or already comfortable with tools like Obsidian, Notion, or self-hosting, Plaud is no longer essential. Local Whisper is more than enough.
+## The trade-off between simplicity and control
 
-My actual setup in 2026 is very simple. I use Plaud for quick meetings, thought-free note-taking, and any situation where I just want it to work. Local Whisper I reserve for sensitive content, deep work, and long-term archives. This combo works better than any marketing promise.
+Using Plaud also means accepting a clear trade-off. Audio goes through the cloud, privacy depends on a third party, and the subscription quickly becomes necessary when recordings become frequent. This is neither universally bad nor automatically the wrong decision. It is a practical choice.
 
-Plaud Note is still a very good product, well designed, well finished, and pleasant to use. But in 2026, it's no longer a must-have. The real question isn't whether Plaud is good, because it is. The real question is whether you'd rather pay to not think, or spend ten minutes keeping control of your data.
+As soon as the audio becomes sensitive, I prefer to take back control. Comparing Plaud with local Whisper as if they were equivalent products therefore misses the point. They represent two different approaches.
 
-My advice remains the same. Try local Whisper for ten minutes. If that wears you out, Plaud is there. Otherwise, you'll find it gets hard to go back.
+Plaud provides a ready-to-use experience. Local Whisper requires a little more work, but keeps control of the files and reduces the long-term cost. The difference in transcription quality is often small. Whisper can even perform better with some accents or in more difficult environments.
+
+## Who still benefits from Plaud
+
+I would still recommend Plaud when removing friction matters more than technical control: quick meetings, frequent travel, and notes that do not contain critical data. For journalists, trainers, and highly mobile professionals, its simplicity remains difficult to beat.
+
+When privacy comes first, subscriptions become frustrating, or a local environment already exists around Obsidian, self-hosting, or other personal tools, Plaud is no longer essential. Local Whisper can be more than enough.
+
+## How I use it in 2026
+
+My current setup remains simple. I use Plaud for quick meetings and situations where I only want the recording to work without preparation. I keep local Whisper for sensitive material, deeper work, and long-term archives.
+
+This combination suits me better than treating cloud and local tools as opposing camps. Plaud Note remains well designed, well finished, and pleasant to use. It is simply no longer a requirement.
+
+The useful question is no longer whether Plaud is good. It is. The decision is whether immediate simplicity is worth the subscription and cloud processing, or whether a few extra minutes of setup are worth keeping control of the data.
+
+A short trial with local Whisper answers that question more clearly than any marketing promise.

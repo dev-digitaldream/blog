@@ -2,6 +2,7 @@
 title: "Protect Your Data: Digital Hygiene for Everyone"
 description: "Digital hygiene explained simply: passwords, 2FA, password managers, physical security keys, and good privacy habits without the paranoia."
 date: "2024-04-16"
+updated: 2026-09-13
 category: "blog"
 tags: []
 excerpt: ""
@@ -11,25 +12,42 @@ cover: ""
 lang: en
 translation: protegez-vos-donnees-lhygiene-numerique-a-la-portee-de-tous
 ---
+Digital hygiene can sound like a subject reserved for experts and companies. In practice, it is mostly a handful of habits that prevent the most common problems. Those problems do not always happen because an attacker is particularly skilled. They often happen because a door was left open without anyone noticing.
 
-When people talk about digital hygiene, it often feels like it only concerns experts or companies. In reality, it's much simpler than that. It's just a set of good habits that help you avoid the most common problems, the ones that happen not because someone is highly skilled, but because you left a door open without realizing it.
+![Physical keys and two-factor authentication apps](/blog/protegez-vos-donnees-lhygiene-numerique-a-la-portee-de-tous/2fa.webp "Two-factor authentication")
 
-![2fa](/blog/protegez-vos-donnees-lhygiene-numerique-a-la-portee-de-tous/2fa.webp "2fa")
+My approach is to reduce risk without making everyday life unnecessarily complicated. I am not looking for a miracle solution or a paranoid routine. I prefer a few reliable tools and choices that remain manageable over time.
 
-If I had to sum up my approach, I'd say I'm mostly looking to make life as easy as possible while reducing risk as much as possible. No miracle solutions, no paranoia, just reliable tools and consistent choices.
+## A password manager ends password reuse
 
-In my daily life, two tools were at the center of this setup for a long time. Bitwarden for passwords, and Authy for two-factor authentication. I chose them for a simple reason: they did the job without making me think about them constantly. And that's exactly what I expect from a good security tool.
+For a long time, two tools were central to my setup: Bitwarden for passwords and Authy for two-factor authentication. I chose them because they did their job without demanding constant attention. That is exactly what I expect from a good security tool.
 
-Passwords quickly became the foundation of everything else. A reused password today is a ticking time bomb. Data breaches have become routine, and when one service falls, every other service sharing that same password falls with it. Using a unique password for each service isn't optional anymore. Without a manager, it's unmanageable. With Bitwarden, it becomes nearly invisible. Passwords are generated automatically, stored in an encrypted vault, accessible everywhere, and I don't need to memorize them anymore.
+Passwords are the foundation of everything else. When the same password is reused, a breach at one service can expose several accounts. Incidents like this have become common enough for every account to deserve a different password.
 
-Once that foundation is in place, two-factor authentication becomes obvious. Adding a second factor means accepting that a password alone isn't enough anymore. For a long time, Authy filled this role perfectly. Multi-device sync was reassuring, especially if you lose or change your phone. But over time, some limitations showed up, particularly the lack of a desktop app, which eventually weighed on my daily usage.
+Without a manager, maintaining that discipline quickly becomes unmanageable. With Bitwarden, passwords are generated, stored in an encrypted vault, and available on my devices. I no longer need to memorize them or create predictable variations around the same word.
 
-Migrating to another solution wasn't as simple as I would have liked. I didn't want to hack something together with random scripts found online, especially when dealing with 2FA secrets. So I took a more careful approach. I found an old Authy backup I had kept, then had to disable and re-enable certain services manually to start from a clean slate. It was slow, sometimes annoying, but ultimately very healthy. It forced me to clean up, verify every account, and rebuild something clear and under control.
+## Two-factor authentication and the limits of Authy
 
-At that point, another question naturally came up: is app-based 2FA enough for everything? For many services, yes. But for truly sensitive accounts, I chose to go a step further with physical security keys like YubiKey. The principle is simple: without the key, access is impossible. No code to intercept, no phishing possible. It's not something I use everywhere, but for critical accounts, it's a peace of mind that's hard to replace.
+Once every account has a unique password, two-factor authentication is the logical next step. It prevents a compromised password from being enough to open an account.
 
-The only rule I follow with these keys is to always have at least two. One primary, one backup, stored in different places. Losing a key should never mean losing access to everything.
+Authy served that purpose very well for a long time. Synchronization across devices was reassuring when replacing or losing a phone. Over time, some limitations became frustrating in my workflow, particularly the disappearance of the desktop application.
 
-What struck me most in all of this wasn't the technical side, but the human factor. I've seen colleagues use a single password for everything, not out of carelessness, but out of convenience. Taking a bit of time to show them how a password manager and two-factor authentication work changed everything. Less stress, fewer blockers, less unnecessary risk.
+Moving away was not as straightforward as I had hoped. I did not want to trust random scripts from the internet with 2FA secrets. I preferred to start from an older Authy backup, then manually disable and re-enable two-factor authentication on some services.
 
-Looking back, digital hygiene isn't extreme at all. It's just a few choices made once, that avoid a lot of problems down the road. Protecting your data isn't about becoming paranoid. It's simply accepting that your digital life deserves the same basic care as everything else.
+The process was long and occasionally tedious, but it was also useful. It forced me to remove unused accounts, check what still mattered, and rebuild a clearer setup.
+
+## Physical keys for critical accounts
+
+App-based authentication is enough for many services. For the most sensitive accounts, I chose to add physical security keys such as YubiKeys.
+
+The idea is simple: access requires the key to be physically present. There is no temporary code to copy or intercept. I do not use security keys everywhere, but they provide a level of reassurance that is difficult to replace on critical accounts.
+
+I always keep at least two keys: a primary one and a backup stored somewhere else. Losing one key must never mean losing every account protected by it.
+
+## The human factor matters more than complexity
+
+The most memorable part of this process was not technical. I have seen colleagues reuse one password everywhere because it felt simpler, rather than because they did not care.
+
+A short explanation of password managers and two-factor authentication was enough to change those habits. The result was practical: less stress, fewer access problems, and less unnecessary risk.
+
+Digital hygiene is not an extreme discipline. It is mostly a few decisions made once, followed by tools that work quietly in the background. Protecting data means giving digital life the same basic care as everything else, without turning security into a full-time occupation.
