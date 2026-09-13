@@ -11,8 +11,8 @@ import { LANGUAGES } from '../lib/i18n';
 <div class="flex items-center gap-2" data-translation={translationSlug ?? ''}>
   <select
     id="language-selector"
+    data-language-selector
     class="bg-transparent border border-neutral-200 dark:border-neutral-800 rounded-lg px-3 py-2 text-sm font-sans text-neutral-700 dark:text-neutral-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--pen)]/40"
-    onchange="switchLang(this.value)"
   >
     {Object.entries(LANGUAGES).map(([code, name]) => (
       <option value={code} selected={code === currentLang}>
@@ -23,23 +23,30 @@ import { LANGUAGES } from '../lib/i18n';
 </div>
 
 <script is:inline>
-  function switchLang(lang) {
-    const el = document.querySelector('[data-translation]');
-    const t = el?.dataset.translation;
+  function languageTarget(lang, select) {
     const current = window.location.pathname;
-    const isArticle = current.startsWith('/blog/') && current !== '/blog/' && current !== '/blog';
-    if (isArticle && t) {
-      if (lang === 'en') {
-        window.location.href = '/blog/' + t;
-      } else {
-        window.location.href = '/blog/' + t;
-      }
-      return;
+    const translation = select.closest('[data-translation]')?.dataset.translation;
+    const isArticle = /^\/blog\/[^/]+\/?$/.test(current);
+    if (isArticle && translation) return `/blog/${translation}/`;
+    if (lang === 'en') {
+      if (current.startsWith('/en/')) return current;
+      return current === '/' ? '/en/' : `/en${current.endsWith('/') ? current : `${current}/`}`;
     }
-    if (lang === 'en' && !current.startsWith('/en')) {
-      window.location.href = '/en' + current;
-    } else if (lang === 'fr' && current.startsWith('/en')) {
-      window.location.href = current.replace(/^\/en/, '') || '/';
-    }
+    if (current.startsWith('/en/')) return current.replace(/^\/en/, '') || '/';
+    return current;
   }
+
+  function initLanguageSelector() {
+    document.querySelectorAll('[data-language-selector]').forEach(select => {
+      if (select.dataset.bound === 'true') return;
+      select.dataset.bound = 'true';
+      select.addEventListener('change', () => {
+        const target = languageTarget(select.value, select);
+        if (target !== window.location.pathname) window.location.assign(target);
+      });
+    });
+  }
+
+  initLanguageSelector();
+  document.addEventListener('astro:page-load', initLanguageSelector);
 </script>
