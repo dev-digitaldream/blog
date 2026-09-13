@@ -63,34 +63,79 @@ const publishedPosts = type === 'article' ? await getCollection('blog', ({ data 
 const counterpart = publishedPosts.find((post) =>
   post.id === translationSlug && post.data.lang !== lang
 );
-const languageAlternates = counterpart ? [
+const articleAlternates = counterpart ? [
   { lang: lang === 'en' ? 'en-US' : 'fr-FR', url: canonicalURL },
   { lang: counterpart.data.lang === 'en' ? 'en-US' : 'fr-FR', url: new URL(`/blog/${counterpart.id}/`, Astro.site) },
 ] : [];
+const staticAlternatePaths: Record<string, { fr: string; en: string }> = {
+  '/': { fr: '/', en: '/en/' },
+  '/en/': { fr: '/', en: '/en/' },
+  '/blog/': { fr: '/blog/', en: '/en/blog/' },
+  '/en/blog/': { fr: '/blog/', en: '/en/blog/' },
+  '/projects/': { fr: '/projects/', en: '/en/projects/' },
+  '/en/projects/': { fr: '/projects/', en: '/en/projects/' },
+  '/manifeste/': { fr: '/manifeste/', en: '/en/manifeste/' },
+  '/en/manifeste/': { fr: '/manifeste/', en: '/en/manifeste/' },
+};
+const staticPair = staticAlternatePaths[Astro.url.pathname];
+const staticAlternates = staticPair ? [
+  { lang: 'fr-FR', url: new URL(staticPair.fr, Astro.site) },
+  { lang: 'en-US', url: new URL(staticPair.en, Astro.site) },
+] : [];
+const languageAlternates = articleAlternates.length > 0 ? articleAlternates : staticAlternates;
 const defaultLanguageURL = languageAlternates.find((alternate) => alternate.lang === 'fr-FR')?.url;
 
 // JSON-LD structured data
 const jsonLD = type === 'article'
   ? {
       '@context': 'https://schema.org',
-      '@type': 'BlogPosting',
-      headline: headline || title,
-      inLanguage: lang,
-      description,
-      image: ogImage,
-      datePublished: publishedTime,
-      dateModified: modifiedTime || publishedTime,
-      author: { '@type': 'Person', name: author },
-      publisher: {
-        '@type': 'Organization',
-        name: 'DigitalDream',
-        logo: { '@type': 'ImageObject', url: new URL('/favicon-light.svg', Astro.site).toString() },
-      },
-      mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalURL.toString() },
-      keywords: tags.join(', '),
-      ...(category ? { articleSection: category } : {}),
-      ...(wordCount ? { wordCount } : {}),
-      ...(readingMinutes ? { timeRequired: `PT${readingMinutes}M` } : {}),
+      '@graph': [
+        {
+          '@type': 'BlogPosting',
+          '@id': `${canonicalURL.toString()}#article`,
+          headline: headline || title,
+          inLanguage: lang === 'en' ? 'en-US' : 'fr-FR',
+          description,
+          image: ogImage,
+          datePublished: publishedTime,
+          dateModified: modifiedTime || publishedTime,
+          author: { '@type': 'Person', name: author },
+          publisher: {
+            '@type': 'Organization',
+            name: 'DigitalDream',
+            logo: { '@type': 'ImageObject', url: new URL('/avatar-dd.png', Astro.site).toString() },
+          },
+          mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalURL.toString() },
+          keywords: tags.join(', '),
+          ...(category ? { articleSection: category } : {}),
+          ...(wordCount ? { wordCount } : {}),
+          ...(readingMinutes ? { timeRequired: `PT${readingMinutes}M` } : {}),
+        },
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${canonicalURL.toString()}#breadcrumb`,
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: lang === 'en' ? 'The notebook' : 'Le carnet',
+              item: new URL(lang === 'en' ? '/en/' : '/', Astro.site).toString(),
+            },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: lang === 'en' ? 'Articles' : 'Articles',
+              item: new URL(lang === 'en' ? '/en/blog/' : '/blog/', Astro.site).toString(),
+            },
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: headline || title,
+              item: canonicalURL.toString(),
+            },
+          ],
+        },
+      ],
     }
   : {
       '@context': 'https://schema.org',
@@ -107,6 +152,7 @@ const jsonLD = type === 'article'
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="viewport" content="width=device-width" />
     <link id="favicon" rel="icon" type="image/svg+xml" href="/favicon-light.svg" />
     <link rel="canonical" href={canonicalURL} />
