@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from './Footer.astro';
+import { getCollection } from 'astro:content';
+import { topics, topicPath, type TopicLanguage } from '../lib/topics';
+
+interface Props { lang: TopicLanguage }
+const { lang } = Astro.props;
+const published = await getCollection('blog', ({ data }) => !data.draft && data.lang === lang);
+const byId = new Map(published.map((post) => [post.id, post]));
+const picks = (lang === 'fr' ? [
+  'macscp-outil-transfert-manquait-mac',
+  'quand-lia-debloque-enfin-des-systemes-industriels-fermes',
+  'degooglisation-comment-jai-migre-drive-photos-et-gmail-vers-des-solutions-plus-privees-et-souveraines',
+] : [
+  'macscp-file-transfer-tool-missing-on-mac',
+  'when-ai-finally-unlocked-industrial-systems',
+  'degoogling-migrating-from-google-to-private-solutions',
+]).map((id) => byId.get(id)).filter(Boolean);
+
+const copy = lang === 'fr' ? {
+  title: 'Commencer ici',
+  description: 'Une porte d’entrée dans le Carnet de DD : trois articles représentatifs, les grands sujets et la ligne éditoriale.',
+  eyebrow: 'pour ouvrir le carnet au bon endroit',
+  intro: 'Ce carnet rassemble des expériences techniques vécues : outils construits pour travailler, infrastructure administrée au quotidien et essais qui ne se terminent pas toujours comme prévu.',
+  selection: 'Trois pages pour commencer',
+  topics: 'Choisir un sujet',
+  manifesto: 'Comprendre la démarche',
+  manifestoText: 'Le manifeste explique pourquoi ce carnet reste personnel, comment les produits sont testés et comment les partenariats sont signalés.',
+  manifestoLink: 'Lire le manifeste',
+  all: 'Voir toutes les notes',
+} : {
+  title: 'Start here',
+  description: 'An entry point into DD’s notebook: three representative articles, the main topics, and the editorial approach.',
+  eyebrow: 'opening the notebook in the right place',
+  intro: 'This notebook brings together first-hand technical experience: tools built for work, infrastructure run every day, and experiments that do not always end as expected.',
+  selection: 'Three pages to begin with',
+  topics: 'Choose a topic',
+  manifesto: 'Understand the approach',
+  manifestoText: 'The manifesto explains why this notebook remains personal, how products are tested, and how partnerships are disclosed.',
+  manifestoLink: 'Read the manifesto',
+  all: 'Browse every note',
+};
+const alternatePath = lang === 'en' ? '/commencer/' : '/en/start-here/';
+---
+
+<Layout title={`${copy.title} · DigitalDream`} description={copy.description} lang={lang} alternatePath={alternatePath}>
+  <main class="min-h-screen text-ink">
+    <section class="max-w-5xl mx-auto px-6 md:px-12 pt-16 md:pt-24 pb-20">
+      <p class="hand text-2xl md:text-3xl text-pen -rotate-1 mb-4">{copy.eyebrow}</p>
+      <h1 class="font-display font-extrabold tracking-tight text-4xl md:text-6xl mb-6">{copy.title}</h1>
+      <p class="font-serif text-lg md:text-xl leading-relaxed text-ink-soft max-w-3xl mb-16">{copy.intro}</p>
+
+      <h2 class="font-display font-bold text-2xl md:text-3xl mb-8">{copy.selection}</h2>
+      <ol class="grid grid-cols-1 md:grid-cols-3 gap-7 list-none p-0 m-0 mb-16">
+        {picks.map((post, index) => post && (
+          <li>
+            <a href={`/blog/${post.id}/`} class:list={['paper-card group relative flex h-full flex-col p-6 no-underline', `tilt-${index + 1}`]}>
+              <span class:list={['tape', index % 2 ? 'tape-r' : 'tape-c']} aria-hidden="true"></span>
+              <span class="hand text-2xl text-pen mb-3">0{index + 1}</span>
+              <h3 class="font-display font-bold text-xl leading-snug mb-3 group-hover:text-pen transition-colors">{post.data.title}</h3>
+              <p class="font-serif text-sm leading-relaxed text-ink-soft">{post.data.description}</p>
+            </a>
+          </li>
+        ))}
+      </ol>
+
+      <h2 class="font-display font-bold text-2xl md:text-3xl mb-8">{copy.topics}</h2>
+      <nav class="flex flex-wrap gap-3 mb-16" aria-label={copy.topics}>
+        {topics[lang].map((topic) => (
+          <a href={topicPath(lang, topic.slug)} class="paper-card hoverable px-4 py-3 font-display font-semibold text-sm text-ink no-underline">{topic.title}</a>
+        ))}
+      </nav>
+
+      <aside class="paper-card relative p-7 md:p-9 tilt-1">
+        <span class="tape tape-l" aria-hidden="true"></span>
+        <p class="hand text-2xl text-pen mb-2">{copy.manifesto}</p>
+        <p class="font-serif text-lg leading-relaxed text-ink-soft max-w-3xl mb-5">{copy.manifestoText}</p>
+        <div class="flex flex-wrap gap-5">
+          <a href={lang === 'en' ? '/en/manifeste/' : '/manifeste/'} class="font-display font-semibold text-sm text-pen">{copy.manifestoLink} →</a>
+          <a href={lang === 'en' ? '/en/blog/' : '/blog/'} class="font-display font-semibold text-sm text-pen">{copy.all} →</a>
+        </div>
+      </aside>
+    </section>
+  </main>
+  <Footer lang={lang} />
+</Layout>
