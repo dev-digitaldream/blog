@@ -4,6 +4,7 @@ description: Pour terminer ma migration de Windows vers Mac, il me manquait mon
   usage de WinSCP. J'ai créé macSCP avec l'aide de l'IA.
 date: 2026-09-12
 lang: fr
+translation: macscp-file-transfer-tool-missing-on-mac
 draft: false
 category: blog
 tags:

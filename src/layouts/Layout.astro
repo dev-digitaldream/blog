@@ -30,6 +30,10 @@ interface Props {
   author?: string;
   tags?: string[];
   translationSlug?: string;
+  headline?: string;
+  wordCount?: number;
+  readingMinutes?: number;
+  category?: string;
 }
 
 const lang = Astro.props.lang ?? (Astro.url.pathname.startsWith('/en') ? 'en' : 'fr');
@@ -47,26 +51,30 @@ const {
   author = 'DigitalDream',
   tags = [],
   translationSlug,
+  headline,
+  wordCount,
+  readingMinutes,
+  category,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(image || '/og-default.png', Astro.site).toString();
 const publishedPosts = type === 'article' ? await getCollection('blog', ({ data }) => !data.draft) : [];
-const currentPostId = Astro.url.pathname.replace(/^\/blog\//, '').replace(/\/$/, '');
 const counterpart = publishedPosts.find((post) =>
-  post.id === translationSlug && post.data.lang !== lang && post.data.translation === currentPostId
+  post.id === translationSlug && post.data.lang !== lang
 );
 const languageAlternates = counterpart ? [
-  { lang, url: canonicalURL },
-  { lang: counterpart.data.lang, url: new URL(`/blog/${counterpart.id}/`, Astro.site) },
+  { lang: lang === 'en' ? 'en-US' : 'fr-FR', url: canonicalURL },
+  { lang: counterpart.data.lang === 'en' ? 'en-US' : 'fr-FR', url: new URL(`/blog/${counterpart.id}/`, Astro.site) },
 ] : [];
+const defaultLanguageURL = languageAlternates.find((alternate) => alternate.lang === 'fr-FR')?.url;
 
 // JSON-LD structured data
 const jsonLD = type === 'article'
   ? {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
-      headline: title,
+      headline: headline || title,
       inLanguage: lang,
       description,
       image: ogImage,
@@ -80,6 +88,9 @@ const jsonLD = type === 'article'
       },
       mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalURL.toString() },
       keywords: tags.join(', '),
+      ...(category ? { articleSection: category } : {}),
+      ...(wordCount ? { wordCount } : {}),
+      ...(readingMinutes ? { timeRequired: `PT${readingMinutes}M` } : {}),
     }
   : {
       '@context': 'https://schema.org',
@@ -99,9 +110,11 @@ const jsonLD = type === 'article'
     <meta name="viewport" content="width=device-width" />
     <link id="favicon" rel="icon" type="image/svg+xml" href="/favicon-light.svg" />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     {languageAlternates.map((alternate) => (
       <link rel="alternate" hreflang={alternate.lang} href={alternate.url} />
     ))}
+    {defaultLanguageURL && <link rel="alternate" hreflang="x-default" href={defaultLanguageURL} />}
     <link rel="alternate" type="application/rss+xml" title="DigitalDream Blog" href="/rss.xml" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>

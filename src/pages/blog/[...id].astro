@@ -72,8 +72,13 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3'];
   image={post.data.cover}
   type="article"
   publishedTime={post.data.date}
+  modifiedTime={post.data.updated}
   tags={post.data.tags}
   translationSlug={post.data.translation}
+  headline={post.data.title}
+  wordCount={stats.words}
+  readingMinutes={readMinutes}
+  category={post.data.category}
 >
   <ReadingProgress />
 
