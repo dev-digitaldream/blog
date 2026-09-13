@@ -36,7 +36,7 @@ const emptyMsg = currentLang === 'en' ? 'Type a few characters to search.' : 'Ta
         autocomplete="off"
         class="flex-1 bg-transparent border-0 outline-none p-0 text-xl md:text-2xl text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-600"
       />
-      <button id="search-close" type="button" aria-label="Fermer" class="font-mono text-[10px] tracking-widest uppercase text-neutral-500 dark:text-neutral-400 border border-neutral-400/60 dark:border-neutral-600/60 rounded px-2 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800">ESC</button>
+      <button id="search-close" type="button" aria-label={currentLang === 'en' ? 'Close' : 'Fermer'} class="font-mono text-[10px] tracking-widest uppercase text-neutral-500 dark:text-neutral-400 border border-neutral-400/60 dark:border-neutral-600/60 rounded px-2 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800">ESC</button>
     </div>
   </div>
   <div id="search-results" class="flex-1 overflow-y-auto px-6 md:px-12 py-8">

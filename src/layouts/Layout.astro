@@ -242,7 +242,11 @@ const jsonLD = type === 'article'
           <span class="hand text-lg leading-none text-[var(--pen)] -ml-1 mt-1 hidden sm:inline">{lang === 'en' ? 'the notebook' : 'le carnet'}</span>
         </a>
         <nav class="hidden md:flex items-center gap-6 font-sans text-[13px] font-medium text-[var(--ink-soft)]">
-          <a href="/random" class="hover:text-[var(--pen)] transition-colors">🎲</a>
+          <a
+            href="/random"
+            aria-label={lang === 'en' ? 'Open a random article' : 'Ouvrir un article au hasard'}
+            class="hover:text-[var(--pen)] transition-colors"
+          >🎲</a>
           <a href={`${prefix}/blog`} class="hover:text-[var(--pen)] transition-colors">notes</a>
           <a href={`${prefix}/projects`} class="hover:text-[var(--pen)] transition-colors">works</a>
           <a href={`${prefix}/manifeste`} class="hover:text-[var(--pen)] transition-colors">{lang === 'en' ? 'manifesto' : 'manifeste'}</a>
@@ -255,8 +259,8 @@ const jsonLD = type === 'article'
         </div>
       </div>
     </header>
-    <main class="pt-20">
+    <div class="pt-20">
       <slot />
-    </main>
+    </div>
   </body>
 </html>
