@@ -7,7 +7,7 @@ tags: []
 excerpt: ""
 metaTitle: "Running Windows 11 on Apple Silicon Mac with VMware Fusion"
 metaDescription: "Complete guide to installing and using Windows 11 ARM on Apple Silicon Mac with free VMware Fusion Pro. Compared with Parallels and UTM."
-cover: ""
+cover: "/blog/faire-tourner-windows-11-sur-un-mac-apple-silicon-avec-vmware-fusion/vmware.webp"
 lang: en
 translation: faire-tourner-windows-11-sur-un-mac-apple-silicon-avec-vmware-fusion
 ---
