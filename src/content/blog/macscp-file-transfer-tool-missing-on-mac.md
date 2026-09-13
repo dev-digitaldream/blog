@@ -106,7 +106,7 @@ There are bugs, too. The application occasionally misbehaves when I switch serve
 
 ### A naming collision discovered later
 
-After publishing this article, I discovered [another project named macSCP](https://github.com/macnev2013/macSCP), whose GitHub repository dates back to 2021. That project is unrelated to mine. Its author now describes it as unmaintained and points to a successor called AnySCP.
+While writing this article, I discovered [another project named macSCP](https://github.com/macnev2013/macSCP), whose GitHub repository dates back to 2021. My initial searches had not surfaced it, and I did not know about it when I started my own project. Its author now describes it as unmaintained and points to a successor called AnySCP.
 
 I had started my own application independently, long before finding that repository. My private `dev-digitaldream/scp-client-macos` repository was created on November 5, 2025, and preserves the history of that independent work. The name simply combined Mac and SCP, which makes it easy to understand how two people arrived at the same idea. I still want to disclose the collision clearly. If my application is eventually released publicly, its name will need to be reconsidered to prevent confusion.
 

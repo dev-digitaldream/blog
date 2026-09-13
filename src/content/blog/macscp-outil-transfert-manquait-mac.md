@@ -116,7 +116,7 @@ Il reste aussi des bugs. Il arrive que l’application se comporte mal quand je 
 
 ### Une homonymie découverte après coup
 
-Après avoir publié ce billet, j’ai découvert [un autre projet nommé macSCP](https://github.com/macnev2013/macSCP), dont le dépôt GitHub existe depuis 2021. Ce projet est indépendant du mien. Son auteur indique qu’il n’est plus maintenu et qu’il a évolué vers une nouvelle application appelée AnySCP.
+En écrivant ce billet, j’ai découvert [un autre projet nommé macSCP](https://github.com/macnev2013/macSCP), dont le dépôt GitHub existe depuis 2021. Mes recherches initiales n’avaient rien fait apparaître, et je ne connaissais pas ce projet lorsque j’ai commencé le mien. Son auteur indique qu’il n’est plus maintenu et qu’il a évolué vers une nouvelle application appelée AnySCP.
 
 J’avais commencé mon application de mon côté bien avant de découvrir ce dépôt. Mon dépôt privé `dev-digitaldream/scp-client-macos` a été créé le 5 novembre 2025 et conserve l’historique de ce travail indépendant. Le nom venait simplement de l’association entre Mac et SCP, ce qui explique assez facilement que deux personnes aient eu la même idée. Je préfère néanmoins signaler cette homonymie clairement. Si mon application doit un jour être distribuée publiquement, son nom devra être réévalué pour éviter toute confusion.
 
