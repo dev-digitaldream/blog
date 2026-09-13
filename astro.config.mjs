@@ -17,7 +17,9 @@ for (const filename of fs.readdirSync(blogDirectory).filter((name) => /\.mdx?$/.
   const frontmatter = fs.readFileSync(path.join(blogDirectory, filename), 'utf8').split('---', 3)[1] || '';
   const lang = frontmatter.match(/^lang:\s*["']?([^\s"']+)/m)?.[1];
   const translation = frontmatter.match(/^translation:\s*["']?([^\s"']+)/m)?.[1];
-  if (lang && translation) translations.set(slug, { lang, translation });
+  const published = frontmatter.match(/^date:\s*["']?([^\s"']+)/m)?.[1];
+  const updated = frontmatter.match(/^updated:\s*["']?([^\s"']+)/m)?.[1];
+  if (lang) translations.set(slug, { lang, translation, lastmod: updated || published });
 }
 
 // https://astro.build/config
@@ -41,7 +43,9 @@ export default defineConfig({
       serialize(item) {
         const match = new URL(item.url).pathname.match(/^\/blog\/([^/]+)\/?$/);
         const entry = match ? translations.get(match[1]) : undefined;
+        if (entry?.lastmod) item.lastmod = new Date(entry.lastmod);
         if (!entry) return item;
+        if (!entry.translation) return item;
         const counterpart = translations.get(entry.translation);
         if (!counterpart) return item;
         const urls = {
