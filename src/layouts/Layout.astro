@@ -156,6 +156,18 @@ const jsonLD = type === 'article'
       }
       document.addEventListener('astro:page-load', headingAnchorCopy);
       headingAnchorCopy();
+
+      if (!window.avatarSparkBound) {
+        document.addEventListener('click', event => {
+          const portrait = event.target.closest?.('[data-avatar-spark]');
+          if (!portrait) return;
+          portrait.classList.remove('is-popping');
+          void portrait.offsetWidth;
+          portrait.classList.add('is-popping');
+          window.setTimeout(() => portrait.classList.remove('is-popping'), 620);
+        });
+        window.avatarSparkBound = true;
+      }
     </script>
   </head>
   <body class="bg-notebook grain text-neutral-900 dark:text-neutral-100">
