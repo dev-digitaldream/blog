@@ -3,12 +3,15 @@ const themes = ['light', 'dark', 'system'] as const;
 type Theme = typeof themes[number];
 ---
 
-<div class="flex items-center gap-0.5 p-0.5 rounded-full border border-neutral-300/70 dark:border-neutral-700/70" data-theme-toggle>
+<div class="theme-switcher" data-theme-toggle>
+  <span class="theme-indicator" data-theme-indicator aria-hidden="true"></span>
   {themes.map((theme) => (
     <button
+      type="button"
       data-theme-value={theme}
       aria-label={`Theme ${theme}`}
-      class="theme-btn group size-7 flex items-center justify-center rounded-full text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+      aria-pressed="false"
+      class="theme-btn group"
       onclick={`setTheme('${theme}')`}
     >
       {theme === 'light' && (
@@ -35,23 +38,83 @@ type Theme = typeof themes[number];
   ))}
 </div>
 
+<style>
+  .theme-switcher {
+    --theme-step: 30px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 2px;
+    border: 1px solid color-mix(in srgb, var(--ink-faint) 54%, transparent);
+    border-radius: 999px;
+  }
+
+  .theme-indicator {
+    position: absolute;
+    inset-block: 2px;
+    inset-inline-start: 2px;
+    width: 28px;
+    border-radius: 999px;
+    background: var(--ink);
+    box-shadow: 0 3px 9px color-mix(in srgb, var(--shadow-ink) 18%, transparent);
+    transform: translateX(calc(var(--theme-index, 0) * var(--theme-step)));
+    transition:
+      transform 260ms cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 260ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .theme-btn {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border-radius: 999px;
+    color: var(--ink-soft);
+    transition: color 180ms ease, transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .theme-btn:hover { color: var(--ink); }
+  .theme-btn:active { transform: scale(0.88); }
+  .theme-btn[aria-pressed='true'] { color: var(--paper-raised); }
+  .theme-btn:focus-visible { outline: 2px solid var(--pen); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .theme-indicator { transition-duration: 80ms; }
+    .theme-btn { transition-duration: 80ms; }
+    .theme-btn:active { transform: none; }
+  }
+</style>
+
 <script is:inline>
-  function applyTheme(theme) {
+  let themeTransitionTimer;
+
+  function applyTheme(theme, animate = false) {
     const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    if (animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('theme-transitioning');
+      clearTimeout(themeTransitionTimer);
+      themeTransitionTimer = setTimeout(() => document.documentElement.classList.remove('theme-transitioning'), 300);
+    }
     document.documentElement.classList.toggle('dark', isDark);
-    // Update active button styling
+    const favicon = document.getElementById('favicon');
+    if (favicon) favicon.href = isDark ? '/avatar-dd-white.svg' : '/favicon-light.svg';
+    const themeIndex = ['light', 'dark', 'system'].indexOf(theme);
+    document.querySelectorAll('[data-theme-toggle]').forEach((toggle) => {
+      toggle.style.setProperty('--theme-index', Math.max(themeIndex, 0));
+    });
     document.querySelectorAll('[data-theme-value]').forEach((btn) => {
       const isActive = btn.getAttribute('data-theme-value') === theme;
-      btn.classList.toggle('bg-neutral-900', isActive);
-      btn.classList.toggle('dark:bg-neutral-100', isActive);
-      btn.classList.toggle('text-white', isActive);
-      btn.classList.toggle('dark:text-neutral-900', isActive);
+      btn.setAttribute('aria-pressed', String(isActive));
     });
   }
 
   function setTheme(theme) {
     localStorage.setItem('theme', theme);
-    applyTheme(theme);
+    applyTheme(theme, true);
   }
 
   // Initialize active state on load
@@ -62,7 +125,7 @@ type Theme = typeof themes[number];
   // Listen for system theme changes
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
     if ((localStorage.getItem('theme') || 'system') === 'system') {
-      applyTheme('system');
+      applyTheme('system', true);
     }
   });
 </script>

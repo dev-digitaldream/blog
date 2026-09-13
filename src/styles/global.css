@@ -73,6 +73,25 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Transition courte déclenchée uniquement lors d'un choix de thème. */
+html.theme-transitioning body,
+html.theme-transitioning body *,
+html.theme-transitioning body *::before,
+html.theme-transitioning body *::after {
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity;
+  transition-duration: 260ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-transitioning body,
+  html.theme-transitioning body *,
+  html.theme-transitioning body *::before,
+  html.theme-transitioning body *::after {
+    transition-duration: 80ms;
+  }
+}
+
 body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
