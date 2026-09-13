@@ -2,10 +2,11 @@
 title: "Dégooglisation : comment j’ai migré Drive, Photos et Gmail vers des solutions plus privées et souveraines"
 description: "Comment je suis passé de Google (Drive, Photos, Gmail) à des services plus privés et souverains."
 date: "2025-11-16"
+updated: 2026-09-13
 category: "blog"
 tags: []
 excerpt: ""
-metaTitle: "Dégooglisation : migrer Drive, Photos et Gmail vers des alternatives privées"
+metaTitle: "Dégooglisation : quitter Drive, Photos et Gmail"
 metaDescription: "Tutoriel détaillé pour quitter Google : backup, migration, nouvelles solutions cloud, DNS, confidentialité..."
 cover: ""
 lang: fr
@@ -17,7 +18,7 @@ La dégooglisation n’est plus un sujet marginal. De plus en plus d’utilisate
 De mon côté, il ne s’agit pas d’un rejet brutal ni d’un grand ménage radical. J’ai avancé progressivement, en fonction des usages, des contraintes techniques et des alternatives réellement disponibles. Certaines décisions sont très claires, d’autres beaucoup plus nuancées, et c’est justement ce que je partage ici.
 
 
-**Pourquoi se dégoogliser ?**
+## Pourquoi se dégoogliser ?
 
 La question n’est pas morale, elle est pratique. Google concentre une quantité énorme de données personnelles et professionnelles : fichiers, photos, mails, historiques, localisation, habitudes d’usage. Tout fonctionne bien, parfois même trop bien, mais au prix d’une dépendance totale à un seul écosystème.
 
@@ -25,7 +26,7 @@ Se dégoogliser permet surtout de reprendre la main. Réduire cette dépendance,
 
 ⸻
 
-_1. Migrer Google Drive vers kDrive (Infomaniak)_
+## 1. Migrer Google Drive vers kDrive (Infomaniak)
 
 Google Drive hébergeait plus de 1,5 To de documents personnels et professionnels. Une migration locale aurait été longue et peu fiable. J’ai donc opté pour une approche plus efficace.
 
@@ -35,7 +36,7 @@ kDrive représente aujourd’hui une alternative européenne solide, hébergée 
 
 ⸻
 
-_2. Quitter Google Photos : NAS QNAP + Immich_
+## 2. Quitter Google Photos : NAS QNAP + Immich
 
 Google Photos reste objectivement l’un des meilleurs services du marché. Performant, fiable, confortable. Malgré cela, pour des raisons de confidentialité, j’ai choisi de rapatrier l’ensemble de ma photothèque sur un NAS QNAP avec Immich comme interface.
 
@@ -45,7 +46,7 @@ Mais c’est cohérent avec un choix d’auto-hébergement. Ce n’est ni plus s
 
 
 
-_3. Migration progressive de Gmail_
+## 3. Migration progressive de Gmail
 
 Le mail est toujours la partie la plus délicate d’une dégooglisation. Changer d’adresse, prévenir les contacts, migrer les usages prend du temps.
 
@@ -55,7 +56,7 @@ Ce n’est pas encore parfaitement structuré, mais c’est fonctionnel et surto
 
 
 
-_4. Ce que je garde encore chez Google_
+## 4. Ce que je garde encore chez Google
 
 La dégooglisation reste un processus progressif. Certaines briques sont encore difficiles à remplacer.
 
@@ -63,7 +64,7 @@ Google Sheets en fait partie. Aucune alternative actuelle n’offre le même niv
 
 Google Photos reste également présent, mais de manière très limitée. Même après migration, je reconnais son efficacité et sa fiabilité. L’objectif n’est pas l’abandon total, mais la réduction de l’exposition.
 
-**Conclusion : une dégooglisation réaliste et maîtrisée**
+## Conclusion : une dégooglisation réaliste et maîtrisée
 
 La dégooglisation n’est pas un grand saut dans le vide. C’est une suite de décisions progressives et assumées : Drive vers kDrive, Photos vers NAS et Immich, Gmail vers une solution indépendante, sauvegardes réparties entre NAS et cloud européen, accès externe sécurisé via Cloudflare Tunnel.
 

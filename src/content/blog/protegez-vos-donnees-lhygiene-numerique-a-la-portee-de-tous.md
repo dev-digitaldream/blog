@@ -2,11 +2,12 @@
 title: "Protégez vos données : l’hygiène numérique à la portée de tous"
 description: "L’hygiène numérique expliquée simplement : mots de passe, 2FA, gestionnaires, clés de sécurité physiques et bonnes pratiques pour protéger ses données sans devenir parano."
 date: "2024-04-16"
+updated: 2026-09-13
 category: "blog"
 tags: []
 excerpt: ""
 metaTitle: "Protégez vos données : l’hygiène numérique à la portée de tous"
-metaDescription: "L’hygiène numérique expliquée simplement : mots de passe, 2FA, gestionnaires, clés de sécurité physiques et bonnes pratiques pour protéger ses données sans devenir parano."
+metaDescription: "Mots de passe uniques, gestionnaire, 2FA et clés de sécurité : des habitudes simples et réalistes pour mieux protéger ses données au quotidien."
 cover: ""
 lang: fr
 translation: protect-your-data-digital-hygiene-for-everyone

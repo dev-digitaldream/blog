@@ -2,10 +2,11 @@
 title: "Astro racheté par Cloudflare, quand les frameworks cessent d’être neutres"
 description: "Analyse pragmatique du rachat d’Astro par Cloudflare et de ce que cette convergence entre framework et infrastructure change réellement pour les développeurs."
 date: "2026-01-18"
+updated: 2026-09-13
 category: "blog"
 tags: []
 excerpt: ""
-metaTitle: "Astro racheté par Cloudflare, quand les frameworks cessent d’être neutres"
+metaTitle: "Rachat d’Astro par Cloudflare : quels changements ?"
 metaDescription: "Analyse pragmatique du rachat d’Astro par Cloudflare et de ce que cette convergence entre framework et infrastructure change réellement pour les développeurs."
 cover: ""
 lang: fr

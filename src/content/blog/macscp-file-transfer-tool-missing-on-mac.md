@@ -2,6 +2,7 @@
 title: "macSCP: I built the file transfer tool I was missing on Mac"
 description: "Moving from Windows to Mac left a gap where WinSCP used to be. I built macSCP with AI assistance to handle my everyday file transfers."
 date: 2026-09-12
+updated: 2026-09-13
 lang: en
 translation: macscp-outil-transfert-manquait-mac
 draft: false
@@ -10,7 +11,7 @@ tags: ["macOS", "SCP", "SFTP", "development", "AI"]
 cover: "/blog/macscp/macscp-desktop.webp"
 excerpt: "I now do 99% of my work on macOS. macSCP filled a practical gap: a straightforward interface for moving files to and from my Linux machines."
 metaTitle: "macSCP: the file transfer tool I was missing on Mac"
-metaDescription: "Moving from Windows to macOS, building macSCP with Claude Code and then Codex, with Chinese models via the excellent OpenCode along the way, and using it to transfer files to my Linux machines."
+metaDescription: "How I built macSCP to replace my WinSCP workflow on macOS and transfer files between my Mac, iPhone, iPad, and remote Linux machines."
 ---
 
 Before leaving Windows as my main operating system for work (in my personal life, I have been an Apple guy since the Intel beta tests and the first Hackintoshes; yes, I am that old, kid), I had one remaining problem to solve: getting back what I used WinSCP for, on macOS. My files on one side, a remote machine on the other, and a graphical interface to move files between them without going through the terminal. I wanted to change operating systems without giving up all my habits.

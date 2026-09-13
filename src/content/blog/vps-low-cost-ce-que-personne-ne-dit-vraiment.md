@@ -2,6 +2,7 @@
 title: "VPS low cost. Ce que personne ne dit vraiment"
 description: "Avis sur les VPS low cost, fournisseurs peu fiables, retour d’expérience et recommandation RackNerd"
 date: "2025-11-16"
+updated: 2026-09-13
 category: "blog"
 tags: []
 excerpt: ""
@@ -20,7 +21,7 @@ Je partage ici une expérience répétée chez plusieurs fournisseurs, notamment
 
 ⸻
 
-Le syndrome du VPS pas cher. Accessible quand il veut
+## Le syndrome du VPS pas cher : accessible quand il veut
 
 Les offres ultra low cost qui tournent autour de dix euros par an ont toutes un point commun. Le VPS fonctionne correctement au moment de la commande, puis devient aléatoire après quelques jours.
 
@@ -30,7 +31,7 @@ Chez certains fournisseurs, j’ai passé plus de temps à essayer d’ouvrir un
 
 ⸻
 
-Le support qui tourne en rond
+## Le support qui tourne en rond
 
 Le support chez ces hébergeurs suit un schéma très prévisible.
 
@@ -45,7 +46,7 @@ C’est comme si on vous disait de changer de maison à chaque fois que la porte
 
 ⸻
 
-Quand le prix devient un piège
+## Quand le prix devient un piège
 
 Un VPS à dix euros par an, c’est séduisant sur le papier. En pratique, cela coûte beaucoup plus cher que son prix, mais en temps perdu et en énergie mentale.
 
@@ -55,7 +56,7 @@ Pour des tests ultra ponctuels, pourquoi pas. Pour un minimum de stabilité, ce 
 
 ⸻
 
-Le contre exemple. RackNerd
+## Le contre-exemple : RackNerd
 
 Après plusieurs essais chez différents fournisseurs, celui qui s’est révélé réellement fiable dans la catégorie low cost est RackNerd.
 
@@ -73,7 +74,7 @@ Pour mes besoins actuels, notamment pour tester CapRover, Dokploy ou des stacks 
 ⸻
 ![vps](/blog/vps-low-cost-ce-que-personne-ne-dit-vraiment/vps.webp "vps")
 
-Je ne cherche pas le parfait. Je cherche le fonctionnel
+## Je ne cherche pas le parfait, je cherche le fonctionnel
 
 Les VPS low cost ont leur place.
 On ne demande pas du SLA digne d’un datacenter Tier IV.
@@ -85,7 +86,7 @@ La différence de prix est minime comparée au temps perdu à tout recommencer.
 
 ⸻
 
-Conclusion
+## Conclusion
 
 Le low cost n’est pas un problème en soi. Le problème, c’est quand le prix bas devient la seule valeur ajoutée du service, au point qu’il n’y a plus rien derrière.
 

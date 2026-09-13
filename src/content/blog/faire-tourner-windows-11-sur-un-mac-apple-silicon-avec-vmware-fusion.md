@@ -2,11 +2,12 @@
 title: "Faire tourner Windows 11 sur un Mac Apple Silicon avec VMware Fusion"
 description: "Guide complet pour installer et utiliser Windows 11 ARM sur un Mac Apple Silicon avec VMware Fusion Pro gratuit. Comparaison avec Parallels et UTM, performances, limites et cas d’usage réels."
 date: "2026-01-11"
+updated: 2026-09-13
 category: "blog"
 tags: []
 excerpt: ""
-metaTitle: "Faire tourner Windows 11 sur un Mac Apple Silicon avec VMware Fusion"
-metaDescription: "Guide complet pour installer et utiliser Windows 11 ARM sur un Mac Apple Silicon avec VMware Fusion Pro gratuit. Comparaison avec Parallels et UTM, performances, limites et cas d’usage réels."
+metaTitle: "Windows 11 sur Mac Apple Silicon avec VMware Fusion"
+metaDescription: "Installer Windows 11 ARM sur un Mac Apple Silicon avec VMware Fusion Pro gratuit : performances, limites et comparaison avec Parallels et UTM."
 cover: "/blog/faire-tourner-windows-11-sur-un-mac-apple-silicon-avec-vmware-fusion/vmware.webp"
 lang: fr
 translation: running-windows-11-on-apple-silicon-mac-vmware-fusion

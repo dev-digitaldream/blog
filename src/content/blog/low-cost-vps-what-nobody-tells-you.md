@@ -2,6 +2,7 @@
 title: "Low Cost VPS. What Nobody Really Tells You"
 description: "Honest review of cheap VPS providers, unreliable hosts, real-world experience, and why RackNerd is the exception."
 date: "2025-11-16"
+updated: 2026-09-13
 category: "blog"
 tags: []
 excerpt: ""
@@ -20,7 +21,7 @@ I'm sharing repeated experiences across several providers here, especially the v
 
 ---
 
-The cheap VPS syndrome. Available when it feels like it
+## The cheap VPS syndrome: available when it feels like it
 
 Ultra low cost offers hovering around ten euros a year all share one thing in common. The VPS works fine when you order it, then turns flaky after a few days.
 
@@ -30,7 +31,7 @@ With some providers, I spent more time trying to establish an SSH connection tha
 
 ---
 
-The support loop
+## The support loop
 
 Support at these hosts follows a very predictable pattern.
 
@@ -45,7 +46,7 @@ It's like being told to move houses every time your front door gets stuck.
 
 ---
 
-When the price becomes the trap
+## When the price becomes the trap
 
 A ten-euro-a-year VPS looks appealing on paper. In practice, it costs way more than its price tag, but in wasted time and mental energy.
 
@@ -55,7 +56,7 @@ For very occasional testing, sure. For any semblance of stability, it's not viab
 
 ---
 
-The exception. RackNerd
+## The exception: RackNerd
 
 After several attempts with different providers, the one that actually proved reliable in the low cost category is RackNerd.
 
@@ -73,7 +74,7 @@ For my current needs, specifically testing CapRover, Dokploy, or quick Docker st
 ---
 ![vps](/blog/vps-low-cost-ce-que-personne-ne-dit-vraiment/vps.webp "vps")
 
-I'm not looking for perfect. I'm looking for functional
+## I'm not looking for perfect, I'm looking for functional
 
 Low cost VPS hosts have their place.
 Nobody is asking for Tier IV datacenter SLA.
@@ -85,7 +86,7 @@ The price difference is tiny compared to the time lost starting over every time.
 
 ---
 
-Conclusion
+## Conclusion
 
 Low cost isn't the problem. The problem is when the low price becomes the service's only value, to the point where there's nothing left behind it.
 

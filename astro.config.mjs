@@ -22,6 +22,22 @@ for (const filename of fs.readdirSync(blogDirectory).filter((name) => /\.mdx?$/.
   if (lang) translations.set(slug, { lang, translation, lastmod: updated || published });
 }
 
+const staticTranslations = new Map([
+  ['/commencer/', '/en/start-here/'],
+  ['/sujets/', '/en/topics/'],
+  ['/partenariats/', '/en/partnerships/'],
+  ['/sujets/apple-et-outils/', '/en/topics/apple-and-tools/'],
+  ['/sujets/auto-hebergement-et-infrastructure/', '/en/topics/self-hosting-and-infrastructure/'],
+  ['/sujets/ia-appliquee/', '/en/topics/applied-ai/'],
+  ['/sujets/vie-privee-et-securite/', '/en/topics/privacy-and-security/'],
+  ['/sujets/developpement-et-architecture/', '/en/topics/development-and-architecture/'],
+]);
+const staticTranslationByPath = new Map();
+for (const [frPath, enPath] of staticTranslations) {
+  staticTranslationByPath.set(frPath, { frPath, enPath });
+  staticTranslationByPath.set(enPath, { frPath, enPath });
+}
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://blog.digitaldream.work',
@@ -42,7 +58,17 @@ export default defineConfig({
         locales: { fr: 'fr-FR', en: 'en-US' },
       },
       serialize(item) {
-        const match = new URL(item.url).pathname.match(/^\/blog\/([^/]+)\/?$/);
+        const pathname = new URL(item.url).pathname;
+        const staticPair = staticTranslationByPath.get(pathname);
+        if (staticPair) {
+          item.links = [
+            { lang: 'fr-FR', url: `https://blog.digitaldream.work${staticPair.frPath}` },
+            { lang: 'en-US', url: `https://blog.digitaldream.work${staticPair.enPath}` },
+            { lang: 'x-default', url: `https://blog.digitaldream.work${staticPair.frPath}` },
+          ];
+          return item;
+        }
+        const match = pathname.match(/^\/blog\/([^/]+)\/?$/);
         const entry = match ? translations.get(match[1]) : undefined;
         if (entry?.lastmod) item.lastmod = new Date(entry.lastmod);
         if (!entry) return item;

@@ -2,10 +2,11 @@
 title: "De-Googling: How I Migrated Drive, Photos, and Gmail to More Private and Sovereign Solutions"
 description: "Step by step: how I went from Google (Drive, Photos, Gmail) to more private, self-hosted, and European alternatives."
 date: "2025-11-16"
+updated: 2026-09-13
 category: "blog"
 tags: []
 excerpt: ""
-metaTitle: "De-Googling: How I Migrated Drive, Photos, and Gmail to More Private and Sovereign Solutions"
+metaTitle: "De-Googling: Leaving Drive, Photos, and Gmail"
 metaDescription: "Step by step: how I went from Google (Drive, Photos, Gmail) to more private, self-hosted, and European alternatives."
 cover: ""
 lang: en
@@ -16,7 +17,7 @@ De-googling is no longer a fringe topic. More and more people are looking to red
 
 On my end, this was not a sudden rejection or a radical purge. I moved forward gradually, based on actual usage, technical constraints, and what alternatives were really available. Some decisions are very clear, others are much more nuanced, and that is exactly what I am sharing here.
 
-**Why de-Google?**
+## Why de-Google?
 
 The question is not moral, it is practical. Google holds an enormous amount of personal and professional data: files, photos, emails, history, location, usage patterns. Everything works well, sometimes too well, but at the cost of total dependence on a single ecosystem.
 
@@ -24,7 +25,7 @@ De-googling is mostly about taking back control. Reducing that dependence, choos
 
 ---
 
-_1. Migrating Google Drive to kDrive (Infomaniak)_
+## 1. Migrating Google Drive to kDrive (Infomaniak)
 
 Google Drive was hosting over 1.5 TB of personal and professional documents. A local migration would have been slow and unreliable. So I went with a more efficient approach.
 
@@ -34,7 +35,7 @@ kDrive is a solid European alternative, hosted in Switzerland, with no commercia
 
 ---
 
-_2. Leaving Google Photos: QNAP NAS + Immich_
+## 2. Leaving Google Photos: QNAP NAS + Immich
 
 Google Photos is objectively one of the best services on the market. Powerful, reliable, convenient. Despite that, for privacy reasons, I chose to bring my entire photo library back to a QNAP NAS using Immich as the interface.
 
@@ -44,7 +45,7 @@ But it is consistent with a self-hosting choice. It is neither simpler nor more 
 
 ---
 
-_3. Gradual migration from Gmail_
+## 3. Gradual migration from Gmail
 
 Email is always the trickiest part of de-googling. Changing your address, notifying contacts, migrating usage patterns all take time.
 
@@ -54,7 +55,7 @@ It is not perfectly structured yet, but it is functional and, most importantly, 
 
 ---
 
-_4. What I still keep at Google_
+## 4. What I still keep at Google
 
 De-googling remains a gradual process. Some pieces are still hard to replace.
 
@@ -62,7 +63,7 @@ Google Sheets is one of them. No current alternative offers the same level of co
 
 Google Photos is also still around, but in a very limited way. Even after migration, I recognize its effectiveness and reliability. The goal is not total abandonment, but reducing exposure.
 
-**Conclusion: a realistic and controlled de-googling**
+## Conclusion: a realistic and controlled de-googling
 
 De-googling is not a leap into the unknown. It is a series of progressive, deliberate decisions: Drive to kDrive, Photos to NAS and Immich, Gmail to an independent solution, backups split between NAS and European cloud, secure external access through Cloudflare Tunnel.
 

@@ -2,10 +2,11 @@
 title: "Astro Bought by Cloudflare: When Frameworks Stop Being Neutral"
 description: "A pragmatic analysis of the Astro-Cloudflare acquisition and what this framework-infrastructure convergence means for developers."
 date: "2026-01-18"
+updated: 2026-09-13
 category: "blog"
 tags: []
 excerpt: ""
-metaTitle: "Astro Bought by Cloudflare: When Frameworks Stop Being Neutral"
+metaTitle: "Cloudflare Buys Astro: What Changes for Developers?"
 metaDescription: "A pragmatic analysis of the Astro-Cloudflare acquisition and what this framework-infrastructure convergence means for developers."
 cover: ""
 lang: en
