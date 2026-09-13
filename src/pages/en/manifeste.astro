@@ -174,15 +174,15 @@ const t = {
           <h2 class="font-display font-bold tracking-tight text-2xl md:text-3xl text-ink mb-5">{t.s4.title}</h2>
           <ul class="space-y-3 mb-5 list-none p-0 m-0">
             {t.s4.items.map(item => (
-              <li class="flex items-start gap-3 font-serif text-[17px] text-ink-faint">
+              <li class="flex items-start gap-3 font-serif text-[17px] text-ink-soft">
                 <svg class="mt-1.5 shrink-0 text-pen" width="13" height="13" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                   <path d="M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
-                <span class="line-through decoration-[var(--pen)] decoration-wavy decoration-2 underline-offset-4">{item}</span>
+                <span>{item}</span>
               </li>
             ))}
           </ul>
-          <p class="hand text-xl text-ink-faint rotate-[0.5deg]">{t.s4.note}</p>
+          <p class="hand text-xl text-ink-soft rotate-[0.5deg]">{t.s4.note}</p>
         </div>
       </div>
 
