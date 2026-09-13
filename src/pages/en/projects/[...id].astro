@@ -4,7 +4,7 @@ import Footer from '../../../components/Footer.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects');
+  const projects = await getCollection('projects', ({ data }) => data.lang === 'en' && !data.draft);
   return projects.map((project: any) => ({
     params: { id: project.id },
     props: { project },
@@ -13,6 +13,7 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
+const currentLang = 'en';
 
 function fmtDate(d: Date | string, lang: string) {
   return new Date(d).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {
@@ -21,7 +22,7 @@ function fmtDate(d: Date | string, lang: string) {
 }
 ---
 
-<Layout title={`${project.data.title} · DigitalDream`} description={project.data.description}>
+<Layout lang="en" title={`${project.data.title} · DigitalDream`} description={project.data.description} image={project.data.cover} alternatePath={project.data.translation ? `/projects/${project.data.translation}/` : undefined}>
   <main class="min-h-screen text-ink relative">
     <div class="hidden lg:block absolute top-0 bottom-0 left-10 w-px bg-pen/25 pointer-events-none" aria-hidden="true"></div>
     <div class="hidden lg:block absolute top-0 bottom-0 left-[42px] w-px bg-pen/25 pointer-events-none" aria-hidden="true"></div>
@@ -45,6 +46,13 @@ function fmtDate(d: Date | string, lang: string) {
         <p class="font-serif text-xl md:text-2xl leading-relaxed text-ink-soft mb-10 pl-5 border-l-[3px] border-[var(--pen)]">
           {project.data.description}
         </p>
+      )}
+
+      {project.data.cover && (
+        <div class="relative paper-card tilt-1 p-3 mb-12">
+          <span class="tape tape-c" aria-hidden="true"></span>
+          <img src={project.data.cover} alt={project.data.title} width="1200" height="836" class="w-full h-auto rounded-md" loading="eager" decoding="async" />
+        </div>
       )}
 
       {(project.data.demoURL || project.data.repoURL) && (

@@ -38,6 +38,18 @@ for (const [frPath, enPath] of staticTranslations) {
   staticTranslationByPath.set(enPath, { frPath, enPath });
 }
 
+const projectDirectory = path.resolve('src/content/projects');
+const projectTranslations = new Map();
+if (fs.existsSync(projectDirectory)) {
+  for (const filename of fs.readdirSync(projectDirectory).filter((name) => /\.mdx?$/.test(name))) {
+    const slug = filename.replace(/\.mdx?$/, '');
+    const frontmatter = fs.readFileSync(path.join(projectDirectory, filename), 'utf8').split('---', 3)[1] || '';
+    const lang = frontmatter.match(/^lang:\s*["']?([^\s"']+)/m)?.[1];
+    const translation = frontmatter.match(/^translation:\s*["']?([^\s"']+)/m)?.[1];
+    if (lang) projectTranslations.set(slug, { lang, translation });
+  }
+}
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://blog.digitaldream.work',
@@ -67,6 +79,23 @@ export default defineConfig({
             { lang: 'x-default', url: `https://blog.digitaldream.work${staticPair.frPath}` },
           ];
           return item;
+        }
+        const projectMatch = pathname.match(/^\/(?:en\/)?projects\/([^/]+)\/?$/);
+        const projectEntry = projectMatch ? projectTranslations.get(projectMatch[1]) : undefined;
+        if (projectEntry?.translation) {
+          const counterpart = projectTranslations.get(projectEntry.translation);
+          if (counterpart) {
+            const urls = {
+              [projectEntry.lang]: item.url,
+              [counterpart.lang]: `https://blog.digitaldream.work/${counterpart.lang === 'en' ? 'en/' : ''}projects/${projectEntry.translation}/`,
+            };
+            item.links = [
+              { lang: 'fr-FR', url: urls.fr },
+              { lang: 'en-US', url: urls.en },
+              { lang: 'x-default', url: urls.fr },
+            ];
+            return item;
+          }
         }
         const match = pathname.match(/^\/blog\/([^/]+)\/?$/);
         const entry = match ? translations.get(match[1]) : undefined;

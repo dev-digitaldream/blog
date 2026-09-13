@@ -50,7 +50,7 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
         <ul class="grid grid-cols-1 md:grid-cols-2 gap-7 md:gap-8 list-none p-0 m-0">
           {projects.map((project: any, i: number) => (
             <li>
-              <a href={`/projects/${project.id}`} class:list={['paper-card group relative flex h-full flex-col p-6 md:p-8 no-underline', tilts[i % tilts.length]]}>
+              <a href={`/en/projects/${project.id}`} class:list={['paper-card group relative flex h-full flex-col p-6 md:p-8 no-underline', tilts[i % tilts.length]]}>
                 <span class:list={['tape', i % 2 === 0 ? 'tape-c' : 'tape-r']} aria-hidden="true"></span>
                 <h3 class="font-display font-semibold tracking-tight text-2xl text-ink leading-tight mb-3 group-hover:text-pen transition-colors">
                   {project.data.title}
