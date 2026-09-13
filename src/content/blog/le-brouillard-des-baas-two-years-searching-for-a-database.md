@@ -3,6 +3,7 @@ title: "The BaaS Fog: Two Years Searching for a Database"
 description: "Firebase, Supabase, Neon, Convex: two years testing BaaS for a real-time app. What nobody tells you about the trade-offs."
 date: "2026-03-29"
 updated: 2026-09-13
+updateNote: "Information about Firestore billing, Neon Auth, Neon’s Data API, and Convex self-hosting was checked and updated."
 tags: ["baas", "supabase", "firebase", "architecture", "backend"]
 cover: "https://pub-8d35cf03c12f4e258a891dd5fc8f9fe4.r2.dev/blog/baas-cover.webp"
 lang: en

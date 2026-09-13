@@ -3,6 +3,7 @@ title: "Le Brouillard des BaaS : Deux Ans à Chercher une Base de Données"
 description: "Firebase, Supabase, Neon, Convex : deux ans à tester les BaaS pour une app temps réel. Ce que personne ne dit sur les compromis."
 date: "2026-03-29"
 updated: 2026-09-13
+updateNote: "Les informations sur la facturation de Firestore, Neon Auth, la Data API de Neon et l’auto-hébergement de Convex ont été vérifiées et actualisées."
 slug: "le-brouillard-des-baas-deux-ans-a-chercher-une-base-de-donne"
 tags: ["baas", "supabase", "firebase", "architecture", "backend"]
 cover: "https://pub-8d35cf03c12f4e258a891dd5fc8f9fe4.r2.dev/blog/baas-cover.webp"

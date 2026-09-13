@@ -63,6 +63,8 @@ const strings = {
     relatedTitle: 'D’autres pages du carnet',
     read: 'lire',
     filedUnder: 'dans les dossiers',
+    updateLabel: 'mise à jour',
+    updateDefault: 'Ce billet a été relu et actualisé pour tenir compte des évolutions du sujet.',
   },
   en: {
     back: 'back to the notebook',
@@ -72,6 +74,8 @@ const strings = {
     relatedTitle: 'More notebook pages',
     read: 'read',
     filedUnder: 'filed under',
+    updateLabel: 'updated',
+    updateDefault: 'This article was reviewed and updated to reflect changes in the subject.',
   },
 };
 const t = strings[post.data.lang as 'fr' | 'en'] ?? strings.fr;
@@ -137,6 +141,17 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3'];
           <span class="tape tape-c" aria-hidden="true"></span>
           <img src={post.data.cover} alt={post.data.title} class="w-full h-auto rounded-md" loading="eager" decoding="async" />
         </div>
+      )}
+
+      {post.data.updated && (
+        <aside class="mb-10 rounded-lg border border-dashed border-[var(--pen)]/55 bg-[var(--paper-raised)] px-5 py-4" aria-label={t.updateLabel}>
+          <p class="hand text-xl md:text-2xl leading-none text-pen mb-1.5">
+            {t.updateLabel} · {fmtDateLong(post.data.updated, currentLang)}
+          </p>
+          <p class="font-serif text-base leading-relaxed text-ink-soft m-0">
+            {post.data.updateNote || t.updateDefault}
+          </p>
+        </aside>
       )}
 
       <!-- Corps -->
