@@ -4,6 +4,8 @@ import Footer from '../../components/Footer.astro';
 import ReadingProgress from '../../components/ReadingProgress.astro';
 import { getCollection, render } from 'astro:content';
 import readingTime from 'reading-time';
+import fs from 'node:fs';
+import path from 'node:path';
 
 export async function getStaticPaths() {
   const blog = await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft);
@@ -19,6 +21,16 @@ const currentLang = post.data.lang;
 
 const stats = readingTime(post.body || '');
 const readMinutes = Math.max(1, Math.round(stats.minutes));
+
+function firstLocalImage(body: string | undefined): string | undefined {
+  const match = body?.match(/!\[[^\]]*\]\((\/[^)\s"]+)/);
+  if (!match) return undefined;
+  const imagePath = match[1];
+  const filePath = path.join(process.cwd(), 'public', decodeURIComponent(imagePath));
+  return fs.existsSync(filePath) ? imagePath : undefined;
+}
+
+const socialImage = post.data.cover || firstLocalImage(post.body);
 
 const allPosts = await getCollection('blog', ({ data }: any) => !data.draft);
 const related = allPosts
@@ -69,7 +81,7 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3'];
   lang={currentLang}
   title={`${post.data.metaTitle || post.data.title} · DigitalDream`}
   description={post.data.metaDescription || post.data.description}
-  image={post.data.cover}
+  image={socialImage}
   type="article"
   publishedTime={post.data.date}
   modifiedTime={post.data.updated}

@@ -46,8 +46,6 @@ Concretely, you can create as many virtual machines as you need, freely allocate
 
 The trade-off is mostly about support. There is no dedicated hotline or priority tickets, and you rely on documentation and community forums. For personal, educational, or test use, this is usually not a problem. You just need to accept that a Broadcom account is required to download Fusion, which is not very elegant, but once the software is installed, it stays out of your way.
 
-![vmware](/blog/faire-tourner-windows-11-sur-un-mac-apple-silicon-avec-vmware-fusion/vmware.webp "vmware")
-
 ## Installing Windows 11, What Really Changes
 
 Windows 11 introduced additional requirements, especially around security, with things like TPM, Secure Boot, and encryption. On paper, this can seem restrictive, but in practice, it is mostly a set of rules to follow.

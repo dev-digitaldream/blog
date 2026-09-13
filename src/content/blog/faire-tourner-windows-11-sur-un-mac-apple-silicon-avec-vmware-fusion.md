@@ -49,8 +49,6 @@ Concrètement, on peut créer autant de machines virtuelles que nécessaire, all
 
 La contrepartie concerne surtout le support. Il n’y a pas de hotline dédiée ni de tickets prioritaires, et on s’appuie sur la documentation et les forums communautaires. Pour un usage personnel, éducatif ou de test, ce n’est généralement pas un problème. Il faut simplement accepter qu’un compte Broadcom soit requis pour télécharger Fusion, ce qui n’est pas très élégant, mais une fois le logiciel installé, il sait se faire discret.
 
-![vmware](/blog/faire-tourner-windows-11-sur-un-mac-apple-silicon-avec-vmware-fusion/vmware.webp "vmware")
-
 
 
 ## Installer Windows 11, ce qui change vraiment

@@ -68,4 +68,4 @@ De-googling is not a leap into the unknown. It is a series of progressive, delib
 
 Each step aims for the same goal: keep control without sacrificing convenience entirely. It is not perfect, but it is consistent, and above all, sustainable.
 
-![degoogl](/blog/degooglification-comment-jai-migre-drive-photos-et-gmail-vers-des-solutions-plus-privees-et-souveraines/degoogl.webp "degoogl")
+![degoogl](/blog/degooglisation-comment-jai-migre-drive-photos-et-gmail-vers-des-solutions-plus-privees-et-souveraines/degoogl.webp "degoogl")
