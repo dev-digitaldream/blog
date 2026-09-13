@@ -207,8 +207,15 @@ const jsonLD = type === 'article'
     <meta name="author" content={author} />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#f5eeda" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1b1f31" media="(prefers-color-scheme: dark)" />
+    <meta name="apple-mobile-web-app-title" content="Carnet DD" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <LanguageSuggest lang={lang} />
     <link id="favicon" rel="icon" type="image/svg+xml" href="/favicon-light.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href={canonicalURL} />
     <link rel="author" href={lang === 'en' ? '/en/manifeste/' : '/manifeste/'} />
     <link rel="sitemap" href="/sitemap-index.xml" />
