@@ -115,7 +115,7 @@ const jsonLD = type === 'article'
       <link rel="alternate" hreflang={alternate.lang} href={alternate.url} />
     ))}
     {defaultLanguageURL && <link rel="alternate" hreflang="x-default" href={defaultLanguageURL} />}
-    <link rel="alternate" type="application/rss+xml" title="DigitalDream Blog" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title={lang === 'en' ? 'DigitalDream · The notebook' : 'DigitalDream · Le carnet'} href={lang === 'en' ? '/en/rss.xml' : '/rss.xml'} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
 
