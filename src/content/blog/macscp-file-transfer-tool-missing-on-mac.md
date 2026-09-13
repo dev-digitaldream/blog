@@ -3,7 +3,7 @@ title: "macSCP: I built the file transfer tool I was missing on Mac"
 description: "Moving from Windows to Mac left a gap where WinSCP used to be. I built macSCP with AI assistance to handle my everyday file transfers."
 date: 2026-09-12
 updated: 2026-09-13
-updateNote: "The article now clarifies that macSCP addresses my particular workflow rather than a complete absence of Mac clients. Available features and work still in progress remain clearly separated."
+updateNote: "The article now clarifies that macSCP addresses my particular workflow rather than a complete absence of Mac clients. A naming collision discovered after publication is also disclosed."
 lang: en
 translation: macscp-outil-transfert-manquait-mac
 draft: false
@@ -103,6 +103,12 @@ I would also like to store the commands we use at work inside the application. F
 There are bugs, too. The application occasionally misbehaves when I switch servers. It is rare in my use, but it is one of the things that needs fixing. Using my own tool every day gives me as many ideas for improvements as reasons to feel pleased with it.
 
 ## I have not decided what comes next
+
+### A naming collision discovered later
+
+After publishing this article, I discovered [another project named macSCP](https://github.com/macnev2013/macSCP), whose GitHub repository dates back to 2021. That project is unrelated to mine. Its author now describes it as unmaintained and points to a successor called AnySCP.
+
+I had started my own application independently, long before finding that repository. My private `dev-digitaldream/scp-client-macos` repository was created on November 5, 2025, and preserves the history of that independent work. The name simply combined Mac and SCP, which makes it easy to understand how two people arrived at the same idea. I still want to disclose the collision clearly. If my application is eventually released publicly, its name will need to be reconsidered to prevent confusion.
 
 I am still considering whether to open up the code and share it on GitHub or offer the application through the App Store. Nothing has been decided about distribution, licensing, or timing. That decision will be the subject of a future post. For now, I would rather describe the application as I use it.
 

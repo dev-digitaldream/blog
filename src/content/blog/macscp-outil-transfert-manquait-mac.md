@@ -4,7 +4,7 @@ description: Pour terminer ma migration de Windows vers Mac, il me manquait mon
   usage de WinSCP. J'ai créé macSCP avec l'aide de l'IA.
 date: 2026-09-12
 updated: 2026-09-13
-updateNote: "Le billet précise désormais que macSCP répond à mon flux de travail particulier plutôt qu’à une absence totale de clients Mac. Les fonctions disponibles et celles encore en développement restent clairement séparées."
+updateNote: "Le billet précise désormais que macSCP répond à mon flux de travail particulier plutôt qu’à une absence totale de clients Mac. Une homonymie découverte après publication est également signalée."
 lang: fr
 translation: macscp-file-transfer-tool-missing-on-mac
 draft: false
@@ -113,6 +113,12 @@ Je voudrais aussi pouvoir garder dans l’application les commandes que nous uti
 Il reste aussi des bugs. Il arrive que l’application se comporte mal quand je change de serveur. C’est rare dans mon usage, mais ça fait partie des choses à corriger. Utiliser mon propre outil tous les jours me donne autant d’idées d’amélioration que de raisons d’en être content.
 
 ## Pour la suite, je n’ai pas encore tranché
+
+### Une homonymie découverte après coup
+
+Après avoir publié ce billet, j’ai découvert [un autre projet nommé macSCP](https://github.com/macnev2013/macSCP), dont le dépôt GitHub existe depuis 2021. Ce projet est indépendant du mien. Son auteur indique qu’il n’est plus maintenu et qu’il a évolué vers une nouvelle application appelée AnySCP.
+
+J’avais commencé mon application de mon côté bien avant de découvrir ce dépôt. Mon dépôt privé `dev-digitaldream/scp-client-macos` a été créé le 5 novembre 2025 et conserve l’historique de ce travail indépendant. Le nom venait simplement de l’association entre Mac et SCP, ce qui explique assez facilement que deux personnes aient eu la même idée. Je préfère néanmoins signaler cette homonymie clairement. Si mon application doit un jour être distribuée publiquement, son nom devra être réévalué pour éviter toute confusion.
 
 J’hésite encore entre ouvrir le code et le partager sur GitHub, et proposer l’application sur l’App Store. Rien n’est décidé sur la forme de distribution, la licence ou le calendrier. Ce choix fera l’objet d’un prochain billet. Pour l’instant, je préfère décrire l’application telle qu’elle me sert.
 
