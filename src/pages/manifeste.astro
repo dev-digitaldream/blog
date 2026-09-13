@@ -77,7 +77,10 @@ const t = {
 }[currentLang];
 ---
 
-<Layout title={`${currentLang === 'fr' ? 'Manifeste' : 'Manifesto'} · DigitalDream`}>
+<Layout
+  title={`${currentLang === 'fr' ? 'Manifeste' : 'Manifesto'} · DigitalDream`}
+  description="Pourquoi DD tient ce carnet, écrit anonymement et teste réellement les outils et produits présentés, sans publicité déguisée."
+>
   <main class="min-h-screen text-ink relative">
     <!-- Marge rouge façon cahier -->
     <div class="hidden lg:block absolute top-0 bottom-0 left-10 w-px bg-pen/25 pointer-events-none" aria-hidden="true"></div>
