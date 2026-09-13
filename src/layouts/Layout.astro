@@ -3,7 +3,6 @@ import '../styles/global.css';
 import '@fontsource-variable/sora';
 import '@fontsource-variable/fraunces';
 import '@fontsource-variable/caveat';
-import frauncesFontUrl from '@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url';
 import '@fontsource/jetbrains-mono/400.css';
 import '@fontsource/jetbrains-mono/500.css';
 import LanguageSelector from '../components/LanguageSelector.astro';
@@ -149,7 +148,6 @@ const jsonLD = type === 'article'
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="viewport" content="width=device-width" />
     <LanguageSuggest lang={lang} />
-    <link rel="preload" href={frauncesFontUrl} as="font" type="font/woff2" crossorigin="anonymous" />
     <link id="favicon" rel="icon" type="image/svg+xml" href="/favicon-light.svg" />
     <link rel="canonical" href={canonicalURL} />
     <link rel="sitemap" href="/sitemap-index.xml" />
