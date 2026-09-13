@@ -1,13 +1,14 @@
 ---
 title: "Faire tourner Windows 11 sur un Mac Apple Silicon avec VMware Fusion"
-description: "Guide complet pour installer et utiliser Windows 11 ARM sur un Mac Apple Silicon avec VMware Fusion Pro gratuit. Comparaison avec Parallels et UTM, performances, limites et cas d’usage réels."
+description: "Retour concret sur Windows 11 ARM avec VMware Fusion 26H1 : installation, compatibilité, limites et comparaison avec UTM et Parallels."
 date: "2026-01-11"
 updated: 2026-09-13
+updateNote: "Le guide a été actualisé pour VMware Fusion 26H1. Les limites de Windows ARM, des dossiers partagés et de la virtualisation imbriquée sont maintenant précisées."
 category: "blog"
-tags: []
+tags: ["vmware", "windows-11", "apple-silicon", "virtualisation", "mac"]
 excerpt: ""
-metaTitle: "Windows 11 sur Mac Apple Silicon avec VMware Fusion"
-metaDescription: "Installer Windows 11 ARM sur un Mac Apple Silicon avec VMware Fusion Pro gratuit : performances, limites et comparaison avec Parallels et UTM."
+metaTitle: "Windows 11 ARM sur Mac avec VMware Fusion 26H1"
+metaDescription: "Installer Windows 11 ARM sur un Mac Apple Silicon avec VMware Fusion 26H1 gratuit : licence, compatibilité, performances et limites réelles."
 cover: "/blog/faire-tourner-windows-11-sur-un-mac-apple-silicon-avec-vmware-fusion/vmware.webp"
 lang: fr
 translation: running-windows-11-on-apple-silicon-mac-vmware-fusion
@@ -15,98 +16,76 @@ translation: running-windows-11-on-apple-silicon-mac-vmware-fusion
 
 *Quand un vieux monde du logiciel d’entreprise fait encore une surprise*
 
-Il y a des noms qui traînent depuis longtemps dans l’informatique, parfois un peu poussiéreux, parfois rassurants. VMware fait clairement partie de ceux-là. Pendant des années, c’était l’outil sérieux, solide, un peu austère, qu’on associait aux salles serveurs, aux environnements critiques et aux licences hors de prix. Un logiciel qu’on respectait, sans forcément l’aimer.
+VMware fait partie de ces noms que j’associe aux salles serveurs, aux environnements critiques et aux licences difficiles à suivre. Après le rachat par Broadcom, les changements commerciaux autour des produits d’entreprise ont renforcé cette image.
 
-Puis Broadcom a racheté VMware, et là, tout a commencé à grincer. Des licences qui disparaissent, des abonnements imposés, des clients historiques un peu perdus. Le genre de feuilleton qui donne surtout envie de regarder ailleurs et de tourner la page sans trop se retourner.
+Au milieu de ce bruit, Fusion a pourtant pris la direction inverse. Depuis novembre 2024, VMware Fusion Pro est gratuit pour les usages personnels, éducatifs et commerciaux. La version actuelle, Fusion 26H1, conserve ce modèle.
 
-Et pourtant, au milieu de ce bruit, une décision presque contre intuitive est tombée fin 2024. **VMware Fusion Pro devient gratuit.** Gratuit, vraiment. Pas une version bridée, pas un mode démo, pas un essai limité dans le temps, mais un vrai hyperviseur complet, utilisable sur macOS, y compris sur les Mac Apple Silicon, pour faire tourner Windows 11.
+Cela en fait une option sérieuse pour lancer Windows 11 sur un Mac Apple Silicon, à condition de comprendre ce que « Windows sur ARM » implique réellement.
 
-Et ça mérite qu’on s’y attarde calmement.
+## Pourquoi garder Windows sur un Mac
 
----
+Le besoin est rarement idéologique. Il peut venir d’un logiciel métier disponible uniquement sous Windows, d’un outil d’administration jamais porté sur macOS ou d’un environnement de test qu’il serait inutile d’installer sur une seconde machine.
 
-## Pourquoi vouloir Windows sur un Mac ARM
+Sur les Mac Intel, Boot Camp permettait de démarrer directement sous Windows. Apple Silicon utilise une architecture ARM différente. Fusion ne traduit pas un système d’exploitation x86 complet : il virtualise un système conçu pour la même architecture que le Mac. Sur ces machines, il faut donc installer **Windows 11 ARM64**.
 
-La question revient souvent, et elle est rarement idéologique. Dans la plupart des cas, elle est très concrète. Il y a le logiciel métier qui n’existe que sous Windows, l’outil d’administration jamais porté ailleurs, le programme interne ancien qu’on n’a ni le temps ni l’envie de réécrire, ou simplement le besoin de tester un environnement Windows sans acheter un PC supplémentaire.
+Windows 11 ARM peut ensuite exécuter de nombreuses applications x86 et x64 grâce à sa propre couche d’émulation. Cette compatibilité concerne les applications, pas les systèmes d’exploitation ni tous les pilotes.
 
-Sur les Mac Intel, la question ne se posait pas vraiment. Boot Camp ou la virtualisation classique faisaient le travail. Avec Apple Silicon, on est passé sur une autre architecture, ARM, la même famille que celle des smartphones. Windows existe bien en version ARM, mais tout l’écosystème a dû s’adapter.
+## Fusion est gratuit, Windows ne l’est pas
 
-Aujourd’hui, ça fonctionne. Pas parfaitement, pas magiquement, mais suffisamment bien pour beaucoup d’usages réels.
+L’[annonce de VMware](https://blogs.vmware.com/cloud-foundation/2024/11/11/vmware-fusion-and-workstation-are-now-free-for-all-users/) confirme que Fusion Pro est gratuit pour tous les utilisateurs et que les fonctions de l’ancienne version payante restent présentes. Le support repose principalement sur la documentation et la communauté lorsqu’aucun contrat de support antérieur n’est encore actif.
 
+Le téléchargement passe toujours par un compte gratuit sur le portail Broadcom. Depuis 25H2, VMware utilise une numérotation calendaire. [Fusion 26H1](https://blogs.vmware.com/cloud-foundation/2026/05/14/announcing-vmware-workstation-and-fusion-26h1/) est la version publiée au premier semestre 2026.
 
-## VMware Fusion, c’est quoi exactement
+La gratuité de l’hyperviseur ne couvre pas Windows. Microsoft demande une licence distincte pour chaque instance de Windows 11 Pro, y compris dans une machine virtuelle. Une clé Windows 11 Pro peut activer l’édition ARM comme l’édition x64.
 
-VMware Fusion est un **hyperviseur**, c’est à dire un logiciel qui permet de faire tourner un ordinateur dans un autre ordinateur. Ton Mac continue de fonctionner normalement, macOS reste maître à bord, et Fusion crée une machine virtuelle avec son propre processeur, sa mémoire, son disque et sa carte graphique simulée. Windows croit être installé sur un vrai PC, alors qu’il partage en réalité les ressources de la machine hôte.
+## Installer Windows 11 ARM
 
-C’est un principe ancien et éprouvé, largement utilisé dans les entreprises, les laboratoires et les environnements de test. VMware fait ça depuis longtemps, et plutôt bien. Sur Mac Apple Silicon, Fusion s’appuie sur l’hyperviseur natif d’Apple, ce qui évite toute émulation lente ou bricolée. On est sur de la virtualisation propre, stable et prévisible.
+Fusion propose une fonction **Get Windows from Microsoft** qui télécharge la bonne image ARM64. Cette méthode évite de récupérer par erreur un ISO x86 incompatible.
 
+La création de la machine reste classique : choix des ressources, création du disque virtuel et démarrage de l’installation. Windows 11 demande un TPM 2.0. Fusion fournit un TPM virtuel, ce qui nécessite le chiffrement de la machine virtuelle. Il faut conserver le mot de passe associé avec les sauvegardes de la VM.
 
+Après l’installation, VMware Tools apporte les pilotes et une meilleure intégration. Sur Apple Silicon, cette intégration n’est toutefois pas identique à celle connue autrefois sur les Mac Intel.
 
-## La surprise Broadcom : Fusion Pro gratuit
+## Ce qui fonctionne bien
 
-C’est là que l’histoire devient réellement intéressante. Depuis novembre 2024, **VMware Fusion Pro est téléchargeable gratuitement**, sans différence fonctionnelle avec ce qui était auparavant payant. Les limitations ne sont pas techniques, mais administratives.
+Pour la bureautique, les outils d’administration, les navigateurs, les applications métier classiques et de nombreux logiciels x86 ou x64, Windows 11 ARM est devenu parfaitement exploitable. Fusion prend en charge les snapshots, le réseau virtuel, l’USB et l’accélération DirectX 11 dans les versions récentes.
 
-Concrètement, on peut créer autant de machines virtuelles que nécessaire, allouer librement CPU et mémoire, activer l’accélération graphique, utiliser des snapshots, partager des dossiers entre macOS et Windows et brancher des périphériques USB. Bref, tout ce qui fait un hyperviseur sérieux est bien présent.
+L’ensemble convient bien à un environnement isolé que l’on ouvre pour une tâche précise. Les snapshots permettent de revenir rapidement en arrière après un test ou une mise à jour risquée.
 
-La contrepartie concerne surtout le support. Il n’y a pas de hotline dédiée ni de tickets prioritaires, et on s’appuie sur la documentation et les forums communautaires. Pour un usage personnel, éducatif ou de test, ce n’est généralement pas un problème. Il faut simplement accepter qu’un compte Broadcom soit requis pour télécharger Fusion, ce qui n’est pas très élégant, mais une fois le logiciel installé, il sait se faire discret.
+L’émulation des applications x86 et x64 a néanmoins un coût. Une application ARM64 native reste préférable lorsqu’elle existe, surtout pour les charges lourdes.
 
+## Les limites à connaître avant de commencer
 
+La [documentation de compatibilité de VMware](https://knowledge.broadcom.com/external/article/315609) évite plusieurs mauvaises surprises :
 
-## Installer Windows 11, ce qui change vraiment
+- un Mac Apple Silicon ne peut pas lancer une machine virtuelle Windows x86, Windows XP ou Windows 7 avec Fusion ;
+- les dossiers partagés Fusion ne sont pas pris en charge pour un invité Windows ARM ;
+- Unity Mode n’est pas disponible ;
+- les pilotes de périphériques Windows doivent exister en ARM64 ;
+- la virtualisation imbriquée n’est pas prise en charge.
 
-Windows 11 a introduit des exigences supplémentaires, notamment en matière de sécurité, avec des notions comme le TPM, le Secure Boot ou le chiffrement. Sur le papier, cela peut paraître contraignant, mais dans les faits, c’est surtout un cadre à respecter.
+Cette dernière limite désactive notamment WSL2, Windows Sandbox et certaines fonctions reposant sur Hyper-V ou VBS. Pour du développement Linux dans Windows, ce point peut suffire à écarter Fusion sur Apple Silicon.
 
-Dans VMware Fusion, cela se traduit par quelques étapes supplémentaires lors de la création de la machine virtuelle. Il faut activer le chiffrement afin de pouvoir ajouter un module TPM virtuel. Ce n’est pas compliqué, mais ce n’est pas non plus un simple enchaînement de clics.
+Les jeux et logiciels utilisant des pilotes anti-triche, des pilotes noyau ou des fonctions graphiques récentes doivent aussi être vérifiés au cas par cas. « La majorité des applications fonctionne » ne signifie pas que tout logiciel Windows devient compatible.
 
-Une fois cette étape passée, Windows 11 ARM s’installe normalement. Et c’est souvent là que la surprise arrive. **La majorité des logiciels Windows classiques fonctionnent.** Microsoft fournit une couche de traduction pour les applications x86, un peu à la manière de Rosetta sur macOS. Ce n’est pas parfait, mais pour beaucoup d’outils professionnels, c’est largement suffisant.
+## UTM pour préserver une ancienne machine
 
+UTM répond à un autre besoin dans mon travail. Je l’utilise pour conserver une ancienne machine Windows XP clonée depuis une station arrivée en fin de vie. Elle contient des logiciels aujourd’hui difficiles à retrouver qui assurent encore la communication entre des équipements anciens et un système de monitoring plus récent.
 
+Réécrire ces logiciels n’aurait pas de sens. Ils sont stables, remplissent leur rôle et les machines pilotées approchent elles-mêmes de leur fin de vie. La solution la plus pragmatique a été de virtualiser l’existant et de rendre cette machine sauvegardable et portable.
 
-## À l’usage, ce que ça vaut vraiment
+UTM peut émuler une autre architecture avec QEMU, ce que Fusion ne fait pas sur Apple Silicon. Cette souplesse se paie en performances et en intégration, mais elle reste précieuse pour préserver un vieux système.
 
-Soyons honnêtes, VMware Fusion n’essaie pas d’être magique. L’interface est sobre, parfois un peu sèche, et on ne cherche pas à faire oublier qu’on est dans une machine virtuelle. Windows reste dans sa fenêtre, avec ses réglages, ses limites et son environnement bien distinct.
+## Parallels reste plus intégré
 
-Mais en échange, on gagne en prévisibilité. Les performances sont stables, les snapshots fiables, et les réglages explicites. C’est typiquement le genre d’outil qu’on lance pour un besoin précis, qu’il s’agisse d’ouvrir un logiciel métier, de maintenir un environnement de test ou de faire une opération ponctuelle, puis qu’on referme sans y penser davantage.
+Parallels offre une installation plus guidée et une intégration macOS plus poussée. Cette finition compte lorsqu’une machine Windows accompagne toute la journée de travail. Le produit reste commercial et généralement vendu par abonnement.
 
-C’est un peu comme un bon tournevis. Pas spectaculaire, mais toujours là quand il faut.
+Fusion paraît plus austère, mais il couvre gratuitement beaucoup de besoins professionnels ponctuels. Le choix dépend surtout du niveau d’intégration attendu et des fonctions ARM indispensables, pas seulement du prix.
 
+## Un bon outil, dans un cadre précis
 
+VMware Fusion 26H1 permet bien de faire tourner Windows 11 ARM gratuitement sur un Mac Apple Silicon. Il s’agit d’un hyperviseur mature, toujours maintenu et utilisable également dans un contexte commercial.
 
-## Et UTM dans tout ça
+Il faut ajouter le prix éventuel de la licence Windows et vérifier les dépendances critiques avant de migrer un poste de travail : architecture des applications, pilotes, USB, WSL2, Sandbox et dossiers partagés.
 
-Impossible de parler de virtualisation sur Mac Apple Silicon sans mentionner **UTM**. UTM est une solution open source, très appréciée dans la communauté macOS, notamment parce qu’elle est simple à installer et repose sur les technologies natives d’Apple.
-
-Dans mon cas, UTM me rend un service très concret. Je l’utilise pour faire tourner une ancienne machine Windows XP, clonée depuis une station de travail en fin de vie. Cette machine embarque des logiciels aujourd’hui introuvables, mais qui assurent encore la communication entre des équipements anciens et un système de monitoring plus récent.
-
-Réécrire ces logiciels n’aurait aucun sens. Ils sont stables, ils font exactement ce qu’on leur demande, et les machines qu’ils pilotent arrivent elles aussi en fin de vie. La solution la plus pragmatique a donc été de virtualiser l’existant tel quel, de cloner le Windows XP d’origine et de le faire tourner sur mon Mac via UTM.
-
-Ce n’est pas parfait. L’intégration est limitée, les performances ne sont pas spectaculaires et on sent clairement l’âge du système. Mais ça fonctionne, et surtout, le système reste disponible, sauvegardable et portable, sans dépendre d’une vieille machine physique qui finira forcément par tomber en panne.
-
-Dans ce genre de situation, UTM n’est pas un outil moderne ou élégant. C’est un outil pragmatique, presque utilitaire, et parfois, c’est exactement ce dont on a besoin.
-
-
-
-## Et face à Parallels
-
-La comparaison avec Parallels est inévitable. Parallels est plus simple à prendre en main, plus soigné visuellement et plus orienté grand public. L’intégration avec macOS est impressionnante, parfois au point de faire oublier qu’on utilise Windows.
-
-Mais Parallels est payant, par abonnement, et clairement positionné comme un produit commercial. VMware Fusion, lui, ressemble davantage à un outil d’ingénieur mis à disposition. Moins flatteur, plus brut, mais désormais gratuit. Pour quelqu’un qui accepte de comprendre un minimum ce qu’il fait, c’est un compromis très honnête.
-
-
-
-## Un outil gratuit, pour combien de temps
-
-C’est sans doute la vraie question. Broadcom a montré qu’il pouvait changer brutalement de stratégie, et rien ne garantit que cette gratuité durera éternellement. Mais aujourd’hui, le logiciel est là, complet, fonctionnel et utilisable sans carte bancaire.
-
-Pour un usage personnel, éducatif, ou simplement pour éviter de dépendre d’un abonnement de plus, c’est difficile de ne pas y voir une opportunité.
-
-
-
-## En guise de fin
-
-VMware Fusion n’est pas redevenu cool, et il n’a pas changé de personnalité.
-Mais il est redevenu **accessible**.
-
-Faire tourner Windows 11 sur un Mac Apple Silicon, sans payer, sans bidouille douteuse, avec un outil mature et éprouvé, c’est désormais possible. Ce n’est pas parfait, ce n’est pas magique, mais c’est suffisamment solide pour répondre à beaucoup de besoins réels.
-
-Et parfois, dans le numérique, c’est exactement ce qu’on attend d’un outil.
+Pour ouvrir un logiciel métier, maintenir un environnement de test ou effectuer une intervention ponctuelle, le compromis reste très convaincant. Fusion n’efface pas les limites de Windows ARM. Il leur donne simplement un cadre stable et compréhensible.
