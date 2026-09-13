@@ -200,65 +200,61 @@ a.paper-card:hover,
   border-radius: 8px;
 }
 
+.avatar-art {
+  position: relative;
+  display: block;
+  padding-top: 13.73%;
+}
+
+.avatar-portrait {
+  width: 100%;
+  height: auto;
+}
+
 .avatar-rays {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
+  left: 40.42%;
+  width: 22.74%;
   height: auto;
-  aspect-ratio: 1;
-  overflow: visible;
   pointer-events: none;
-  fill: var(--pen);
-}
-
-.avatar-ray {
-  opacity: 0;
-  transform-box: fill-box;
   transform-origin: center bottom;
 }
 
-.avatar-spark:hover .avatar-ray,
-.avatar-spark:focus-visible .avatar-ray {
+.avatar-spark:hover .avatar-rays,
+.avatar-spark:focus-visible .avatar-rays {
   animation: avatar-ray-wave 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.avatar-spark:hover .avatar-ray-left,
-.avatar-spark:focus-visible .avatar-ray-left { animation-delay: 35ms; }
-.avatar-spark:hover .avatar-ray-right,
-.avatar-spark:focus-visible .avatar-ray-right { animation-delay: 70ms; }
-
-.avatar-spark.is-popping .avatar-ray {
+.avatar-spark.is-popping .avatar-rays {
   animation: avatar-ray-pop 580ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-.avatar-spark.is-popping .avatar-ray-left { animation-delay: 35ms; }
-.avatar-spark.is-popping .avatar-ray-right { animation-delay: 70ms; }
 
 @keyframes avatar-ray-wave {
-  0% { opacity: 0; transform: translateY(7px) scaleY(0.72); }
-  38% { opacity: 1; transform: translateY(-5px) scaleY(1.12); }
-  72% { opacity: 0.72; transform: translateY(-2px) scaleY(1.03); }
-  100% { opacity: 0; transform: translateY(0) scaleY(1); }
+  0% { transform: translateY(0) scaleY(1); }
+  38% { transform: translateY(-5px) scaleY(1.1); }
+  72% { transform: translateY(2px) scaleY(0.97); }
+  100% { transform: translateY(0) scaleY(1); }
 }
 
 @keyframes avatar-ray-pop {
-  0% { opacity: 0; transform: translateY(9px) scale(0.65); }
-  34% { opacity: 1; transform: translateY(-9px) scale(1.2); }
-  68% { opacity: 0.82; transform: translateY(-3px) scale(1.06); }
-  100% { opacity: 0; transform: translateY(0) scale(1); }
+  0% { transform: translateY(0) scale(1); }
+  34% { transform: translateY(-9px) scale(1.16); }
+  68% { transform: translateY(3px) scale(0.98); }
+  100% { transform: translateY(0) scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .avatar-spark:hover .avatar-ray,
-  .avatar-spark:focus-visible .avatar-ray,
-  .avatar-spark.is-popping .avatar-ray {
+  .avatar-spark:hover .avatar-rays,
+  .avatar-spark:focus-visible .avatar-rays,
+  .avatar-spark.is-popping .avatar-rays {
     animation: avatar-ray-reduced 180ms ease-out both;
   }
 }
 
 @keyframes avatar-ray-reduced {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 0.8; }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.72; }
 }
 
 /* --- Souligné tracé main ---------------------------------- */

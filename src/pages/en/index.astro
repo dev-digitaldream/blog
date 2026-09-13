@@ -151,13 +151,12 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
           <div class="relative paper-card tilt-2 p-5 md:p-6 pb-3 max-w-[320px] md:max-w-[360px]">
             <span class="tape tape-c" aria-hidden="true"></span>
             <button type="button" class="avatar-spark" data-avatar-spark aria-label="Animate DD's portrait">
-              <img src="/avatar-dd.webp" alt="DD avatar" width="640" height="777" class="w-full h-auto block dark:hidden" />
-              <img src="/avatar-dd-white.svg" alt="DD avatar" width="640" height="777" class="w-full h-auto hidden dark:block" loading="eager" decoding="async" />
-              <svg class="avatar-rays" viewBox="0 0 1024 1024" aria-hidden="true">
-                <path class="avatar-ray avatar-ray-left" d="M481.444 52.0735C487.103 51.516 488.809 51.83 491.779 56.964C497.59 67.008 503.24 77.119 508.94 87.2345C512.715 93.9405 516.78 100.745 520.1 107.676C522.105 112.258 519.225 115.611 515.64 117.777C512.96 118.221 509.09 118.216 507.51 115.573C497.099 98.15 487.193 80.155 477.597 62.262C475.288 57.957 478.211 54.535 481.444 52.0735Z" />
-                <path class="avatar-ray avatar-ray-right" d="M674.945 52.047C690.49 50.9165 685.425 63.6825 679.925 71.518C674.1 79.8085 659.08 113.829 652.295 117.792C645.855 118.576 639.85 113.49 642.17 109.3C647.52 99.661 668.21 56.81 674.945 52.047Z" />
-                <path class="avatar-ray avatar-ray-center" d="M578.885 26.0428C583.635 25.8077 588.135 26.7887 588.3 32.5563C588.82 50.5625 588.41 68.654 588.49 86.678C588.52 93.3985 589.45 96.264 583.35 99.8885C582.21 100.004 580.92 100.019 579.8 99.7715C577.92 99.357 575.92 98.219 574.945 96.503C573.695 94.299 573.245 34.9438 574.37 30.7284C575 28.3843 576.975 27.2343 578.885 26.0428Z" />
-              </svg>
+              <span class="avatar-art">
+                <img src="/avatar-dd-clean-black.svg" alt="DD avatar" width="919" height="872" class="avatar-portrait block dark:hidden" />
+                <img src="/avatar-dd-clean-white.svg" alt="DD avatar" width="919" height="872" class="avatar-portrait hidden dark:block" loading="eager" decoding="async" />
+                <img src="/avatar-dd-rays-black.svg" alt="" width="209" height="92" class="avatar-rays avatar-rays-black block dark:hidden" aria-hidden="true" />
+                <img src="/avatar-dd-rays-white.svg" alt="" width="209" height="92" class="avatar-rays avatar-rays-white hidden dark:block" aria-hidden="true" />
+              </span>
             </button>
             <p class="hand text-xl text-ink-soft text-center pt-2 pb-1 rotate-[-1deg]">
               {t.avatarCaption}
