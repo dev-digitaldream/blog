@@ -82,6 +82,8 @@ const staticAlternatePaths: Record<string, { fr: string; en: string }> = {
   '/en/start-here/': { fr: '/commencer/', en: '/en/start-here/' },
   '/sujets/': { fr: '/sujets/', en: '/en/topics/' },
   '/en/topics/': { fr: '/sujets/', en: '/en/topics/' },
+  '/partenariats/': { fr: '/partenariats/', en: '/en/partnerships/' },
+  '/en/partnerships/': { fr: '/partenariats/', en: '/en/partnerships/' },
 };
 const staticPair = staticAlternatePaths[Astro.url.pathname];
 const staticAlternates = staticPair ? [
