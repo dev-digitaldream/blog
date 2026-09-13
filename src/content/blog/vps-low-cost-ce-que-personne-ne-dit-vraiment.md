@@ -12,86 +12,52 @@ cover: ""
 lang: fr
 translation: low-cost-vps-what-nobody-tells-you
 ---
+Pendant longtemps, je me suis laissé tenter par les VPS low cost. Une dizaine d’euros par an pour un serveur avec un gigaoctet de mémoire et une trentaine de gigaoctets de stockage paraît idéal pour essayer une stack, déployer un petit service ou bricoler avec CapRover et Dokploy.
 
-Pendant longtemps, je me suis laissé tenter par les VPS low cost. Quand on voit des offres à dix euros par an pour un serveur avec un giga de RAM et trente giga de disque, difficile de résister. Sur le papier, c’est parfait pour tester une stack, déployer rapidement un petit service ou jouer avec CapRover ou Dokploy.
+Sur le papier, tout fonctionne. Dans la réalité, l’économie réalisée à l’achat se transforme parfois en heures perdues.
 
-La réalité est beaucoup moins glamour.
+Ce constat vient de plusieurs expériences chez des fournisseurs très agressifs sur le marché du VPS bon marché. Il ne s’agit pas de créer une polémique, mais de raconter ce qui revient régulièrement et ce que ces offres coûtent une fois le temps passé devant le terminal ajouté au calcul.
 
-Je partage ici une expérience répétée chez plusieurs fournisseurs, notamment les acteurs très agressifs du marché low cost. L’objectif n’est pas de faire un drama, seulement d’expliquer à quoi s’attendre et pourquoi certains choix se révèlent être des pertes de temps plus qu’autre chose.
+## Le serveur disponible quand il le décide
 
-⸻
+Les offres autour de dix euros par an suivent souvent le même scénario. Le VPS fonctionne correctement après la commande, puis son comportement devient aléatoire quelques jours plus tard.
 
-## Le syndrome du VPS pas cher : accessible quand il veut
+Les temps de réponse varient, le panneau d’administration devient inaccessible, la machine redémarre sans prévenir et SSH peut se figer au milieu d’une commande. Chez certains fournisseurs, j’ai passé plus de temps à essayer d’établir une connexion qu’à travailler sur le serveur.
 
-Les offres ultra low cost qui tournent autour de dix euros par an ont toutes un point commun. Le VPS fonctionne correctement au moment de la commande, puis devient aléatoire après quelques jours.
+Une mise à jour, un build Docker ou une installation un peu lourde suffisait parfois à bloquer toute la machine. Pour un environnement destiné aux essais, devoir craindre chaque commande finit par enlever une grande partie de son intérêt.
 
-Temps de réponse irrégulier. Panel inaccessible. Reboots intempestifs. SSH qui se fige au milieu d’une commande. Les exemples ne manquent pas.
+## Un support qui tourne en rond
 
-Chez certains fournisseurs, j’ai passé plus de temps à essayer d’ouvrir une connexion SSH qu’à réellement travailler dessus. Une simple mise à jour, un build Docker ou une installation un peu lourde pouvait bloquer totalement la machine.
+Le support suit lui aussi un schéma assez prévisible. Je signale que le VPS est hors ligne. Quelques heures plus tard, on me répond que tout paraît normal. Après plusieurs échanges, la solution proposée consiste souvent à repartir avec une nouvelle instance.
 
-⸻
+Un VPS n’est pourtant pas un objet jetable que l’on remplace sans conséquence. Installer CapRover, configurer le réseau, ajuster Docker, déployer des applications et régler le pare-feu demande du temps. Recommencer toute cette préparation chaque fois que la machine devient instable n’a rien d’une solution.
 
-## Le support qui tourne en rond
+Cela revient à changer de maison chaque fois que la porte d’entrée se bloque.
 
-Le support chez ces hébergeurs suit un schéma très prévisible.
+## Quand le prix devient le piège
 
-Vous ouvrez un ticket pour signaler que le VPS est hors ligne.
-On vous répond quelques heures plus tard que tout semble normal.
-Vous insistez.
-On vous propose une nouvelle instance.
+Une machine à dix euros par an semble imbattable. Son coût réel augmente pourtant à chaque réinstallation, recherche de panne, migration et nouvelle configuration.
 
-Le problème avec cette solution, c’est qu’un VPS n’est pas un objet jetable dans lequel on perd dix secondes. Quand vous avez passé une ou deux heures à installer CapRover, à configurer un réseau, à fine tuner Docker, à déployer des apps et à ajuster les règles firewall, perdre tout cela juste pour recommencer ailleurs n’a rien de logique.
+Pour un essai très ponctuel, cette instabilité peut rester acceptable. Dès qu’un service doit tenir quelques semaines ou que l’environnement demande plus d’une heure de préparation, l’offre ne paraît plus aussi économique.
 
-C’est comme si on vous disait de changer de maison à chaque fois que la porte d’entrée se bloque.
+Le prix affiché ne mesure pas le temps ni l’énergie mentale nécessaires pour maintenir la machine utilisable.
 
-⸻
+## L’exception RackNerd
 
-## Quand le prix devient un piège
+Après plusieurs essais, RackNerd est le fournisseur qui s’est montré le plus fiable dans cette catégorie de prix.
 
-Un VPS à dix euros par an, c’est séduisant sur le papier. En pratique, cela coûte beaucoup plus cher que son prix, mais en temps perdu et en énergie mentale.
+Je ne le compare pas à AWS, Hetzner ou OVH. Le positionnement est différent. Je parle ici de serveurs de test ou de petits projets qui doivent simplement rester disponibles pour moins de cinquante euros par an.
 
-Vous réinstallez. Vous recommencez. Vous cherchez pourquoi ça rame. Vous basculez sur une nouvelle instance. Vous reconfigurez tout. Et le cycle recommence.
+Sur les instances RackNerd que j’ai utilisées, le réseau est resté stable, les performances correspondaient au tarif et la machine ne disparaissait pas pendant une journée. Surtout, je ne passais plus mon temps à tout réinstaller.
 
-Pour des tests ultra ponctuels, pourquoi pas. Pour un minimum de stabilité, ce n’est pas viable.
+Pour tester CapRover, Dokploy ou des stacks Docker rapides, c’est le seul fournisseur low cost que je conserve actuellement dans ma liste.
 
-⸻
+![Interface d’un VPS low cost](/blog/vps-low-cost-ce-que-personne-ne-dit-vraiment/vps.webp "VPS low cost")
 
-## Le contre-exemple : RackNerd
+## Je cherche le fonctionnel
 
-Après plusieurs essais chez différents fournisseurs, celui qui s’est révélé réellement fiable dans la catégorie low cost est RackNerd.
+Les VPS low cost ont leur place. Je n’en attends pas le niveau de service d’un grand fournisseur ni les garanties d’un datacenter haut de gamme. J’attends une machine qui répond, un réseau suffisamment stable et une disponibilité cohérente avec le prix.
 
-Ce n’est pas comparable à AWS, Hetzner ou OVH. Le positionnement n’est pas le même et ce n’est pas le but. Je parle ici de serveurs de test ou de micro projets qui doivent tenir debout pour moins de cinquante euros par an.
+Entre dix euros pour un serveur inutilisable et cinquante euros pour une machine qui tient debout, la différence devient faible face au temps perdu à tout recommencer.
 
-Sur RackNerd, les VPS fonctionnent réellement de manière constante.
-Le réseau tient.
-Les performances sont cohérentes avec le tarif.
-Le serveur ne disparaît pas pendant une journée sans prévenir.
-
-Surtout, on ne passe pas son temps à tout réinstaller.
-
-Pour mes besoins actuels, notamment pour tester CapRover, Dokploy ou des stacks Docker rapides, c’est aujourd’hui le seul fournisseur low cost que je garde dans ma liste.
-
-⸻
-![vps](/blog/vps-low-cost-ce-que-personne-ne-dit-vraiment/vps.webp "vps")
-
-## Je ne cherche pas le parfait, je cherche le fonctionnel
-
-Les VPS low cost ont leur place.
-On ne demande pas du SLA digne d’un datacenter Tier IV.
-On veut juste une machine qui répond, un réseau stable et une disponibilité correcte.
-
-À choisir entre payer dix euros par an pour un serveur inutilisable ou cinquante euros pour un serveur qui fonctionne réellement, le calcul est vite fait.
-
-La différence de prix est minime comparée au temps perdu à tout recommencer.
-
-⸻
-
-## Conclusion
-
-Le low cost n’est pas un problème en soi. Le problème, c’est quand le prix bas devient la seule valeur ajoutée du service, au point qu’il n’y a plus rien derrière.
-
-Mon conseil est simple. Si vous cherchez un VPS pour apprendre, bricoler ou tester des stacks modernes sans perdre une demi journée à chaque plantage, oubliez les offres miracles à dix euros l’année.
-
-Dans cette catégorie, RackNerd est le seul fournisseur qui m’a offert une expérience stable et cohérente avec mes attentes.
-
-On ne cherche pas la perfection. On cherche un service qui tient debout.
+Le low cost n’est donc pas le problème. Il le devient lorsque le prix bas constitue la seule qualité du service. Pour apprendre, bricoler ou tester des stacks modernes, une offre légèrement plus chère mais stable reste souvent le choix le plus économique.

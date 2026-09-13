@@ -12,63 +12,56 @@ cover: ""
 lang: fr
 translation: degoogling-migrating-from-google-to-private-solutions
 ---
+La dégooglisation n’est plus un sujet marginal. Documents, photos, courriels, historique et habitudes finissent facilement regroupés chez un seul acteur. Tout fonctionne bien, parfois même trop bien, jusqu’au moment où cette dépendance commence à poser question.
 
-La dégooglisation n’est plus un sujet marginal. De plus en plus d’utilisateurs cherchent à réduire leur dépendance aux services Google, non pas par idéologie, mais par besoin de contrôle, de confidentialité et de cohérence à long terme. Centraliser documents, photos, mails et habitudes chez un seul acteur finit toujours par poser question.
+De mon côté, il n’y a pas eu de rejet brutal ni de grand ménage idéologique. J’ai avancé progressivement, en fonction de mes usages, des contraintes techniques et des alternatives réellement disponibles. Certaines décisions se sont imposées facilement. D’autres restent beaucoup plus nuancées.
 
-De mon côté, il ne s’agit pas d’un rejet brutal ni d’un grand ménage radical. J’ai avancé progressivement, en fonction des usages, des contraintes techniques et des alternatives réellement disponibles. Certaines décisions sont très claires, d’autres beaucoup plus nuancées, et c’est justement ce que je partage ici.
+## Pourquoi réduire ma dépendance à Google
 
+Ma motivation est d’abord pratique. Centraliser autant de données personnelles et professionnelles dans un seul écosystème réduit la marge de manœuvre. Changer un service devient plus difficile lorsque tous les autres sont liés.
 
-## Pourquoi se dégoogliser ?
+Je cherche donc à reprendre la main, à privilégier des solutions européennes ou auto-hébergées lorsqu’elles répondent correctement au besoin, et à limiter l’analyse commerciale de mes contenus.
 
-La question n’est pas morale, elle est pratique. Google concentre une quantité énorme de données personnelles et professionnelles : fichiers, photos, mails, historiques, localisation, habitudes d’usage. Tout fonctionne bien, parfois même trop bien, mais au prix d’une dépendance totale à un seul écosystème.
+Cela ne signifie pas remplacer chaque service à n’importe quel prix. Lorsqu’aucune alternative crédible ne correspond à mon usage, je continue à utiliser Google. Cette migration reste une progression, pas une règle absolue.
 
-Se dégoogliser permet surtout de reprendre la main. Réduire cette dépendance, choisir des solutions européennes ou auto-hébergées quand c’est possible, et limiter l’analyse systématique des contenus à des fins commerciales. Cela ne veut pas dire tout remplacer coûte que coûte. Quand aucune alternative crédible n’existe, je continue d’utiliser Google, sans culpabilité. Le principe reste simple : avancer étape par étape.
+## 1. De Google Drive à kDrive avec rclone
 
-⸻
+Google Drive contenait plus de 1,5 To de documents personnels et professionnels. Télécharger l’ensemble chez moi avant de le renvoyer ailleurs aurait été long, aurait saturé ma connexion et aurait multiplié les possibilités d’interruption.
 
-## 1. Migrer Google Drive vers kDrive (Infomaniak)
+J’ai préféré louer un VPS low cost pendant quelques heures, installer rclone, configurer Google Drive et kDrive comme deux destinations distantes, puis lancer le transfert directement depuis le datacenter.
 
-Google Drive hébergeait plus de 1,5 To de documents personnels et professionnels. Une migration locale aurait été longue et peu fiable. J’ai donc opté pour une approche plus efficace.
+Le débit était bien meilleur et ma connexion personnelle restait disponible. La migration complète a pris environ deux à trois heures.
 
-La méthode est simple : louer un VPS low cost pendant quelques heures, installer rclone, configurer les deux remotes (Google Drive et kDrive) et lancer le transfert directement depuis un datacenter. Résultat : un débit élevé, aucune saturation de ma connexion et une migration complète en deux à trois heures.
+J’ai choisi kDrive comme alternative européenne hébergée en Suisse. Ce choix ne résulte d’aucun partenariat et ne transforme pas le service en solution parfaite. Il répond simplement mieux à mes priorités actuelles.
 
-kDrive représente aujourd’hui une alternative européenne solide, hébergée en Suisse, sans exploitation commerciale des données. Ce choix n’est lié à aucun partenariat ou sponsoring. Il répond simplement à mes besoins.
+## 2. De Google Photos à un NAS QNAP avec Immich
 
-⸻
+Google Photos reste objectivement l’un des services les plus confortables du marché. Il est performant, fiable et très difficile à remplacer sans accepter quelques compromis.
 
-## 2. Quitter Google Photos : NAS QNAP + Immich
+Pour des raisons de confidentialité, j’ai néanmoins rapatrié ma photothèque sur un NAS QNAP et installé Immich comme interface. Le parcours comprend un export avec Google Takeout, un import local, un accès externe avec Cloudflare Tunnel sans ouverture directe de ports et une sauvegarde automatique vers kDrive par WebDAV.
 
-Google Photos reste objectivement l’un des meilleurs services du marché. Performant, fiable, confortable. Malgré cela, pour des raisons de confidentialité, j’ai choisi de rapatrier l’ensemble de ma photothèque sur un NAS QNAP avec Immich comme interface.
+Cette solution demande davantage d’attention. Le NAS fonctionne en permanence, fait du bruit et reste moins confortable que Google Photos. Elle correspond cependant à mon choix d’auto-hébergement et me donne plus de contrôle sur les fichiers.
 
-Concrètement, cela passe par un export via Google Takeout, un import local dans Immich, un accès externe sécurisé via Cloudflare Tunnel sans ouverture de ports, et une sauvegarde automatique du NAS vers kDrive via WebDAV. Le NAS tourne en permanence, il est bruyant, ce n’est clairement pas la solution la plus confortable.
+## 3. Une migration progressive de Gmail
 
-Mais c’est cohérent avec un choix d’auto-hébergement. Ce n’est ni plus simple ni plus agréable que Google Photos. C’est simplement plus privé.
+Le courrier électronique est la partie la plus délicate. Une nouvelle adresse touche les contacts, les comptes existants et des années d’habitudes. Ce changement ne se règle pas en un week-end.
 
+J’ai envisagé Infomaniak Mail, mais la limite de cinq adresses ne correspondait pas à mes besoins au moment de ce choix. J’ai donc déplacé mes boîtes vers un hébergement mutualisé avec cPanel.
 
+Cette organisation me permet de créer les adresses nécessaires et d’utiliser une configuration IMAP et SMTP classique. Elle n’est pas encore parfaite, mais elle fonctionne et réduit ma dépendance à Gmail.
 
-## 3. Migration progressive de Gmail
+## 4. Ce que je conserve encore chez Google
 
-Le mail est toujours la partie la plus délicate d’une dégooglisation. Changer d’adresse, prévenir les contacts, migrer les usages prend du temps.
+Certaines briques restent difficiles à remplacer. Google Sheets en fait partie. Je n’ai pas trouvé d’alternative qui réunisse au même niveau la collaboration, les intégrations, l’automatisation par scripts et les API dont j’ai besoin.
 
-J’ai envisagé Infomaniak Mail, mais la limite à cinq adresses ne correspondait pas à mes besoins. J’ai donc choisi de gérer mes boîtes via un hébergement mutualisé avec CPanel. Cela me permet de créer autant d’adresses que nécessaire, de garder un contrôle total et d’utiliser une configuration IMAP et SMTP classique.
+Google Photos reste également présent de manière limitée. Avoir migré les fichiers ne m’empêche pas de reconnaître l’efficacité du service.
 
-Ce n’est pas encore parfaitement structuré, mais c’est fonctionnel et surtout indépendant de Google.
+Mon objectif n’est donc pas l’abandon total. Je cherche plutôt à réduire l’exposition et à éviter qu’un seul fournisseur devienne indispensable à toute mon organisation.
 
+## Une dégooglisation réaliste
 
+Le résultat tient dans une série de décisions progressives : Drive vers kDrive, Photos vers QNAP et Immich, Gmail vers une messagerie indépendante, sauvegardes réparties entre le NAS et un cloud européen, puis accès externe protégé par Cloudflare Tunnel.
 
-## 4. Ce que je garde encore chez Google
+Cette organisation n’est ni plus simple ni parfaite. Elle reste cohérente avec ce que je recherche : conserver suffisamment de confort tout en reprenant le contrôle sur les données qui comptent.
 
-La dégooglisation reste un processus progressif. Certaines briques sont encore difficiles à remplacer.
-
-Google Sheets en fait partie. Aucune alternative actuelle n’offre le même niveau de collaboration, d’intégration, d’automatisation via scripts et d’API. Pour cet usage précis, je continue donc à l’utiliser.
-
-Google Photos reste également présent, mais de manière très limitée. Même après migration, je reconnais son efficacité et sa fiabilité. L’objectif n’est pas l’abandon total, mais la réduction de l’exposition.
-
-## Conclusion : une dégooglisation réaliste et maîtrisée
-
-La dégooglisation n’est pas un grand saut dans le vide. C’est une suite de décisions progressives et assumées : Drive vers kDrive, Photos vers NAS et Immich, Gmail vers une solution indépendante, sauvegardes réparties entre NAS et cloud européen, accès externe sécurisé via Cloudflare Tunnel.
-
-Chaque étape vise le même objectif : garder le contrôle sans sacrifier complètement le confort. Ce n’est pas parfait, mais c’est cohérent, et surtout durable.
-
-
-![degoogl](/blog/degooglisation-comment-jai-migre-drive-photos-et-gmail-vers-des-solutions-plus-privees-et-souveraines/degoogl.webp "degoogl")
+![Organisation utilisée après la migration hors de Google](/blog/degooglisation-comment-jai-migre-drive-photos-et-gmail-vers-des-solutions-plus-privees-et-souveraines/degoogl.webp "Dégooglisation")
