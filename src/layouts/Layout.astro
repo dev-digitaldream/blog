@@ -154,6 +154,7 @@ const jsonLD = type === 'article'
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="viewport" content="width=device-width" />
+    <LanguageSuggest lang={lang} />
     <link id="favicon" rel="icon" type="image/svg+xml" href="/favicon-light.svg" />
     <link rel="canonical" href={canonicalURL} />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -232,7 +233,6 @@ const jsonLD = type === 'article'
     </script>
   </head>
   <body class="bg-notebook grain text-neutral-900 dark:text-neutral-100">
-    <LanguageSuggest lang={lang} translationSlug={translationSlug} />
     <header class="fixed top-3 md:top-4 left-0 right-0 z-50 px-4 md:px-8">
       <div class="max-w-5xl mx-auto flex justify-between items-center gap-4 pl-4 pr-3 py-2 rounded-full border border-[var(--paper-edge)] bg-[var(--paper-raised)]/85 dark:bg-[var(--paper-raised)]/85 backdrop-blur-xl shadow-[0_2px_14px_rgba(45,36,12,0.10)]">
         <a href={prefix || '/'} class="flex items-center gap-2.5 no-underline whitespace-nowrap">

@@ -1,28 +1,15 @@
 ---
 export interface Props {
-  translationSlug?: string;
   lang?: 'fr' | 'en';
 }
-const { translationSlug } = Astro.props;
 const lang = Astro.props.lang ?? (Astro.url.pathname.startsWith('/en') ? 'en' : 'fr');
 ---
 
-<div
-  id="lang-suggest"
-  data-translation={translationSlug}
-  data-current={lang}
-  hidden
-></div>
-
-<script>
+<script is:inline define:vars={{ pageLang: lang }}>
   (function () {
-    const el = document.getElementById('lang-suggest');
-    if (!el) return;
-
     const current = window.location.pathname;
     if (current !== '/' && current !== '/en/') return;
 
-    const pageLang = el.dataset.current;
     let manualChoice = null;
     try { manualChoice = localStorage.getItem('site-language-choice'); } catch {}
     const browserIsFrench = (navigator.language || '').toLowerCase().startsWith('fr');
