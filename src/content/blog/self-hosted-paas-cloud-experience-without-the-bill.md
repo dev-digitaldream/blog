@@ -2,6 +2,7 @@
 title: "Self-Hosted PaaS: The Cloud Experience Without the Bill"
 description: "An overview of self-hosted PaaS solutions to get the public cloud developer experience without the invoice shock."
 date: "2026-01-01"
+updated: 2026-09-13
 category: "blog"
 tags: []
 excerpt: ""
@@ -11,193 +12,80 @@ cover: ""
 lang: en
 translation: paas-auto-heberges-lexperience-cloud-sans-la-facture-2026
 ---
+![Self-hosted platform interfaces](/blog/paas-auto-heberges-lexperience-cloud-sans-la-facture-2026/image2.webp "Self-hosted PaaS")
 
-![image2](/blog/paas-auto-heberges-lexperience-cloud-sans-la-facture-2026/image2.webp "image2")
+I have always appreciated the promise made by platforms such as Heroku, Vercel, and Render: connect a repository, start a deployment, and forget almost everything else. That convenience becomes less comfortable when services multiply, the bill becomes difficult to predict, or a platform limit forces the architecture to change.
 
-In 2024 and 2025, a sharp shift happened in the development world: after years of depending on big public cloud providers, more and more teams are walking backward. Not out of nostalgia, but pragmatism. Unpredictable bills, the end of generous free tiers, and the limits of commercial PaaS like Heroku or Vercel raised a simple question: what if we took back control of our infrastructure, without sacrificing simplicity?
+I eventually returned to my own VPS instances without wanting all the manual administration that usually comes with them. Self-hosted PaaS platforms occupy that middle ground. They automate builds, domains, certificates, and container lifecycles while leaving the server and data under my control.
 
-That is exactly what self-hosted PaaS solutions promise: the same developer experience, the same modern workflows, but on your own server.
+The promise is attractive. It does not remove the need for backups, security, or monitoring the machine.
 
-## The Return of "Bring Your Own Server"
+## What running the server actually changes
 
-The movement is not ideological or romantic. It is economic and technical.
+A properly sized VPS can host several applications and internal tools for a fixed cost. Docker standardized much of the runtime, while buildpacks, Nixpacks, and modern reverse proxies made deployment far less improvised.
 
-### From Free Tier to Budget Shock
+A workflow close to “git push, then deploy” can now run on a server rented from almost any provider.
 
-Today, a VPS with 4 vCPU and 16 GB RAM commonly runs between 20 and 30 EUR/month in Europe. On a single machine, you can run dozens of application services and internal tools. By contrast, the same load on a managed PaaS can easily cost several times more, especially once you add managed databases, storage, and metrics.
+The trade-off remains clear: when the disk fills up, Docker stops responding, or a backup fails, no managed service automatically takes responsibility. The PaaS simplifies operations, but the server remains mine to maintain.
 
-Self-hosted PaaS turns that raw power into an intelligent platform, without the managed service tax.
+I have not used every platform below under the same conditions or for the same amount of time. I group them by approach, separating the ones that fit my workflow from those designed for different priorities.
 
-### Technical Building Blocks Finally Mature
+## Dokploy: a modern interface over familiar components
 
-Three standards changed everything:
+Dokploy is close to what I was looking for on my VPS instances. The interface remains readable, and deployments rely on familiar components such as Docker, Docker Compose, buildpacks, and Nixpacks.
 
-- Docker everywhere: application execution has become a commodity.
-- Buildpacks and Nixpacks: no more writing twisted Dockerfiles for every project.
-- Modern reverse proxies like Traefik, Caddy, and HAProxy: automatic HTTPS, dynamic routing, managed certificates, all without network black magic.
+I can keep several applications on one machine without manually maintaining every proxy and certificate configuration. The system remains close enough to Docker for me to understand what is happening when something breaks.
 
-Result: the "git push to deploy" experience is no longer reserved for public cloud. It is now accessible on any well-configured server.
+That balance matters more in my workflow than the length of its feature list.
 
-***
+## Coolify: many possibilities in one interface
 
-## PaaS with a Graphical Interface
+Coolify covers a broad range of needs. Its catalog makes it easier to deploy applications, databases, and common supporting services. The rich interface feels closer to a public cloud platform.
 
-For those who want an experience close to Vercel, Netlify, or Render, but at home.
+That breadth also means more components and settings. On a small machine, or for a service where every detail needs to remain predictable, I prefer fewer layers. Coolify appears better suited when a complete interface and a large choice of ready-to-run templates matter more than minimalism.
 
-### Dokploy: Stability First
+## CapRover: visually older, still understandable
 
-Dokploy makes a clear choice: build on Docker Swarm, with little magic and a lot of predictability.
+CapRover uses Docker Swarm with Nginx in front. Its interface feels less modern, but its behavior is well understood, and the community catalog launches common services quickly.
 
-- Zero-downtime deployments via rolling updates.
-- Support for Dockerfile, docker-compose, Buildpacks, and Nixpacks.
-- Security enabled from installation (firewall, SSH key auth, IP banning).
-- Very low CPU footprint at idle.
+I have used it for experiments and small deployments. It does not try to follow every new trend, which can become a strength when the priority is a simple and predictable platform.
 
-Ideal if you want a modern UI without turning your VPS into a permanent space heater.
+Dokploy and CapRover provide different experiences, but they share an important quality: the server remains understandable instead of becoming a complete black box.
 
-***
+## Dokku and Piku: terminal before dashboard
 
-### Coolify: The Swiss Army Knife
+Dokku brings the original Heroku idea to a personal server. A Git repository and a deployment command trigger the build, processes, and proxy. Its value lies in a text-based workflow that is easy to document and reproduce.
 
-Coolify is one of the most popular and most complete solutions right now.
+Piku takes minimalism further. It can work without making Docker the center of the architecture and targets machines where every resource matters. That approach fits small servers, ARM boards, and focused projects better than a team looking for a large dashboard.
 
-- One-click catalog for databases and ancillary services.
-- Docker container support, sometimes even clusters.
-- Rich, highly visual interface, built for full-stack developers.
+These tools require more confidence with SSH. In return, they add fewer layers between the application and the operating system.
 
-This richness has a cost though:
+## SwiftWave: an option for small machines
 
-- Higher CPU and RAM consumption than minimalist solutions.
-- Bugs and instability sometimes reported in production on complex stacks.
-- Less suited for very small VPS or ultra-critical workloads.
+SwiftWave uses Go and HAProxy with an emphasis on a small footprint. The approach is interesting when service density matters and the server has limited resources.
 
-Great for quickly prototyping lots of things, riskier if you need mission-critical on a small budget.
+I see it as something to evaluate rather than an automatic replacement for more established platforms. Low memory use is only one criterion. Documentation, backups, upgrades, and the ability to diagnose a failure matter just as much in production.
 
-***
+## Cosmos and Cloudron optimize for different priorities
 
-### CapRover: The Reliable Veteran
+Cosmos Server places access security at the center of the experience. Its reverse proxy, centralized authentication, and private access model suit a homelab or services that should not be exposed without additional protection.
 
-CapRover is a safe bet, proven over years.
+Cloudron takes another direction. It provides integrated applications, updates, backups, and even a mail stack. The service is paid, but its purpose is to reduce administration time for a small organization without a dedicated infrastructure team.
 
-- Docker Swarm-based orchestration.
-- Nginx frontend with automatic HTTPS.
-- Simple, community-driven one-click app ecosystem.
+These products go beyond deploying a single application. They organize a larger part of the server and therefore require accepting more of their technical choices.
 
-Less flashy visually, but very robust in real use. A solid choice if you want something dependable, predictable, and not full of surprises.
+## My main criterion: understanding the failure
 
-***
+The decision depends less on the number of buttons than on the acceptable level of responsibility.
 
-## CLI-Oriented PaaS
+- **Dokploy** fits my need for a modern interface while remaining close to Docker.
+- **CapRover** remains useful for familiar and straightforward deployments.
+- **Coolify** is stronger when a rich catalog and interface are the priority.
+- **Dokku** and **Piku** favor lightweight workflows driven from the terminal.
+- **Cosmos Server** focuses on protected access to services.
+- **Cloudron** trades some control and a subscription for less administration.
+- **SwiftWave** is primarily worth evaluating when resources are severely limited.
 
-For those who live in the terminal and do not fear SSH.
+I no longer look for a platform that promises to do everything. I look for one whose backups, updates, and failures I can understand.
 
-### Dokku: The Historical Standard
-
-Dokku is the spirit of Heroku on your own server.
-
-You run:
-
-```bash
-git push dokku main
-```
-
-And the rest follows:
-
-- Automatic application build.
-- Deployment with process management.
-- Reverse proxy and SSL.
-- Near-zero idle consumption.
-- Plugins for Postgres, Redis, storage, etc.
-- Ultra stable, low maintenance over time.
-
-The safest choice for purists who love simple, reproducible, text-based workflows.
-
-***
-
-### Piku: Radical Minimalism
-
-Piku fits in a few thousand lines of Python, with one philosophy: do just what is necessary, with no unnecessary layers.
-
-- Not necessarily Docker-based.
-- Very lightweight, ideal when RAM is scarce.
-- Perfect for Raspberry Pi, small ARM servers, IoT, or edge computing.
-
-When every megabyte counts, this is a very elegant option.
-
-***
-
-## The New Ultra-Performant Generation
-
-### SwiftWave: The Power of Go
-
-SwiftWave shows what a modern, frugal PaaS can look like.
-
-- Written in Go.
-- Very low memory footprint, around a few dozen MB at idle.
-- HAProxy frontend for production deployment.
-- Clustering support for horizontal scaling.
-- Flow management like UDP in some use cases.
-
-Ideal for maximizing service density on small, low-cost servers.
-
-***
-
-## Security, Exposure, and Peace of Mind
-
-### Cosmos Server: Security First
-
-Cosmos takes a different approach: it is a security gateway first, an application platform second.
-
-- Secure reverse proxy as a single entry point.
-- Centralized authentication (SSO) for exposed services.
-- Built-in VPN, avoiding direct port exposure to the Internet.
-- Ability to "adopt" existing containers and integrate them into its management.
-
-Perfect for exposing sensitive services, managing a homelab, or a small IT system without multiplying attack surfaces.
-
-***
-
-### Cloudron: Stress-Free Self-Hosting
-
-Cloudron primarily sells one thing: peace of mind.
-
-- Maintained App Store with pre-integrated, hardened applications.
-- Automatic updates for apps and the platform.
-- Backups, restores, and migrations handled for you.
-- Full integrated mail server if needed (with DNS complexity abstracted away).
-
-It is not free, but it is often cheaper than a full-time sysadmin for a small business. Ideal for small organizations that want serious self-hosting without a dedicated infrastructure team.
-
-***
-
-## How to Choose
-
-It all depends on your context and your comfort level with infrastructure.
-
-- Solo dev or side project:
-  - Dokku if you like the "git push" workflow and simplicity.
-  - Piku if you want extreme minimalism on very small machines.
-- Modern, stable UI:
-  - Dokploy if you want a clean interface, little magic, and good security foundations.
-- Ultra low-cost VPS:
-  - SwiftWave to maximize service density with a very small footprint.
-- Small business that wants to sleep well:
-  - Cloudron for the App Store, updates, backups, and integrated mail.
-- Sensitive services exposed to the Internet:
-  - Cosmos for the reverse proxy + VPN + centralized auth combination.
-
-There is no longer just one right answer. There is the platform that fits your use case, your budget, and the level of control you want to keep.
-
-***
-
-## The Real Revolution
-
-In 2025 and now 2026, self-hosted PaaS solutions are no longer DIY projects for DevOps graybeards. They have become:
-
-- Mature.
-- Performant.
-- Economically rational.
-
-Developers now have the luxury of choice: get the public cloud experience back, without the dependency or the exploding bill.
-
-And that is probably the real revolution.
+A self-hosted PaaS can make a VPS as pleasant to use as a commercial platform. It does not turn infrastructure into a maintenance-free service. The real gain is choosing where the complexity lives, then keeping enough control to act when it returns.
