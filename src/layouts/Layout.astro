@@ -16,7 +16,6 @@ import LanguageSelector from '../components/LanguageSelector.astro';
 import LanguageSuggest from '../components/LanguageSuggest.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import Search from '../components/Search.astro';
-import { ClientRouter } from 'astro:transitions';
 import { getCollection } from 'astro:content';
 
 interface Props {
@@ -308,9 +307,6 @@ const jsonLD = type === 'article'
     <!-- JSON-LD structured data -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLD)} />
 
-    <!-- View Transitions API -->
-    <ClientRouter />
-
     <script is:inline>
       function applyTheme() {
         const stored = localStorage.getItem('theme');
@@ -321,7 +317,6 @@ const jsonLD = type === 'article'
         if (favicon) favicon.href = isDark ? '/avatar-dd-white.svg' : '/favicon-light.svg';
       }
       applyTheme();
-      document.addEventListener('astro:after-swap', applyTheme);
 
       function headingAnchorCopy() {
         document.querySelectorAll('.heading-anchor').forEach(a => {
@@ -333,8 +328,11 @@ const jsonLD = type === 'article'
           });
         });
       }
-      document.addEventListener('astro:page-load', headingAnchorCopy);
-      headingAnchorCopy();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', headingAnchorCopy, { once: true });
+      } else {
+        headingAnchorCopy();
+      }
 
       if (!window.avatarSparkBound) {
         document.addEventListener('click', event => {
