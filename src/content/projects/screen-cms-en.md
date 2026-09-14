@@ -4,6 +4,9 @@ description: "A digital signage CMS and Android TV player I built to regain cont
 date: 2026-03-18
 lang: en
 translation: screen-cms
+applicationCategory: "BusinessApplication"
+operatingSystem: ["Web", "Android", "Android TV", "Google TV"]
+technologies: ["Node.js", "Express", "EJS", "SQLite", "Kotlin"]
 ---
 
 ## Why this project exists
@@ -35,4 +38,3 @@ The player also handles retries after a network interruption and includes a watc
 ## Current status
 
 The project is private and still under development. The CMS foundation and Android player exist, but they still need to be tested on the devices and in the real conditions where they will run. Fleet deployment, device management, and kiosk-mode hardening are among the points to validate before it can become a complete Xibo replacement.
-

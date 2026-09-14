@@ -5,6 +5,9 @@ date: 2025-11-05
 lang: en
 translation: macscp
 cover: "/blog/macscp/macscp-desktop.webp"
+applicationCategory: "DeveloperApplication"
+operatingSystem: ["macOS", "iOS", "iPadOS"]
+technologies: ["Swift", "SwiftUI", "SCP", "SFTP", "Amazon S3"]
 ---
 
 ## The original need

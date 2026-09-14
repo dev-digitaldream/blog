@@ -22,7 +22,19 @@ function fmtDate(d: Date | string, lang: string) {
 }
 ---
 
-<Layout lang="en" title={`${project.data.title} · DigitalDream`} description={project.data.description} image={project.data.cover} alternatePath={project.data.translation ? `/projects/${project.data.translation}/` : undefined}>
+<Layout
+  lang="en"
+  title={`${project.data.title} · DigitalDream`}
+  headline={project.data.title}
+  description={project.data.description}
+  image={project.data.cover}
+  alternatePath={project.data.translation ? `/projects/${project.data.translation}/` : undefined}
+  schemaType="softwareApplication"
+  dateCreated={project.data.date}
+  applicationCategory={project.data.applicationCategory}
+  operatingSystem={project.data.operatingSystem}
+  technologies={project.data.technologies}
+>
   <main class="min-h-screen text-ink relative">
     <div class="hidden lg:block absolute top-0 bottom-0 left-10 w-px bg-pen/25 pointer-events-none" aria-hidden="true"></div>
     <div class="hidden lg:block absolute top-0 bottom-0 left-[42px] w-px bg-pen/25 pointer-events-none" aria-hidden="true"></div>

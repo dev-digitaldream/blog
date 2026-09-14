@@ -26,6 +26,7 @@ const staticTranslations = new Map([
   ['/commencer/', '/en/start-here/'],
   ['/sujets/', '/en/topics/'],
   ['/partenariats/', '/en/partnerships/'],
+  ['/projects/', '/en/projects/'],
   ['/sujets/apple-et-outils/', '/en/topics/apple-and-tools/'],
   ['/sujets/auto-hebergement-et-infrastructure/', '/en/topics/self-hosting-and-infrastructure/'],
   ['/sujets/ia-appliquee/', '/en/topics/applied-ai/'],

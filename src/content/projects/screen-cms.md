@@ -4,6 +4,9 @@ description: "Un CMS d’affichage dynamique et son lecteur Android TV, créés 
 date: 2026-03-18
 lang: fr
 translation: screen-cms-en
+applicationCategory: "BusinessApplication"
+operatingSystem: ["Web", "Android", "Android TV", "Google TV"]
+technologies: ["Node.js", "Express", "EJS", "SQLite", "Kotlin"]
 ---
 
 ## Pourquoi ce projet existe
@@ -35,4 +38,3 @@ Le lecteur prévoit également la reprise après une coupure réseau et un servi
 ## État actuel
 
 Le projet est privé et encore en développement. Le socle du CMS et le lecteur Android existent, mais ils doivent encore être testés sur les appareils et dans les conditions réelles où ils seront utilisés. Le déploiement en masse, la gestion des appareils et le durcissement du mode kiosque font partie des points à valider avant d’en faire un remplacement complet de Xibo.
-
