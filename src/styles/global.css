@@ -4,8 +4,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: 'Sora', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Sora Variable', 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Sora Variable', 'Sora', ui-sans-serif, system-ui, sans-serif;
   --font-serif: 'Fraunces Variable', Georgia, serif;
   --font-hand: 'Caveat', 'Segoe Script', cursive;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
