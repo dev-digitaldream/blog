@@ -1,0 +1,5 @@
+Statut : brouillons FR/EN, draft:true. Proposition de guide issue de la stratégie SEO du 10 octobre 2026. Aucun essai sur une machine Linux de DD n’est revendiqué.
+Faits DD : récupère des logs Linux, utilise macSCP, préfère une interface graphique. Sources : article macSCP existant, manuels officiels OpenSSH ssh/scp, notes OpenSSH9.0, manuel local mktemp.
+Question ouverte : chemin réel des logs, fichier ou journal systemd, type de machine. Aucun hôte privé, mot de passe, clé ou log métier n’est requis.
+Avant publication : intégrer le cas réel, confirmer les commandes sur le client Mac et la machine concernée, ajouter au besoin une capture anonymisée réelle, ajuster la date à la publication. Pas de faux résultat ni de capture fabriquée.
+Maillage à la publication : ajouter les deux nouveaux IDs au topic Apple/Mac, avec un lien depuis le parcours transferts ; envisager un lien depuis la note macSCP sans changer sa date artificiellement.
