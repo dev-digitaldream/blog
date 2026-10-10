@@ -88,6 +88,7 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3'];
 
 <Layout
   lang={currentLang}
+  noindex={Boolean(post.data.draft)}
   title={`${post.data.metaTitle || post.data.title} · DigitalDream`}
   description={post.data.metaDescription || post.data.description}
   image={socialImage}

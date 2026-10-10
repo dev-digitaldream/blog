@@ -11,8 +11,8 @@ category: "blog"
 tags: ["macOS", "SCP", "SFTP", "development", "AI"]
 cover: "/blog/macscp/macscp-desktop.webp"
 excerpt: "I now do 99% of my work on macOS. macSCP filled a practical gap: a straightforward interface for moving files to and from my Linux machines."
-metaTitle: "macSCP: the file transfer tool I was missing on Mac"
-metaDescription: "How I built macSCP to replace my WinSCP workflow on macOS and transfer files between my Mac, iPhone, iPad, and remote Linux machines."
+metaTitle: "WinSCP on Mac: why I built macSCP"
+metaDescription: "My move from WinSCP to macSCP on Mac: SCP and SFTP transfers to Linux, a two-panel interface, and the limits of a personal project."
 ---
 
 Before leaving Windows as my main operating system for work (in my personal life, I have been an Apple guy since the Intel beta tests and the first Hackintoshes; yes, I am that old, kid), I had one remaining problem to solve: getting back what I used WinSCP for, on macOS. My files on one side, a remote machine on the other, and a graphical interface to move files between them without going through the terminal. I wanted to change operating systems without giving up all my habits.
