@@ -28,7 +28,7 @@ That does not mean replacing every service at any cost. When no credible alterna
 
 Google Drive held more than 1.5 TB of personal and professional documents. Downloading everything at home before uploading it elsewhere would have taken a long time, saturated my connection, and created more opportunities for interruption.
 
-I rented a low-cost VPS for a few hours instead, installed rclone, configured Google Drive and kDrive as two remote destinations, and started the transfer directly from the datacenter.
+I rented [a low-cost VPS](/blog/low-cost-vps-what-nobody-tells-you/) for a few hours instead, installed rclone, configured Google Drive and kDrive as two remote destinations, and started the transfer directly from the datacenter.
 
 Throughput was much better and my own internet connection remained available. The complete migration took around two to three hours.
 
@@ -62,6 +62,6 @@ The goal is therefore not complete abandonment. I want to reduce exposure and av
 
 The result is a series of gradual decisions: Drive to kDrive, Photos to QNAP and Immich, Gmail to independent email hosting, backups split between the NAS and a European cloud, and protected remote access through Cloudflare Tunnel.
 
-This setup is neither simpler nor perfect. It remains consistent with what I am trying to achieve: keeping enough convenience while regaining control of the data that matters.
+This setup is neither simpler nor perfect. It remains consistent with what I am trying to achieve: keeping enough convenience while [regaining control of the data that matters](/blog/protect-your-data-digital-hygiene-for-everyone/).
 
 ![My setup after moving data away from Google](/blog/degooglisation-comment-jai-migre-drive-photos-et-gmail-vers-des-solutions-plus-privees-et-souveraines/degoogl.webp "De-Googling")

@@ -16,7 +16,7 @@ translation: self-hosted-paas-cloud-experience-without-the-bill
 
 J’ai longtemps apprécié la promesse des plateformes comme Heroku, Vercel ou Render : connecter un dépôt, lancer un déploiement et oublier presque tout le reste. Cette simplicité devient moins agréable lorsque les services se multiplient, que la facture devient difficile à prévoir ou qu’une limite de la plateforme impose de revoir l’architecture.
 
-Je suis alors revenu vers mes propres VPS, sans vouloir retrouver toute l’administration manuelle qui les accompagne. Les PaaS auto-hébergés occupent cet espace intermédiaire. Ils automatisent les builds, les domaines, les certificats et le cycle de vie des conteneurs, tout en laissant le serveur et les données sous mon contrôle.
+Je suis alors revenu vers [mes propres VPS](/blog/vps-low-cost-ce-que-personne-ne-dit-vraiment/), sans vouloir retrouver toute l’administration manuelle qui les accompagne. Les PaaS auto-hébergés occupent cet espace intermédiaire. Ils automatisent les builds, les domaines, les certificats et le cycle de vie des conteneurs, tout en laissant le serveur et les données sous mon contrôle.
 
 La promesse est séduisante. Elle ne supprime cependant ni les sauvegardes, ni la sécurité, ni la surveillance de la machine.
 

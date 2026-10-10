@@ -28,7 +28,7 @@ Cela ne signifie pas remplacer chaque service à n’importe quel prix. Lorsqu�
 
 Google Drive contenait plus de 1,5 To de documents personnels et professionnels. Télécharger l’ensemble chez moi avant de le renvoyer ailleurs aurait été long, aurait saturé ma connexion et aurait multiplié les possibilités d’interruption.
 
-J’ai préféré louer un VPS low cost pendant quelques heures, installer rclone, configurer Google Drive et kDrive comme deux destinations distantes, puis lancer le transfert directement depuis le datacenter.
+J’ai préféré louer [un VPS low cost](/blog/vps-low-cost-ce-que-personne-ne-dit-vraiment/) pendant quelques heures, installer rclone, configurer Google Drive et kDrive comme deux destinations distantes, puis lancer le transfert directement depuis le datacenter.
 
 Le débit était bien meilleur et ma connexion personnelle restait disponible. La migration complète a pris environ deux à trois heures.
 
@@ -62,6 +62,6 @@ Mon objectif n’est donc pas l’abandon total. Je cherche plutôt à réduire 
 
 Le résultat tient dans une série de décisions progressives : Drive vers kDrive, Photos vers QNAP et Immich, Gmail vers une messagerie indépendante, sauvegardes réparties entre le NAS et un cloud européen, puis accès externe protégé par Cloudflare Tunnel.
 
-Cette organisation n’est ni plus simple ni parfaite. Elle reste cohérente avec ce que je recherche : conserver suffisamment de confort tout en reprenant le contrôle sur les données qui comptent.
+Cette organisation n’est ni plus simple ni parfaite. Elle reste cohérente avec ce que je recherche : conserver suffisamment de confort tout en [reprenant le contrôle sur les données qui comptent](/blog/protegez-vos-donnees-lhygiene-numerique-a-la-portee-de-tous/).
 
 ![Organisation utilisée après la migration hors de Google](/blog/degooglisation-comment-jai-migre-drive-photos-et-gmail-vers-des-solutions-plus-privees-et-souveraines/degoogl.webp "Dégooglisation")

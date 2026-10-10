@@ -50,7 +50,7 @@ I do not compare it with AWS, Hetzner, or OVH. The position is different. This i
 
 On the RackNerd instances I used, the network remained stable, performance matched the price, and the machine did not disappear for an entire day. More importantly, I no longer spent my time reinstalling everything.
 
-For testing CapRover, Dokploy, and quick Docker stacks, it is the only low-cost provider I currently keep on my list.
+For testing [CapRover, Dokploy, and quick Docker stacks](/blog/self-hosted-paas-cloud-experience-without-the-bill/), it is the only low-cost provider I currently keep on my list.
 
 ![Low-cost VPS interface](/blog/vps-low-cost-ce-que-personne-ne-dit-vraiment/vps.webp "Low-cost VPS")
 
