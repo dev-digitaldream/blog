@@ -11,6 +11,7 @@ import { getCollection } from 'astro:content';
 
 interface Props {
   title: string;
+  noindex?: boolean;
   lang?: 'fr' | 'en';
   description?: string;
   image?: string;
@@ -39,6 +40,7 @@ const fallbackDesc = lang === 'en' ? "Personal blog about web dev, self-hosting,
 
 const {
   title,
+  noindex = false,
   description = fallbackDesc,
   image = '/og-default.png',
   type = 'website',
@@ -254,7 +256,7 @@ const jsonLD = type === 'article'
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="author" content={author} />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
     <meta name="viewport" content="width=device-width" />
     <meta name="theme-color" content="#f5eeda" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1b1f31" media="(prefers-color-scheme: dark)" />
