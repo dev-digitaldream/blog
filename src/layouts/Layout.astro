@@ -95,6 +95,9 @@ const customAlternates = alternatePath ? [
   { lang: lang === 'en' ? 'fr-FR' : 'en-US', url: new URL(alternatePath, Astro.site) },
 ] : [];
 const languageAlternates = articleAlternates.length > 0 ? articleAlternates : customAlternates.length > 0 ? customAlternates : staticAlternates;
+const translationPath = languageAlternates.find((alternate) =>
+  alternate.lang !== (lang === 'en' ? 'en-US' : 'fr-FR')
+)?.url.pathname;
 const defaultLanguageURL = languageAlternates.find((alternate) => alternate.lang === 'fr-FR')?.url;
 const siteURL = Astro.site?.toString() ?? 'https://blog.digitaldream.work/';
 const organizationId = `${siteURL}#organization`;
@@ -360,7 +363,7 @@ const jsonLD = type === 'article'
         <div class="flex items-center gap-2 md:gap-3 text-[var(--ink-soft)]">
           <Search lang={lang} />
           <ThemeToggle />
-          <LanguageSelector lang={lang} translationSlug={translationSlug} />
+          <LanguageSelector lang={lang} translationPath={translationPath} />
         </div>
       </div>
     </header>
