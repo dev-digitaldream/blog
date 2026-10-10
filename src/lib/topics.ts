@@ -7,6 +7,7 @@ export interface TopicDefinition {
   eyebrow: string;
   description: string;
   postIds: string[];
+  readingPaths?: { title: string; description: string; postIds: string[] }[];
 }
 
 export const topics: Record<TopicLanguage, TopicDefinition[]> = {
@@ -14,13 +15,31 @@ export const topics: Record<TopicLanguage, TopicDefinition[]> = {
     {
       slug: 'apple-et-outils',
       counterpart: 'apple-and-tools',
-      title: 'Apple et outils du quotidien',
+      title: 'Travailler sur Mac avec Linux et Windows',
       eyebrow: 'sur le bureau et sur le terrain',
-      description: 'Des outils réellement utilisés sur Mac, iPhone et iPad, avec leurs qualités, leurs limites et les bricolages nécessaires pour travailler.',
+      description: 'Transferts SCP et SFTP, Windows sur Apple Silicon et serveurs personnels : mes outils, mes choix et les limites rencontrées sur le terrain.',
+      readingPaths: [
+        {
+          title: 'Transférer des fichiers entre Mac et Linux',
+          description: 'Le point de départ est un usage de terrain : récupérer des logs et envoyer des fichiers vers des machines Linux. La note macSCP raconte pourquoi j’ai construit mon propre outil après avoir travaillé avec WinSCP. L’application reste un projet personnel, sans téléchargement public.',
+          postIds: ['macscp-outil-transfert-manquait-mac'],
+        },
+        {
+          title: 'Garder Windows pour les outils qui en ont besoin',
+          description: 'Une machine virtuelle peut compléter le Mac quand un utilitaire n’existe que sous Windows. Le guide VMware Fusion présente l’installation de Windows 11 ARM, la compatibilité et les limites à vérifier avant de compter sur cette solution.',
+          postIds: ['faire-tourner-windows-11-sur-un-mac-apple-silicon-avec-vmware-fusion'],
+        },
+        {
+          title: 'Choisir et garder la main sur ses serveurs',
+          description: 'Le travail ne s’arrête pas au poste de bureau. Ces deux notes abordent la fiabilité des VPS low cost et le choix d’une plateforme auto-hébergée, avec un critère commun : pouvoir comprendre la panne.',
+          postIds: ['vps-low-cost-ce-que-personne-ne-dit-vraiment', 'paas-auto-heberges-lexperience-cloud-sans-la-facture-2026'],
+        },
+      ],
       postIds: [
+        'vps-low-cost-ce-que-personne-ne-dit-vraiment',
+        'paas-auto-heberges-lexperience-cloud-sans-la-facture-2026',
         'macscp-outil-transfert-manquait-mac',
         'faire-tourner-windows-11-sur-un-mac-apple-silicon-avec-vmware-fusion',
-        'plaud-notes-lenregistreur-qui-promet-de-penser-a-ta-place',
       ],
     },
     {
@@ -76,13 +95,31 @@ export const topics: Record<TopicLanguage, TopicDefinition[]> = {
     {
       slug: 'apple-and-tools',
       counterpart: 'apple-et-outils',
-      title: 'Apple and everyday tools',
+      title: 'Working on Mac with Linux and Windows',
       eyebrow: 'at the desk and in the field',
-      description: 'Tools actually used on Mac, iPhone, and iPad, including their strengths, limits, and the workarounds needed to get the job done.',
+      description: 'SCP and SFTP transfers, Windows on Apple Silicon, and personal servers: my tools, choices, and the limits encountered in the field.',
+      readingPaths: [
+        {
+          title: 'Transfer files between Mac and Linux',
+          description: 'The starting point is field work: retrieving logs and sending files to Linux machines. The macSCP note explains why I built my own tool after working with WinSCP. The app remains a personal project, with no public download.',
+          postIds: ['macscp-file-transfer-tool-missing-on-mac'],
+        },
+        {
+          title: 'Keep Windows for the tools that need it',
+          description: 'A virtual machine can complement the Mac when a utility only runs on Windows. The VMware Fusion guide covers Windows 11 ARM installation, compatibility, and the limits to check before relying on this setup.',
+          postIds: ['running-windows-11-on-apple-silicon-mac-vmware-fusion'],
+        },
+        {
+          title: 'Choose servers you can understand and maintain',
+          description: 'The work does not stop at the desktop. These two notes cover the reliability of low-cost VPS hosting and the choice of a self-hosted platform, with one shared criterion: being able to understand a failure.',
+          postIds: ['low-cost-vps-what-nobody-tells-you', 'self-hosted-paas-cloud-experience-without-the-bill'],
+        },
+      ],
       postIds: [
+        'low-cost-vps-what-nobody-tells-you',
+        'self-hosted-paas-cloud-experience-without-the-bill',
         'macscp-file-transfer-tool-missing-on-mac',
         'running-windows-11-on-apple-silicon-mac-vmware-fusion',
-        'plaud-note-2026-ai-grew-up',
       ],
     },
     {
