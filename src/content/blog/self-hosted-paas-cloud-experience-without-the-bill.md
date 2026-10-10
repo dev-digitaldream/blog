@@ -16,7 +16,7 @@ translation: paas-auto-heberges-lexperience-cloud-sans-la-facture-2026
 
 I have always appreciated the promise made by platforms such as Heroku, Vercel, and Render: connect a repository, start a deployment, and forget almost everything else. That convenience becomes less comfortable when services multiply, the bill becomes difficult to predict, or a platform limit forces the architecture to change.
 
-I eventually returned to my own VPS instances without wanting all the manual administration that usually comes with them. Self-hosted PaaS platforms occupy that middle ground. They automate builds, domains, certificates, and container lifecycles while leaving the server and data under my control.
+I eventually returned to [my own VPS instances](/blog/low-cost-vps-what-nobody-tells-you/) without wanting all the manual administration that usually comes with them. Self-hosted PaaS platforms occupy that middle ground. They automate builds, domains, certificates, and container lifecycles while leaving the server and data under my control.
 
 The promise is attractive. It does not remove the need for backups, security, or monitoring the machine.
 
