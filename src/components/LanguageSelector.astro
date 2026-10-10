@@ -1,14 +1,14 @@
 ---
 export interface Props {
-  translationSlug?: string;
+  translationPath?: string;
   lang?: 'fr' | 'en';
 }
-const { translationSlug } = Astro.props;
+const { translationPath } = Astro.props;
 const currentLang = Astro.props.lang ?? (Astro.url.pathname.startsWith('/en') ? 'en' : 'fr');
 import { LANGUAGES } from '../lib/i18n';
 ---
 
-<div class="flex items-center gap-2" data-translation={translationSlug ?? ''}>
+<div class="flex items-center gap-2">
   <select
     id="language-selector"
     data-language-selector
@@ -16,7 +16,11 @@ import { LANGUAGES } from '../lib/i18n';
     class="bg-transparent border border-neutral-200 dark:border-neutral-800 rounded-lg px-3 py-2 text-sm font-sans text-neutral-700 dark:text-neutral-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--pen)]/40"
   >
     {Object.entries(LANGUAGES).map(([code, name]) => (
-      <option value={code} selected={code === currentLang}>
+      <option
+        value={code}
+        selected={code === currentLang}
+        data-href={code === currentLang ? Astro.url.pathname : translationPath ?? (code === 'en' ? '/en/' : '/')}
+      >
         {name}
       </option>
     ))}
@@ -24,27 +28,14 @@ import { LANGUAGES } from '../lib/i18n';
 </div>
 
 <script is:inline>
-  function languageTarget(lang, select) {
-    const current = window.location.pathname;
-    const translation = select.closest('[data-translation]')?.dataset.translation;
-    const isArticle = /^\/blog\/[^/]+\/?$/.test(current);
-    if (isArticle && translation) return `/blog/${translation}/`;
-    if (lang === 'en') {
-      if (current.startsWith('/en/')) return current;
-      return current === '/' ? '/en/' : `/en${current.endsWith('/') ? current : `${current}/`}`;
-    }
-    if (current.startsWith('/en/')) return current.replace(/^\/en/, '') || '/';
-    return current;
-  }
-
   function initLanguageSelector() {
     document.querySelectorAll('[data-language-selector]').forEach(select => {
       if (select.dataset.bound === 'true') return;
       select.dataset.bound = 'true';
       select.addEventListener('change', () => {
         try { localStorage.setItem('site-language-choice', select.value); } catch {}
-        const target = languageTarget(select.value, select);
-        if (target !== window.location.pathname) window.location.assign(target);
+        const target = select.selectedOptions[0]?.dataset.href;
+        if (target && target !== window.location.pathname) window.location.assign(target);
       });
     });
   }
