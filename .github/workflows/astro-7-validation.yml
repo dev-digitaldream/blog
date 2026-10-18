@@ -21,12 +21,14 @@ jobs:
           node-version: '22.22.0'
           cache: npm
           cache-dependency-path: package-lock.json
+      - name: Upgrade npm resolver
+        run: npm install -g npm@11
       - name: Regenerate Astro 7 lockfile
         run: |
           rm package-lock.json
-          npm install --no-audit --no-fund
+          npm install --install-strategy=nested --no-audit --no-fund
       - name: Install locked dependencies
-        run: npm ci --no-audit --no-fund
+        run: npm ci --install-strategy=nested --no-audit --no-fund
       - name: Validate Astro build
         run: npm run build
       - name: Commit lockfile only after successful build
