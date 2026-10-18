@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
+import { unified } from '@astrojs/markdown-remark';
 import sitemap from '@astrojs/sitemap';
 import pagefind from 'astro-pagefind';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -55,6 +56,10 @@ if (fs.existsSync(projectDirectory)) {
 export default defineConfig({
   site: 'https://blog.digitaldream.work',
   build: { format: 'directory' },
+  // Preserve Astro 6 whitespace semantics while reviewing the v7 renderer.
+  compressHTML: true,
+  // Keep the existing unified rendering pipeline for Markdown/MDX and rehype plugins.
+  markdown: { processor: unified() },
   integrations: [
     mdx({
       rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, {
