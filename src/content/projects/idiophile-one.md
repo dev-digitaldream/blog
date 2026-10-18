@@ -20,6 +20,12 @@ Et oui, le nom **Idiophile** taquine gentiment les excès du milieu audiophile :
 
 ![Les trois finitions d'Idiophile One : Champagne, Black et Blue Glass](/uploads/idiophile-one/idiophile-one-finishes.webp)
 
+![Idiophile One en lecture sur DAC USB, avec ses grandes aiguilles lumineuses](/uploads/idiophile-one/rack-idle.webp)
+
+![La bibliothèque musicale et ses morceaux FLAC](/uploads/idiophile-one/network.webp)
+
+![Égaliseur paramétrique et filtres ajustables](/uploads/idiophile-one/eq-editor.webp)
+
 ## Ce qui fonctionne dans l'alpha
 
 - Une façade inspirée des éléments hi-fi vintage, avec deux vu-mètres, un analyseur de spectre et trois finitions : Champagne, Black et Blue Glass.

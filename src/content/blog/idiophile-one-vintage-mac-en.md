@@ -23,6 +23,8 @@ And since I'm a **vibe coder**, not a professional developer, I decided to build
 
 ## Beautiful needles, but not just for show
 
+![Idiophile One in Blue Glass finish, playing FLAC through a FiiO USB DAC](/uploads/idiophile-one/rack-idle.webp)
+
 Idiophile One looks like a network player or integrated amplifier, with **VU and PEAK meters**, a spectrum analyzer and three finishes: **Champagne, Black and Blue Glass**. I wanted an interface worth looking at, without putting the decoration ahead of the music. There's also a mini player which, according to the project's measurements, uses roughly **2% of one CPU core**. Help is available in French and English.
 
 I wasn't trying to copy a particular piece of equipment or reproduce every feature of an expensive audiophile app. I wanted to recapture a feeling with something I could actually use on my Mac. And if I was going to make a player, it might as well explain what it does to the audio signal.
@@ -35,7 +37,7 @@ The term **bit-perfect** is everywhere in audiophile circles. The basic idea is 
 
 The app adjusts the output sample rate to match each file and selects the most precise available integer format. Its **DIRECT** mode requests exclusive output access and removes the equalizer and ReplayGain from the audio path. The **BIT-PERFECT** indicator only lights up when the player's defined conditions are satisfied; otherwise it stays off and explains why. **Audio Path** shows the stages between the file and the DAC, while **Verify** compares the samples passed to Core Audio against the file's samples. The point is to have something concrete to inspect, not to ask people to trust a little LED.
 
-![Audio Path showing the signal chain from file to output](https://raw.githubusercontent.com/dev-digitaldream/idiophile-one/main/docs/images/audio-path-live.png)
+![Audio Path showing the signal chain from file to output](/uploads/idiophile-one/audio-path.webp)
 
 There's an important distinction: verification covers the audio path under the application's control and the data passed to Core Audio. It does not measure the physical output of a DAC. Likewise, the Mac's built-in speakers apply their own processing, so they cannot guarantee end-to-end bit-perfect playback. For this kind of use, I recommend an **external USB DAC**. I'd rather spell out those limitations than sell digital magic. There's already plenty of that elsewhere.
 
@@ -45,15 +47,17 @@ Not everyone has the same headphones, speakers or preferences. So I included a *
 
 The app also imports **AutoEq** and **Equalizer APO** profiles from a file, drag-and-drop or the clipboard, and includes built-in headphone profiles. One feature I particularly care about is **level-matched A/B comparison while listening**. Our ears have a habit of preferring whatever plays a little louder. The aim here is to reduce that bias and compare settings on more equal terms. No need for a $3,000 cable to discover that the volume was simply higher.
 
-![Parametric EQ editor with level-matched A/B comparison](https://raw.githubusercontent.com/dev-digitaldream/idiophile-one/main/docs/images/eq-editor.png)
+![Parametric EQ editor with level-matched A/B comparison](/uploads/idiophile-one/eq-editor.webp)
 
 ## Local music, internet radio and files on the NAS
+
+![Idiophile One compact mini-player with playback controls](/uploads/idiophile-one/compact.webp)
 
 A beautiful player that could only open three files on the Desktop wouldn't be terribly useful. Idiophile One therefore includes a **music library** with albums, artists, composers, genres, tracks and instant search. I also added **internet radio** through the radio-browser.info directory: when a station offers several streams, the app selects the best one based on the advertised codec and bitrate.
 
 There's also automatic **DLNA / UPnP** server discovery, making it possible to find music on a NAS without manually entering every address. It's a way to bring a local library, radio stations and network files together in one interface. They're different uses, but I thought it was a shame to need several applications just to find music that's already sitting at home.
 
-![Network sources and internet radio in Idiophile One](https://raw.githubusercontent.com/dev-digitaldream/idiophile-one/main/docs/images/network.png)
+![Network sources and internet radio in Idiophile One](/uploads/idiophile-one/network.webp)
 
 ## It's an alpha, not an audiophile miracle
 

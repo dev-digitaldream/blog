@@ -20,6 +20,12 @@ And yes, **Idiophile** is a friendly jab at the excesses of the audiophile world
 
 ![Idiophile One in its three finishes: Champagne, Black, and Blue Glass](/uploads/idiophile-one/idiophile-one-finishes.webp)
 
+![Idiophile One playing through a USB DAC with its illuminated meters](/uploads/idiophile-one/rack-idle.webp)
+
+![The music library and its FLAC tracks](/uploads/idiophile-one/network.webp)
+
+![Parametric equalizer and adjustable filters](/uploads/idiophile-one/eq-editor.webp)
+
 ## What works in the alpha
 
 - A vintage-inspired hi-fi front panel, twin meters, spectrum analyzer, and three finishes: Champagne, Black, and Blue Glass.

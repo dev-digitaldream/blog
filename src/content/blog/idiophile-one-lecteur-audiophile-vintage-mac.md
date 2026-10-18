@@ -24,6 +24,8 @@ Et puisque je suis un **vibe codeur**, pas un développeur professionnel, j'ai d
 
 ## De belles aiguilles, mais pas seulement
 
+![Idiophile One en finition Blue Glass, avec un DAC USB Fiio et une lecture FLAC](/uploads/idiophile-one/rack-idle.webp)
+
 Idiophile One reprend l'allure d'un lecteur réseau ou d'un ampli intégré, avec ses **vu-mètres VU et PEAK**, son analyseur de spectre et trois finitions : **Champagne, Black et Blue Glass**. Je voulais une interface qui donne envie d'être regardée, sans faire passer le décor avant la musique. Il existe également un mini-lecteur qui, d'après les mesures du projet, utilise environ **2 % d'un cœur**. L'aide est disponible en français et en anglais.
 
 Je ne cherchais pas à reproduire à l'identique une machine existante, ni à refaire toutes les fonctions d'un logiciel audiophile hors de prix. Je voulais retrouver une sensation, avec un outil que je pourrais réellement utiliser sur mon Mac. Et, quitte à faire un lecteur, autant qu'il sache expliquer ce qu'il fait au signal sonore.
@@ -36,7 +38,7 @@ Le terme **bit-perfect** revient partout dans le monde audiophile. L'idée est s
 
 L'application adapte la fréquence de sortie à celle du fichier et sélectionne le format entier disponible le plus précis. Son mode **DIRECT** demande un accès exclusif à la sortie et écarte l'égaliseur ainsi que le ReplayGain du chemin audio. Le voyant **BIT-PERFECT** ne s'allume que lorsque les conditions prévues par le lecteur sont réunies ; sinon il reste éteint et indique pourquoi. Un écran **Audio Path** détaille les différentes étapes entre le fichier et le DAC, tandis que **Verify** compare les échantillons transmis à Core Audio à ceux du fichier. Le but est d'avoir des éléments concrets à examiner, pas de demander à l'utilisateur de croire une petite LED sur parole.
 
-![Le détail du chemin audio dans Idiophile One](https://raw.githubusercontent.com/dev-digitaldream/idiophile-one/main/docs/images/audio-path-live.png)
+![Le détail du chemin audio dans Idiophile One](/uploads/idiophile-one/audio-path.webp)
 
 Il y a tout de même une distinction importante : cette vérification porte sur le chemin audio contrôlé par l'application et les données transmises à Core Audio. Elle ne mesure pas ce qui sort physiquement d'un DAC. De même, les haut-parleurs intégrés du Mac appliquent leurs propres traitements et ne permettent pas de garantir un résultat bit-perfect de bout en bout. Pour cet usage, je recommande un **DAC USB externe**. Je préfère préciser ces limites plutôt que de vendre de la magie numérique, on en trouve déjà suffisamment ailleurs.
 
@@ -46,15 +48,17 @@ Tout le monde n'a pas le même casque, les mêmes enceintes ni les mêmes goûts
 
 L'application peut aussi importer des profils **AutoEq** et **Equalizer APO**, depuis un fichier, par glisser-déposer ou depuis le presse-papiers, et propose des profils casque intégrés. Mais ce qui m'intéresse particulièrement, c'est la **comparaison A/B à volume égal pendant l'écoute**. Notre oreille a vite fait de préférer ce qui joue un peu plus fort. Là, l'idée est justement de limiter ce biais pour comparer les réglages dans des conditions plus équitables. Pas besoin d'un câble à 3 000 euros pour découvrir qu'on avait simplement monté le volume.
 
-![L’éditeur d’égaliseur paramétrique et sa comparaison A/B](https://raw.githubusercontent.com/dev-digitaldream/idiophile-one/main/docs/images/eq-editor.png)
+![L’éditeur d’égaliseur paramétrique et sa comparaison A/B](/uploads/idiophile-one/eq-editor.webp)
 
 ## La musique locale, les radios et les fichiers du NAS
+
+![Le mini-lecteur Idiophile One avec commandes de lecture et vu-mètre minimaliste](/uploads/idiophile-one/compact.webp)
 
 Un beau lecteur qui ne sait lire que trois fichiers sur le Bureau aurait tout de même un intérêt limité. Idiophile One dispose donc d'une **bibliothèque musicale** avec albums, artistes, compositeurs, genres, morceaux et recherche instantanée. J'ai aussi intégré les **radios internet** à partir de l'annuaire radio-browser.info : lorsqu'une station propose plusieurs flux, l'application sélectionne le meilleur selon le codec et le débit annoncés.
 
 Il y a également la découverte automatique des serveurs **DLNA / UPnP**, pour retrouver notamment la musique hébergée sur un NAS sans devoir saisir toutes les adresses à la main. C'est une manière de réunir la bibliothèque locale, les stations radio et les fichiers du réseau dans la même interface. Les usages sont différents, mais je trouvais dommage de multiplier les logiciels pour retrouver de la musique qui, au fond, se trouve déjà chez soi.
 
-![Les sources réseau et les radios dans Idiophile One](https://raw.githubusercontent.com/dev-digitaldream/idiophile-one/main/docs/images/network.png)
+![Les sources réseau et les radios dans Idiophile One](/uploads/idiophile-one/network.webp)
 
 ## C'est une alpha, pas un miracle audiophile
 
