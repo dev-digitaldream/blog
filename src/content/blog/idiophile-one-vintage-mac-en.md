@@ -25,7 +25,7 @@ And since I'm a **vibe coder**, not a professional developer, I decided to build
 
 ![Idiophile One in Blue Glass finish, playing FLAC through a FiiO USB DAC](/uploads/idiophile-one/rack-idle.webp)
 
-Idiophile One looks like a network player or integrated amplifier, with **VU and PEAK meters**, a spectrum analyzer and three finishes: **Champagne, Black and Blue Glass**. I wanted an interface worth looking at, without putting the decoration ahead of the music. There's also a mini player which, according to the project's measurements, uses roughly **2% of one CPU core**. Help is available in French and English.
+Idiophile One looks like a network player or integrated amplifier, with **VU and PEAK meters**, a spectrum analyzer and three finishes: **Champagne, Black and Blue Glass(Mc..sh;)**. I wanted an interface worth looking at, without putting the decoration ahead of the music. There's also a mini player which, according to the project's measurements, uses roughly **2% of one CPU core**. Help is available in French and English.
 
 I wasn't trying to copy a particular piece of equipment or reproduce every feature of an expensive audiophile app. I wanted to recapture a feeling with something I could actually use on my Mac. And if I was going to make a player, it might as well explain what it does to the audio signal.
 
