@@ -26,7 +26,7 @@ Et puisque je suis un **vibe codeur**, pas un développeur professionnel, j'ai d
 
 ![Idiophile One en finition Blue Glass, avec un DAC USB Fiio et une lecture FLAC](/uploads/idiophile-one/rack-idle.webp)
 
-Idiophile One reprend l'allure d'un lecteur réseau ou d'un ampli intégré, avec ses **vu-mètres VU et PEAK**, son analyseur de spectre et trois finitions : **Champagne, Black et Blue Glass**. Je voulais une interface qui donne envie d'être regardée, sans faire passer le décor avant la musique. Il existe également un mini-lecteur qui, d'après les mesures du projet, utilise environ **2 % d'un cœur**. L'aide est disponible en français et en anglais.
+Idiophile One reprend l'allure d'un lecteur réseau ou d'un ampli intégré, avec ses **vu-mètres VU et PEAK**, son analyseur de spectre et trois finitions : **Champagne, Black et Blue Glass (Mc..sh;)**. Je voulais une interface qui donne envie d'être regardée, sans faire passer le décor avant la musique. Il existe également un mini-lecteur qui, d'après les mesures du projet, utilise environ **2 % d'un cœur**. L'aide est disponible en français et en anglais.
 
 Je ne cherchais pas à reproduire à l'identique une machine existante, ni à refaire toutes les fonctions d'un logiciel audiophile hors de prix. Je voulais retrouver une sensation, avec un outil que je pourrais réellement utiliser sur mon Mac. Et, quitte à faire un lecteur, autant qu'il sache expliquer ce qu'il fait au signal sonore.
 
