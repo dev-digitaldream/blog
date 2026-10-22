@@ -105,6 +105,11 @@ const t = {
 }[currentLang];
 
 const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
+
+// Only explicitly selected posts display the holographic star.
+function postSticker(post: BlogEntry): boolean {
+  return post.data.sticker === 'best-of-the-best';
+}
 ---
 
 <Layout
@@ -130,6 +135,9 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
         {notes.map((post, i) => {
           const img = cardImage(post);
           const tilt = tilts[i % tilts.length];
+          const sticker = postSticker(post);
+          const stickerRotation = post.data.stickerRotation ?? -14;
+          const stickerScale = post.data.stickerScale ?? 0.9;
           return (
             <li>
               <a
@@ -138,8 +146,20 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
               >
                 <span class:list={['tape', i % 2 === 0 ? 'tape-c' : 'tape-r']} aria-hidden="true"></span>
                 {img ? (
-                  <div class="mb-4 overflow-hidden rounded-md border border-[var(--paper-edge)] bg-white p-1.5 rotate-[-0.6deg]">
+                  <div class="post-thumbnail relative mb-4 rounded-md border border-[var(--paper-edge)] bg-white p-1.5 rotate-[-0.6deg]">
                     <img src={img} alt="" width="640" height="360" class="w-full h-40 md:h-44 object-cover rounded-[3px]" loading="lazy" decoding="async" />
+                    {sticker && (
+                      <img
+                        src="/stickers/dech_star.webp"
+                        alt=""
+                        width="120"
+                        height="120"
+                        loading="lazy"
+                        decoding="async"
+                        class="static-holo-sticker"
+                        style={`--sticker-rotation: ${stickerRotation}deg; --sticker-scale: ${stickerScale};`}
+                      />
+                    )}
                   </div>
                 ) : (
                   <div class="mb-4 h-40 md:h-44 rounded-md border border-dashed border-[var(--paper-edge)] flex items-center justify-center rotate-[0.4deg]" aria-hidden="true">
@@ -272,3 +292,26 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
   </main>
   <Footer lang={currentLang} />
 </Layout>
+
+<style>
+  .static-holo-sticker {
+    position: absolute;
+    z-index: 8;
+    top: -1.15rem;
+    left: -1.9rem;
+    width: clamp(88px, 32%, 132px);
+    height: auto;
+    transform: rotate(var(--sticker-rotation, -14deg)) scale(var(--sticker-scale, 0.96));
+    transform-origin: center;
+    filter: drop-shadow(0 4px 6px rgb(0 0 0 / .24));
+    pointer-events: none;
+  }
+
+  @media (max-width: 640px) {
+    .static-holo-sticker {
+      top: -0.85rem;
+      left: -1.15rem;
+      width: clamp(82px, 30%, 104px);
+    }
+  }
+</style>
