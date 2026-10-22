@@ -137,7 +137,7 @@ function postSticker(post: BlogEntry): boolean {
           const tilt = tilts[i % tilts.length];
           const sticker = postSticker(post);
           const stickerRotation = post.data.stickerRotation ?? -14;
-          const stickerScale = post.data.stickerScale ?? 0.9;
+          const stickerScale = post.data.stickerScale ?? 0.96;
           return (
             <li>
               <a
