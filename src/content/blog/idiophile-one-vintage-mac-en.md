@@ -9,7 +9,7 @@ tags: ["macOS", "audio", "audiophile", "vintage hi-fi", "open source", "AI"]
 cover: "/uploads/idiophile-one/idiophile-one-blue-glass.webp"
 sticker: best-of-the-best
 stickerRotation: -14
-stickerScale: 0.96
+stickerScale: 1.04
 translation: "idiophile-one-lecteur-audiophile-vintage-mac"
 excerpt: "I wanted to bring back the big, glowing needles of old amplifiers without buying a full hi-fi system. That bit of nostalgia became Idiophile One, a free Mac player that also takes the audio signal path seriously."
 metaTitle: "Idiophile One: free vintage-style audiophile player for Mac"
