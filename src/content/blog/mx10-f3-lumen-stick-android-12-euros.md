@@ -150,7 +150,7 @@ Autour de **30 €**, je serais beaucoup plus prudent.
 
 Il faut acheter ce genre de dongle en sachant que le nom commercial ne garantit pas toujours la carte qui arrivera dans le colis, que les informations Android peuvent être falsifiées, que les certifications DRM sont limitées et qu’un firmware exotique peut rendre la récupération pénible. Si le but est simplement de regarder Netflix en bonne qualité dans un hôtel, il existe des appareils certifiés bien plus raisonnables. Chez **Strong**, par exemple, le [LEAP 41](https://www.strong-eu.com/products/receivers/srt-41) est un stick Google TV certifié, annoncé avec Widevine L1 et les certifications Netflix et Prime Video. Chez **Xiaomi**, le [TV Stick 4K (2e génération)](https://www.mi.com/be-fr/product/xiaomi-tv-stick-4k-2nd-gen/specs/) fonctionne sous Google TV ; Xiaomi confirme aussi les certifications logicielles Google, Netflix, Prime Video et YouTube dans [sa FAQ](https://www.mi.com/fr/support/faq/details/KA-873843/). Vérifiez tout de même les caractéristiques du modèle exact, car les références et les générations se ressemblent beaucoup.
 
-J’ai aussi un <a href="https://link.amazon/B0bDe9k3G" rel="nofollow sponsored">lien affilié Amazon</a> à partager pour ceux qui veulent regarder une alternative. Je ne peux pas confirmer automatiquement ici le produit final vers lequel ce lien redirige, donc je préfère ne lui attribuer ni modèle, ni prix, ni certification que je n’ai pas vérifiés. Si vous achetez via ce lien, je peux éventuellement percevoir une commission, sans surcoût annoncé pour vous.
+Pour ceux qui veulent regarder une autre option, voici également un <a href="https://link.amazon/B0bDe9k3G" rel="nofollow sponsored">lien Amazon</a><sup>*</sup>. Je préfère ne pas lui attribuer un modèle, un prix ou une certification que je n’ai pas pu vérifier.
 
 En revanche, pour quelqu’un qui aime démonter, sauvegarder, comprendre et adapter son matériel, le MX10-F3 reste un objet amusant. L’Allwinner H313 est beaucoup plus capable que l’expérience d’origine ne le laisse penser.
 
@@ -167,3 +167,7 @@ Le H313 n’est pas devenu plus rapide. Les 2 Go de RAM n’ont pas doublé pend
 Et surtout, Lumen correspond maintenant à mon usage : j’arrive dans un hôtel, je branche la clé, je retrouve mes applications et je ne passe pas vingt minutes à me battre avec la Smart TV de quelqu’un d’autre.
 
 Pour une chinoiserie payée douze euros, je trouve qu’elle s’en sort plutôt bien.
+
+---
+
+<small>* Lien affilié Amazon : si vous effectuez un achat éligible en passant par ce lien, je peux percevoir une commission, sans surcoût pour vous.</small>
