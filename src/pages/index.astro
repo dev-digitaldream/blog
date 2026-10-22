@@ -112,10 +112,8 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
 
 // Seuls les billets opt-in affichent un sticker. Les deux titres ci-dessous
 // sont des exemples initiaux, remplaçables par « sticker: heart » en frontmatter.
-function postSticker(post: BlogEntry): 'heart' | 'star' | undefined {
-  if (post.data.sticker === 'none') return undefined;
-  if (post.data.sticker) return post.data.sticker;
-  return /Idiophile One/i.test(post.data.title) ? 'star' : undefined;
+function postSticker(post: BlogEntry): boolean {
+  return post.data.sticker === 'best-of-the-best';
 }
 ---
 
@@ -155,13 +153,8 @@ function postSticker(post: BlogEntry): 'heart' | 'star' | undefined {
               >
                 <span class:list={['tape', i % 2 === 0 ? 'tape-c' : 'tape-r']} aria-hidden="true"></span>
                 {sticker && (
-                  <span class="peel-sticker" data-peel-sticker aria-hidden="true">
-                    <span class="peel-sticker-face">
-                      <img src="/stickers/star-holographic.svg" alt="" width="92" height="90" draggable="false" />
-                    </span>
-                    <span class="peel-sticker-flap">
-                      <img src="/stickers/star-holographic.svg" alt="" width="92" height="90" draggable="false" />
-                    </span>
+                  <span class="static-holo-sticker" aria-hidden="true">
+                    <img src="/stickers/star-holographic.svg" alt="" width="116" height="116" loading="lazy" />
                   </span>
                 )}
 
@@ -326,85 +319,23 @@ function postSticker(post: BlogEntry): 'heart' | 'star' | undefined {
 </Layout>
 
 <style>
-  /* Feuille réelle repliée sur une ligne horizontale : aucun triangle ajouté. */
-  .peel-sticker {
-    --lift: 0%;
+  .static-holo-sticker {
     position: absolute;
     z-index: 8;
-    top: 1.65rem;
-    right: -.75rem;
+    width: clamp(82px, 9vw, 116px);
+    top: 1.1rem;
+    right: -1.5rem;
     display: block;
-    width: 92px;
-    height: 90px;
-    transform: rotate(-13deg);
-    pointer-events: auto;
-    cursor: grab;
-    touch-action: none;
-    user-select: none;
-    filter: drop-shadow(1px 4px 3px rgb(0 0 0 / .22));
+    transform: rotate(13deg);
+    filter: drop-shadow(1px 5px 3px rgba(5, 5, 20, .28));
+    pointer-events: none;
   }
-  .peel-sticker:active { cursor: grabbing; }
-  .peel-sticker-face, .peel-sticker-flap {
-    position: absolute;
-    inset: 0;
+  .static-holo-sticker img {
     display: block;
     width: 100%;
-    height: 100%;
-    pointer-events: none;
-    transition: clip-path 480ms cubic-bezier(.2,.8,.2,1), top 480ms cubic-bezier(.2,.8,.2,1);
+    height: auto;
   }
-  .peel-sticker-face {
-    clip-path: polygon(0 var(--lift), 100% var(--lift), 100% 100%, 0 100%);
-  }
-  .peel-sticker-flap {
-    top: calc(-100% + 2 * var(--lift));
-    transform: scaleY(-1);
-    clip-path: polygon(0 0, 100% 0, 100% var(--lift), 0 var(--lift));
-    filter: drop-shadow(0 3px 3px rgb(0 0 0 / .19));
-  }
-  .peel-sticker img { display: block; width: 100%; height: 100%; }
-  .peel-sticker-flap img {
-    /* même silhouette que l'étoile, véritable verso papier */
-    filter: brightness(0) saturate(0) invert(92%) sepia(7%) saturate(108%) hue-rotate(298deg);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .peel-sticker-face, .peel-sticker-flap { transition: none; }
+  @media (max-width: 639px) {
+    .static-holo-sticker { width: 83px; right: -.65rem; top: 1.2rem; }
   }
 </style>
-<script>
-  // Pli de type React Bits : la partie supérieure de l'image est réfléchie,
-  // et non remplacée par un triangle extérieur.
-  document.querySelectorAll<HTMLElement>('[data-peel-sticker]').forEach((sticker) => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) return;
-    let dragging = false;
-    let startY = 0;
-    let startX = 0;
-    const lift = (pct: number) => sticker.style.setProperty('--lift', `${Math.max(0, Math.min(48, pct))}%`);
-    sticker.addEventListener('pointerenter', () => { if (!dragging) lift(23); });
-    sticker.addEventListener('pointerleave', () => { if (!dragging) lift(0); });
-    sticker.addEventListener('pointerdown', (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      dragging = true;
-      startX = event.clientX;
-      startY = event.clientY;
-      sticker.setPointerCapture(event.pointerId);
-      lift(30);
-    });
-    sticker.addEventListener('pointermove', (event) => {
-      if (!dragging) return;
-      lift(30 + Math.hypot(event.clientX - startX, event.clientY - startY) * .16);
-    });
-    const release = (event: PointerEvent) => {
-      if (!dragging) return;
-      event.preventDefault();
-      dragging = false;
-      const r = sticker.getBoundingClientRect();
-      lift(event.clientX >= r.left && event.clientX <= r.right && event.clientY >= r.top && event.clientY <= r.bottom ? 23 : 0);
-    };
-    sticker.addEventListener('pointerup', release);
-    sticker.addEventListener('pointercancel', release);
-    sticker.addEventListener('click', (event) => { event.preventDefault(); event.stopPropagation(); });
-  });
-</script>
