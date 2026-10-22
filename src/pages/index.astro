@@ -110,12 +110,9 @@ const t = {
 
 const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
 
-// Seuls les billets opt-in affichent un sticker. Les deux titres ci-dessous
-// sont des exemples initiaux, remplaçables par « sticker: heart » en frontmatter.
+// Un sticker apparaît uniquement sur les billets activés en frontmatter.
 function postSticker(post: BlogEntry): boolean {
-  if (post.data.sticker === 'none') return false;
-  if (post.data.sticker === 'best-of-the-best') return true;
-  return /Idiophile One/i.test(post.data.title);
+  return post.data.sticker === 'best-of-the-best';
 }
 ---
 
