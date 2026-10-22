@@ -115,7 +115,7 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
 function postSticker(post: BlogEntry): boolean {
   if (post.data.sticker === 'none') return false;
   if (post.data.sticker === 'best-of-the-best') return true;
-  return /MX10-F3/i.test(post.data.title);
+  return /Idiophile One/i.test(post.data.title);
 }
 ---
 
@@ -147,6 +147,8 @@ function postSticker(post: BlogEntry): boolean {
           const img = cardImage(post);
           const tilt = tilts[i % tilts.length];
           const sticker = postSticker(post);
+          const stickerRotation = post.data.stickerRotation ?? -14;
+          const stickerScale = post.data.stickerScale ?? 0.9;
           return (
             <li>
               <a
@@ -154,14 +156,9 @@ function postSticker(post: BlogEntry): boolean {
                 class:list={['paper-card group relative flex h-full flex-col p-5 md:p-6 no-underline', tilt]}
               >
                 <span class:list={['tape', i % 2 === 0 ? 'tape-c' : 'tape-r']} aria-hidden="true"></span>
-                {sticker && (
-                  <span class="static-holo-sticker" aria-hidden="true">
-                    <img src="/stickers/dech_star.webp" alt="" width="120" height="120" loading="lazy" decoding="async" />
-                  </span>
-                )}
 
                 {img ? (
-                  <div class="mb-4 overflow-hidden rounded-md border border-[var(--paper-edge)] bg-white p-1.5 rotate-[-0.6deg]">
+                  <div class="post-thumbnail relative mb-4 rounded-md border border-[var(--paper-edge)] bg-white p-1.5 rotate-[-0.6deg]">
                     <img
                       src={img}
                       alt=""
@@ -171,6 +168,18 @@ function postSticker(post: BlogEntry): boolean {
                       loading="lazy"
                       decoding="async"
                     />
+                    {sticker && (
+                      <img
+                        src="/stickers/dech_star.webp"
+                        alt=""
+                        width="120"
+                        height="120"
+                        loading="lazy"
+                        decoding="async"
+                        class="static-holo-sticker"
+                        style={`--sticker-rotation: ${stickerRotation}deg; --sticker-scale: ${stickerScale};`}
+                      />
+                    )}
                   </div>
                 ) : (
                   <div class="mb-4 h-40 md:h-44 rounded-md border border-dashed border-[var(--paper-edge)] flex items-center justify-center rotate-[0.4deg]" aria-hidden="true">
@@ -324,20 +333,16 @@ function postSticker(post: BlogEntry): boolean {
   .static-holo-sticker {
     position: absolute;
     z-index: 8;
-    width: clamp(82px, 9vw, 116px);
-    top: -.9rem;
-    left: -1.8rem;
-    display: block;
-    transform: rotate(-12deg);
-    filter: drop-shadow(1px 5px 3px rgba(5, 5, 20, .28));
+    top: -1rem;
+    left: -1.25rem;
+    width: clamp(72px, 27%, 110px);
+    height: auto;
+    transform: rotate(var(--sticker-rotation, -14deg)) scale(var(--sticker-scale, 0.9));
+    transform-origin: center;
+    filter: drop-shadow(0 3px 4px rgb(0 0 0 / .24));
     pointer-events: none;
   }
-  .static-holo-sticker img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-  @media (max-width: 639px) {
-    .static-holo-sticker { width: 83px; left: -.7rem; top: -.7rem; }
+  @media (max-width: 640px) {
+    .static-holo-sticker { top: -.65rem; left: -.75rem; width: clamp(72px, 25%, 92px); }
   }
 </style>
