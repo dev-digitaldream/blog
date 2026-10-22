@@ -109,6 +109,14 @@ const t = {
 }[currentLang];
 
 const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
+
+// Seuls les billets opt-in affichent un sticker. Les deux titres ci-dessous
+// sont des exemples initiaux, remplaçables par « sticker: heart » en frontmatter.
+function postSticker(post: BlogEntry): 'heart' | 'star' | undefined {
+  if (post.data.sticker === 'none') return undefined;
+  if (post.data.sticker) return post.data.sticker;
+  return /MX10-F3|Idiophile One/i.test(post.data.title) ? 'heart' : undefined;
+}
 ---
 
 <Layout
@@ -138,6 +146,7 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
         {notes.map((post, i) => {
           const img = cardImage(post);
           const tilt = tilts[i % tilts.length];
+          const sticker = postSticker(post);
           return (
             <li>
               <a
@@ -145,6 +154,30 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
                 class:list={['paper-card group relative flex h-full flex-col p-5 md:p-6 no-underline', tilt]}
               >
                 <span class:list={['tape', i % 2 === 0 ? 'tape-c' : 'tape-r']} aria-hidden="true"></span>
+                {sticker && (
+                  <span class:list={['holo-sticker', sticker === 'star' && 'holo-sticker-star']} aria-hidden="true">
+                    <svg viewBox="0 0 100 100" fill="none" focusable="false">
+                      <defs>
+                        <linearGradient id={`holo-${i}`} x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0%" stop-color="#f9b9e5" />
+                          <stop offset="24%" stop-color="#a6eff2" />
+                          <stop offset="46%" stop-color="#ffefab" />
+                          <stop offset="69%" stop-color="#c4b4ff" />
+                          <stop offset="87%" stop-color="#a3f2da" />
+                          <stop offset="100%" stop-color="#ffc2d9" />
+                        </linearGradient>
+                      </defs>
+                      {sticker === 'star' ? (
+                        <path d="M50 5 62 36 95 38 69 59 78 91 50 72 22 91 31 59 5 38 38 36Z" fill={`url(#holo-${i})`} stroke="#fffdf4" stroke-width="5" stroke-linejoin="round"/>
+                      ) : (
+                        <path d="M50 89C38 79 8 59 8 35 8 20 19 11 32 11c9 0 15 4 18 12 4-8 11-12 19-12 13 0 23 9 23 24 0 24-30 44-42 54Z" fill={`url(#holo-${i})`} stroke="#fffdf4" stroke-width="5" stroke-linejoin="round"/>
+                      )}
+                      <path d="M23 35C24 27 28 23 35 22" stroke="white" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+                    </svg>
+                    <span class="holo-sticker-shine"></span>
+                    <span class="holo-sticker-peel"></span>
+                  </span>
+                )}
 
                 {img ? (
                   <div class="mb-4 overflow-hidden rounded-md border border-[var(--paper-edge)] bg-white p-1.5 rotate-[-0.6deg]">
@@ -305,3 +338,57 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
   </main>
   <Footer lang={currentLang} />
 </Layout>
+
+<style>
+  /* Sticker papier irisé, avec petit coin qui se décolle au survol. */
+  .holo-sticker {
+    position: absolute;
+    z-index: 5;
+    top: 1.85rem;
+    right: -.9rem;
+    width: clamp(65px, 7vw, 87px);
+    aspect-ratio: 1;
+    transform: rotate(16deg);
+    filter: drop-shadow(1px 4px 3px rgb(59 43 61 / .22));
+    transition: transform .45s cubic-bezier(.2,.75,.25,1), filter .45s ease;
+    pointer-events: none;
+    isolation: isolate;
+  }
+  .holo-sticker svg { display: block; width: 100%; height: 100%; }
+  .holo-sticker-shine {
+    position: absolute;
+    inset: 8%;
+    background: linear-gradient(117deg, transparent 15%, rgb(255 255 255 / .6) 38%, transparent 54%, rgb(255 255 255 / .15) 75%);
+    mix-blend-mode: screen;
+    clip-path: polygon(50% 92%, 3% 42%, 3% 13%, 26% 3%, 50% 18%, 74% 3%, 97% 13%, 97% 42%);
+    opacity: .55;
+    transition: transform .65s ease, opacity .4s ease;
+  }
+  .holo-sticker-peel {
+    position: absolute;
+    width: 20%;
+    height: 19%;
+    right: 13%;
+    bottom: 14%;
+    border-radius: 0 0 70% 0;
+    background: linear-gradient(135deg, #fffdf7 10%, #f3dcf5 55%, #c7e4eb 100%);
+    box-shadow: -2px -2px 3px rgb(30 28 36 / .15);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+    transform: scale(.15) rotate(9deg);
+    transform-origin: bottom right;
+    opacity: 0;
+    transition: transform .42s ease, opacity .32s ease;
+  }
+  .paper-card:hover .holo-sticker,
+  .paper-card:focus-visible .holo-sticker {
+    transform: rotate(6deg) translateY(-5px) scale(1.075);
+    filter: drop-shadow(3px 9px 5px rgb(59 43 61 / .24)) hue-rotate(20deg);
+  }
+  .paper-card:hover .holo-sticker-shine,
+  .paper-card:focus-visible .holo-sticker-shine { transform: translateX(20%) rotate(8deg); opacity: .95; }
+  .paper-card:hover .holo-sticker-peel,
+  .paper-card:focus-visible .holo-sticker-peel { transform: scale(1) rotate(9deg); opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .holo-sticker, .holo-sticker-shine, .holo-sticker-peel { transition: none; }
+  }
+</style>
