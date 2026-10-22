@@ -346,7 +346,7 @@ function postSticker(post: BlogEntry): 'heart' | 'star' | undefined {
     position: absolute;
     inset: 0;
     display: block;
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--peel) * 80%), calc(100% - var(--peel) * 75%) 100%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--peel-y, 0%)), calc(100% - var(--peel-x, 0%)) 100%, 0 100%);
     transform: perspective(240px) rotateY(calc(var(--peel) * -13deg)) rotateX(calc(var(--peel) * 7deg));
     transform-origin: top left;
     will-change: transform, clip-path;
@@ -356,15 +356,15 @@ function postSticker(post: BlogEntry): 'heart' | 'star' | undefined {
     position: absolute;
     right: 0;
     bottom: 0;
-    width: calc(var(--peel) * 78%);
-    height: calc(var(--peel) * 80%);
+    width: var(--peel-x, 0%);
+    height: var(--peel-y, 0%);
     background: linear-gradient(135deg, #c9c5d5, #fffdfa 45%, #e5dce9 100%);
     clip-path: polygon(100% 0, 100% 100%, 0 100%);
     border-radius: 0 0 4px 0;
     transform: rotate(calc(var(--peel) * 5deg));
     transform-origin: top left;
     box-shadow: inset 2px -2px 5px rgb(44 25 65 / .14);
-    opacity: calc(var(--peel) * 1);
+    opacity: var(--peel);
   }
   .peel-sticker-glint {
     position: absolute;
@@ -373,7 +373,7 @@ function postSticker(post: BlogEntry): 'heart' | 'star' | undefined {
     background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / .55) 55%, transparent 70%);
     clip-path: polygon(80% 0, 100% 33%, 100% 65%, 59% 100%, 35% 80%, 0 64%, 12% 21%, 45% 0);
     mix-blend-mode: screen;
-    opacity: calc(.25 + var(--peel) * .45);
+    opacity: .38;
   }
   @media (prefers-reduced-motion: reduce) {
     .peel-sticker-face { will-change: auto; }
@@ -401,6 +401,8 @@ function postSticker(post: BlogEntry): 'heart' | 'star' | undefined {
       velocity = (velocity + force) * 0.72;
       value = Math.max(0, Math.min(.88, value + velocity));
       sticker.style.setProperty('--peel', value.toFixed(3));
+      sticker.style.setProperty('--peel-x', `${(value * 75).toFixed(2)}%`);
+      sticker.style.setProperty('--peel-y', `${(value * 80).toFixed(2)}%`);
       if (Math.abs(target - value) > .002 || Math.abs(velocity) > .002) {
         frame = requestAnimationFrame(draw);
       } else { frame = 0; }
