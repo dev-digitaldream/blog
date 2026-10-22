@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import HoloSticker from '../../components/HoloSticker.astro';
 import Footer from '../../components/Footer.astro';
 import Newsletter from '../../components/Newsletter.astro';
 import { getCollection } from 'astro:content';
@@ -98,7 +99,7 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
                 <span class:list={['tape', i % 2 === 0 ? 'tape-c' : 'tape-r']} aria-hidden="true"></span>
 
                 {img ? (
-                  <div class="mb-4 overflow-hidden rounded-md border border-[var(--paper-edge)] bg-white p-1.5 rotate-[-0.6deg]">
+                  <div class="relative mb-4 rounded-md border border-[var(--paper-edge)] bg-white p-1.5 rotate-[-0.6deg]">
                     <img
                       src={img}
                       alt=""
@@ -108,6 +109,7 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
                       loading="lazy"
                       decoding="async"
                     />
+                    <HoloSticker enabled={post.data.sticker === 'best-of-the-best'} rotation={post.data.stickerRotation} scale={post.data.stickerScale} placement="thumbnail" />
                   </div>
                 ) : (
                   <div class="mb-4 h-40 md:h-44 rounded-md border border-dashed border-[var(--paper-edge)] flex items-center justify-center rotate-[0.4deg]" aria-hidden="true">

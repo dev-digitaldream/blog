@@ -1,5 +1,6 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import HoloSticker from '../../../components/HoloSticker.astro';
 import Footer from '../../../components/Footer.astro';
 import { getCollection } from 'astro:content';
 
@@ -52,7 +53,8 @@ const tilts = ['tilt-1', 'tilt-2', 'tilt-3', 'tilt-4'];
             <li>
               <a href={`/en/projects/${project.id}`} class:list={['paper-card group relative flex h-full flex-col p-6 md:p-8 no-underline', tilts[i % tilts.length]]}>
                 <span class:list={['tape', i % 2 === 0 ? 'tape-c' : 'tape-r']} aria-hidden="true"></span>
-                <h3 class="font-display font-semibold tracking-tight text-2xl text-ink leading-tight mb-3 group-hover:text-pen transition-colors">
+                <HoloSticker enabled={project.data.sticker === 'best-of-the-best'} rotation={project.data.stickerRotation} scale={project.data.stickerScale} placement="card" />
+                <h3 class="font-display font-semibold tracking-tight text-2xl text-ink leading-tight mb-3 group-hover:text-pen transition-colors" style={project.data.sticker === 'best-of-the-best' ? 'padding-right: 5rem' : undefined}>
                   {project.data.title}
                 </h3>
                 {project.data.description && (
