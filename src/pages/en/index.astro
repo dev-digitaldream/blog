@@ -137,7 +137,7 @@ function postSticker(post: BlogEntry): boolean {
           const tilt = tilts[i % tilts.length];
           const sticker = postSticker(post);
           const stickerRotation = post.data.stickerRotation ?? -14;
-          const stickerScale = post.data.stickerScale ?? 0.96;
+          const stickerScale = post.data.stickerScale ?? 1.04;
           return (
             <li>
               <a
@@ -299,9 +299,9 @@ function postSticker(post: BlogEntry): boolean {
     z-index: 8;
     top: -1.15rem;
     left: -1.9rem;
-    width: clamp(88px, 32%, 132px);
+    width: clamp(96px, 35%, 146px);
     height: auto;
-    transform: rotate(var(--sticker-rotation, -14deg)) scale(var(--sticker-scale, 0.96));
+    transform: rotate(var(--sticker-rotation, -14deg)) scale(var(--sticker-scale, 1.04));
     transform-origin: center;
     filter: drop-shadow(0 4px 6px rgb(0 0 0 / .24));
     pointer-events: none;
@@ -311,7 +311,7 @@ function postSticker(post: BlogEntry): boolean {
     .static-holo-sticker {
       top: -0.85rem;
       left: -1.15rem;
-      width: clamp(82px, 30%, 104px);
+      width: clamp(90px, 33%, 116px);
     }
   }
 </style>
