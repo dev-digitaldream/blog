@@ -2,6 +2,8 @@
 title: "MX10-F3 : j’ai transformé un stick Android à 12 € en media center propre avec Lumen"
 description: "Mon MX10-F3 à base d’Allwinner H313 était un dongle IPTV bridé, rooté et verrouillé en 720p. Sauvegarde FEL, nettoyage, 1080p, OwnTV et création de mon launcher Lumen."
 date: 2026-10-22
+updated: 2026-10-22
+updateNote: "Précisions sur la mémoire eMCP, les limites réelles des DRM et les alternatives Google TV certifiées. Ajout d’un lien affilié clairement signalé."
 lang: fr
 translation: "mx10-f3-lumen-android-stick-travel-media-center"
 draft: false
@@ -36,7 +38,7 @@ La première bonne surprise est arrivée en ouvrant le boîtier.
 
 Le SoC est bien un **Allwinner H313**, un quad-core Cortex-A53 64 bits avec GPU Mali-G31. Allwinner annonce pour cette puce le décodage H.265 jusqu’en 4K60 et une sortie HDMI pouvant aller jusqu’en 4K60. Le problème de mon stick n’était donc pas simplement « le processeur est trop faible ». Le matériel dispose de capacités vidéo correctes pour ce type d’usage.
 
-La deuxième puce visible sur ma carte est une **Samsung KMR8X0001M-B608**. Sa documentation correspond à un eMCP combinant **16 Go d’eMMC et 2 Go de LPDDR3**. C’est intéressant, parce que les informations remontées par ces appareils et les fiches vendeurs sont parfois assez créatives. Au moins, ici, la référence imprimée directement sur le composant donne une base plus sérieuse.
+La deuxième puce visible sur ma carte est une **Samsung KMR8X0001M-B608**. Les catalogues de composants donnent pour cette référence un eMCP combinant **16 Go d’eMMC et 2 Go de LPDDR3**, deux mémoires distinctes réunies dans le même boîtier. Il ne s’agit donc pas de 16 Go partagés avec la RAM : l’eMMC sert au stockage persistant, tandis que la LPDDR3 est la mémoire vive utilisée par Android. La capacité effectivement visible par l’utilisateur reste inférieure au total annoncé, puisqu’une partie du stockage est occupée par les partitions et le système. C’est intéressant, parce que les informations remontées par ces appareils et les fiches vendeurs sont parfois assez créatives. Au moins, ici, la référence imprimée directement sur le composant donne une base plus sérieuse.
 
 Avant d’aller plus loin, j’ai appliqué une règle que je conseille vraiment sur ce genre de matériel : **ne rien flasher et ne rien supprimer avant d’avoir une sauvegarde exploitable**. Sur une clé à 12 €, la tentation est grande de se dire qu’on peut tout casser. Le problème est surtout qu’un firmware exotique peut être beaucoup plus difficile à retrouver que douze euros.
 
@@ -132,7 +134,7 @@ Il y a un moment où le vibe coding s’arrête et où les clés cryptographique
 
 Mon MX10-F3 est limité à **Widevine L3**. Ce niveau de DRM est suffisant pour faire fonctionner certains services, mais il ne possède pas les certifications matérielles nécessaires à tous les usages HD protégés. Dans mes tests, **Netflix reste limité à 480p**, quelles que soient les capacités théoriques du H313 ou la résolution de l’interface.
 
-Et non, ni Astra, ni GLM, ni une nuit complète avec ADB ne vont transformer une certification Widevine L3 en L1. C’est justement le genre de limite qu’il vaut mieux connaître avant d’acheter.
+Peut-on contourner cette limite ? On trouve régulièrement des démonstrations de recherche qui passent autour de certaines protections, mais il faut distinguer les mécanismes. J’ai notamment lu [cet article sur Medium](https://medium.com/@ysmtb24/i-broke-netflixs-screen-protection-in-one-line-of-code-9717f2e22062), où l’auteur montre que la désactivation de l’accélération matérielle dans une application Electron peut rendre capturables des images vidéo normalement masquées. C’est intéressant pour comprendre la chaîne de rendu des navigateurs, mais **cela ne convertit pas Widevine L3 en L1 et ne fait pas reconnaître mon MX10-F3 comme appareil certifié Netflix HD ou 4K**. Les licences, l’attestation de l’appareil et les règles de qualité imposées par les plateformes restent des questions différentes. Je ne prétends pas qu’aucune faille n’existe, seulement qu’il n’y a pas de simple réglage fiable et légitime qui remplace la certification matérielle et logicielle manquante.
 
 La situation est donc assez amusante : le SoC sait décoder de la vidéo 4K, ma sortie HDMI peut fonctionner bien au-delà de 480p, l’interface Lumen est en 1080p, mais un service comme Netflix peut tout de même décider que la vidéo restera en définition standard parce que la chaîne de confiance DRM n’est pas certifiée.
 
@@ -146,7 +148,9 @@ C’est probablement la meilleure illustration de la différence entre **capacit
 
 Autour de **30 €**, je serais beaucoup plus prudent.
 
-Il faut acheter ce genre de dongle en sachant que le nom commercial ne garantit pas toujours la carte qui arrivera dans le colis, que les informations Android peuvent être falsifiées, que les certifications DRM sont limitées et qu’un firmware exotique peut rendre la récupération pénible. Si le but est simplement de regarder Netflix en bonne qualité dans un hôtel, il existe des appareils certifiés bien plus raisonnables.
+Il faut acheter ce genre de dongle en sachant que le nom commercial ne garantit pas toujours la carte qui arrivera dans le colis, que les informations Android peuvent être falsifiées, que les certifications DRM sont limitées et qu’un firmware exotique peut rendre la récupération pénible. Si le but est simplement de regarder Netflix en bonne qualité dans un hôtel, il existe des appareils certifiés bien plus raisonnables. Chez **Strong**, par exemple, le [LEAP 41](https://www.strong-eu.com/products/receivers/srt-41) est un stick Google TV certifié, annoncé avec Widevine L1 et les certifications Netflix et Prime Video. Chez **Xiaomi**, le [TV Stick 4K (2e génération)](https://www.mi.com/be-fr/product/xiaomi-tv-stick-4k-2nd-gen/specs/) fonctionne sous Google TV ; Xiaomi confirme aussi les certifications logicielles Google, Netflix, Prime Video et YouTube dans [sa FAQ](https://www.mi.com/fr/support/faq/details/KA-873843/). Vérifiez tout de même les caractéristiques du modèle exact, car les références et les générations se ressemblent beaucoup.
+
+J’ai aussi un **[lien affilié Amazon](https://link.amazon/B0bDe9k3G)** (<a href="https://link.amazon/B0bDe9k3G" rel="nofollow sponsored">lien affilié Amazon</a>) à partager pour ceux qui veulent regarder une alternative. Je ne peux pas confirmer automatiquement ici le produit final vers lequel ce lien redirige, donc je préfère ne lui attribuer ni modèle, ni prix, ni certification que je n’ai pas vérifiés. Si vous achetez via ce lien, je peux éventuellement percevoir une commission, sans surcoût annoncé pour vous.
 
 En revanche, pour quelqu’un qui aime démonter, sauvegarder, comprendre et adapter son matériel, le MX10-F3 reste un objet amusant. L’Allwinner H313 est beaucoup plus capable que l’expérience d’origine ne le laisse penser.
 
