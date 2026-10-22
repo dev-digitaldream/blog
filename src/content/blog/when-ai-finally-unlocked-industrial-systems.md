@@ -4,14 +4,17 @@ description: "Ten years of roadblocks, poorly documented protocols, and plenty o
 metaTitle: "How AI Unlocked Closed Industrial Systems"
 metaDescription: "How LLMs, Ghidra, and reverse engineering helped us understand and modernize closed industrial systems after ten years of roadblocks."
 date: 2026-05-24
-updated: 2026-09-13
-updateNote: "The roles of Ghidra, MCP connectors, and OpenCode were clarified. The article now separates model-generated leads more explicitly from results verified in the field."
+updated: 2026-10-22
+updateNote: "Added an October 2026 note about REA and Lean REA, two new reverse-engineering workflows for AI coding agents. The original field experience remains unchanged."
 lang: en
 draft: false
 translation: quand-lia-debloque-enfin-des-systemes-industriels-fermes
 category: blog
 tags: [ai, llm, reverse-engineering, industry, ghidra, codex, automation, gmktec]
 cover: "/uploads/ia-industrie/atelier-investigation.webp"
+sticker: best-of-the-best
+stickerRotation: -11
+stickerScale: 1.04
 excerpt: "For years, we adapted our work to the limits of a closed system. With LLMs, some of those limits are finally starting to give way. Not without mistakes, or work on our side."
 ---
 
@@ -48,6 +51,18 @@ Claude Sonnet and Opus often impressed me when analyzing behavior or reframing c
 Then Codex took on a role I had not anticipated. At first, I mainly saw it as a conventional coding assistant. Yet it started helping me analyze files from embedded Linux, understand binary structures, and explore recompilation options. Tasks I would not have imagined tackling alone a few years earlier became accessible, at least enough to start working on them.
 
 Even with embedded systems specialists, some subjects remained difficult. I am not claiming everything became easy. But in my experience, the barrier to entry clearly shifted.
+
+## October 22, 2026 update: REA and Lean REA would have saved a few late nights
+
+I recently came across two projects that probably would have saved me a fair bit of time at the start of this adventure: **[REA (Reverse Engineer Anything)](https://github.com/morluto/rea)** and its lightweight alternative, **[Lean REA](https://github.com/aicodeking/leanrea)**. Back when we spent evenings opening files, hunting for the right commands, and connecting scattered clues, an assistant that could organize that groundwork would have been very welcome. Reverse engineering requires enough patience without repeatedly explaining to a model where to start.
+
+REA puts tools for inspecting executables, native binaries, application code and certain runtime observations behind an **MCP server and CLI** that coding agents can use. That does not magically turn a model into an embedded-systems engineer or an expert in every proprietary protocol. It makes it easier for the agent to ask the right tools the right questions and show the evidence behind its conclusions.
+
+**Lean REA** takes a different route. Instead of registering a large MCP tool server, it is a **roughly 8 KB skill file** telling the agent which existing command-line tools to use for Electron apps, Android APKs, native binaries, firmware, network captures and more. Think `jadx`, `apktool`, `otool`, `nm` and their friends. It is more of a compact investigation playbook than a whole new analysis suite.
+
+A [MindStudio comparison published on October 17, 2026](https://www.mindstudio.ai/blog/lean-rea-skill-reverse-engineering) reported that Lean REA was **38% faster and 35% cheaper than REA** across **36 runs covering four reverse-engineering tasks**, with nearly identical accuracy. Promising, but hardly a universal verdict: the benchmark tested software and binary analysis with one model and a particular setup. It does not prove that Lean REA can suddenly decipher an undocumented industrial protocol.
+
+**I have not yet validated REA or Lean REA against the industrial systems discussed in this article.** I mention them because they show how much the tooling has changed since our early experiments with Ghidra, packet captures and LLMs that sometimes lost the plot. We are moving from pasting snippets into a chat to giving agents a more structured way to investigate. Their answers still need evidence, and any work on production-connected equipment must remain authorized, controlled and separated from risky operations.
 
 ## Domain knowledge does not appear out of nowhere
 
