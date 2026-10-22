@@ -333,16 +333,21 @@ function postSticker(post: BlogEntry): boolean {
   .static-holo-sticker {
     position: absolute;
     z-index: 8;
-    top: -1rem;
-    left: -1.25rem;
-    width: clamp(72px, 27%, 110px);
+    top: -1.15rem;
+    left: -1.9rem;
+    width: clamp(88px, 32%, 132px);
     height: auto;
-    transform: rotate(var(--sticker-rotation, -14deg)) scale(var(--sticker-scale, 0.9));
+    transform: rotate(var(--sticker-rotation, -14deg)) scale(var(--sticker-scale, 0.96));
     transform-origin: center;
-    filter: drop-shadow(0 3px 4px rgb(0 0 0 / .24));
+    filter: drop-shadow(0 4px 6px rgb(0 0 0 / .24));
     pointer-events: none;
   }
+
   @media (max-width: 640px) {
-    .static-holo-sticker { top: -.65rem; left: -.75rem; width: clamp(72px, 25%, 92px); }
+    .static-holo-sticker {
+      top: -0.85rem;
+      left: -1.15rem;
+      width: clamp(82px, 30%, 104px);
+    }
   }
 </style>
