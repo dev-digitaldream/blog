@@ -146,7 +146,7 @@ function postSticker(post: BlogEntry): boolean {
               >
                 <span class:list={['tape', i % 2 === 0 ? 'tape-c' : 'tape-r']} aria-hidden="true"></span>
                 {img ? (
-                  <div class="post-thumbnail relative mb-4 rounded-md border border-[var(--paper-edge)] bg-white p-1.5 rotate-[-0.6deg]">
+                  <div class="post-thumbnail relative mb-4 rounded-md bg-transparent rotate-[-0.6deg]">
                     <img src={img} alt="" width="640" height="360" class="w-full h-40 md:h-44 object-cover rounded-[3px]" loading="lazy" decoding="async" />
                     {sticker && (
                       <img
