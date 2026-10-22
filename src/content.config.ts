@@ -17,6 +17,8 @@ const blog = defineCollection({
     metaDescription: z.string().optional(),
     cover: z.string().optional(),
     sticker: z.enum(['best-of-the-best', 'none']).optional(),
+    stickerRotation: z.number().min(-180).max(180).optional(),
+    stickerScale: z.number().min(0.5).max(1.5).optional(),
     lang: z.enum(['fr', 'en']).default('fr'),
     translation: z.string().optional(),
   }),
