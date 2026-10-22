@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import HoloSticker from '../../components/HoloSticker.astro';
 import Footer from '../../components/Footer.astro';
 import { getCollection, render } from 'astro:content';
 import { getCurrentLanguage } from '../../lib/i18n';
@@ -67,6 +68,7 @@ function fmtDate(d: Date | string, lang: string) {
         <div class="relative paper-card tilt-1 p-3 mb-12">
           <span class="tape tape-c" aria-hidden="true"></span>
           <img src={project.data.cover} alt={project.data.title} width="1200" height="836" class="w-full h-auto rounded-md" loading="eager" decoding="async" />
+          <HoloSticker enabled={project.data.sticker === 'best-of-the-best'} rotation={project.data.stickerRotation} scale={project.data.stickerScale} placement="cover" />
         </div>
       )}
 
