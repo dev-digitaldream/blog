@@ -9,6 +9,8 @@ category: "blog"
 tags: ["macOS", "audio", "audiophile", "hi-fi vintage", "open source", "IA"]
 cover: "/uploads/idiophile-one/idiophile-one-blue-glass.webp"
 sticker: best-of-the-best
+stickerRotation: -14
+stickerScale: 1.04
 excerpt: "Je voulais retrouver les grandes aiguilles lumineuses des amplis d'autrefois, sans acheter une chaîne hi-fi. De cette nostalgie est né Idiophile One, un lecteur gratuit pour Mac qui prend aussi le chemin du signal audio très au sérieux."
 metaTitle: "Idiophile One : lecteur audiophile vintage gratuit pour Mac"
 metaDescription: "Pourquoi j’ai créé Idiophile One : vu-mètres vintage, DAC, bit-perfect vérifiable, égaliseur, radios et DLNA. Un lecteur Mac gratuit et open source, encore en alpha."

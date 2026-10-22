@@ -5,14 +5,17 @@ description: "Dix ans de blocages, des protocoles peu documentés et beaucoup d�
 metaTitle: "IA et systèmes industriels fermés : retour de terrain"
 metaDescription: "Comment les LLM, Ghidra et le reverse engineering nous ont aidés à comprendre et moderniser des systèmes industriels fermés après dix ans de blocages."
 date: 2026-05-24
-updated: 2026-09-13
-updateNote: "Le rôle de Ghidra, des connecteurs MCP et d’OpenCode a été précisé. Le billet distingue désormais plus clairement les pistes proposées par les modèles des résultats vérifiés sur le terrain."
+updated: 2026-10-22
+updateNote: "Ajout d’un point d’actualité sur REA et Lean REA, deux nouveaux outils de rétro-ingénierie pour les agents IA. Les expériences initiales racontées dans ce billet restent inchangées."
 lang: fr
 draft: false
 translation: when-ai-finally-unlocked-industrial-systems
 category: blog
 tags: [ia, llm, reverse-engineering, industrie, ghidra, codex, automatisation, gmktec]
 cover: "/uploads/ia-industrie/atelier-investigation.webp"
+sticker: best-of-the-best
+stickerRotation: -11
+stickerScale: 1.04
 excerpt: "Pendant des années, nous avons adapté notre travail aux limites d’un système fermé. Avec les LLM, certaines de ces limites commencent enfin à céder. Pas sans erreurs, ni sans travail de notre côté."
 ---
 
@@ -49,6 +52,18 @@ Claude Sonnet et Opus m’ont souvent impressionné pour analyser des comporteme
 Puis Codex a pris une place que je n’avais pas anticipée. Au départ, je le voyais surtout comme un assistant de développement classique. Il a pourtant commencé à m’aider à analyser des fichiers issus de Linux embarqué, à comprendre des structures binaires et à chercher des pistes de recompilation. Des manipulations que je ne m’imaginais pas aborder seul quelques années plus tôt devenaient accessibles, au moins assez pour commencer à travailler dessus.
 
 Même avec des spécialistes de l’embarqué, certains sujets restaient difficiles. Je ne prétends pas que tout est devenu simple. Mais la barrière à l’entrée a clairement bougé dans mon usage.
+
+## Mise à jour du 22 octobre 2026 : REA et Lean REA, ça aurait simplifié quelques soirées !
+
+Je suis tombé sur deux projets récents qui m’auraient probablement fait gagner pas mal de temps au début de cette aventure : **[REA, pour Reverse Engineer Anything](https://github.com/morluto/rea)**, et son alternative minimaliste **[Lean REA](https://github.com/aicodeking/leanrea)**. À l’époque où nous passions nos soirées à ouvrir des fichiers, chercher les bonnes commandes et rapprocher des indices, un assistant capable d’organiser tout cela aurait été plutôt bienvenu. Après tout, le reverse engineering demande déjà assez de patience sans devoir réexpliquer à chaque session par quel bout commencer.
+
+REA regroupe dans un même environnement des outils d’analyse pour les exécutables, les applications, les binaires natifs et certaines observations d’exécution. Il propose notamment une intégration **MCP et CLI**, que l’on peut relier à un agent de développement. L’idée n’est pas que le modèle devienne magiquement un ingénieur en électronique ou un spécialiste de tous les protocoles, mais qu’il puisse interroger plus facilement les outils et surtout retrouver les éléments qui justifient ses hypothèses.
+
+**Lean REA** pousse cette logique dans l’autre sens. Au lieu de charger un gros serveur MCP, c’est un **skill d’environ 8 Ko** qui indique à l’agent quels outils classiques utiliser directement, selon qu’il regarde une application Electron, un APK Android, un binaire, du firmware ou une capture réseau. Il s’appuie par exemple sur `jadx`, `apktool`, `otool`, `nm` et d’autres utilitaires déjà connus. Autrement dit, on fournit à l’IA une méthode de travail plus qu’une nouvelle boîte à outils.
+
+Un [comparatif publié par MindStudio le 17 octobre 2026](https://www.mindstudio.ai/blog/lean-rea-skill-reverse-engineering) rapporte que Lean REA a été **38 % plus rapide et 35 % moins coûteux que REA** dans un banc d’essai de **36 exécutions réparties sur quatre tâches**, avec une précision très proche. Intéressant, mais à relativiser : ce test se concentrait sur des applications et binaires logiciels, avec un modèle et une configuration donnés. Ce n’est ni une mesure universelle, ni la preuve que Lean REA comprendra demain un protocole industriel propriétaire sans documentation.
+
+**Je n’ai pas encore validé REA ou Lean REA sur les systèmes dont je parle ici.** Je les mentionne parce qu’ils montrent très bien le chemin parcouru depuis nos premiers essais avec Ghidra, des captures réseau et des LLM parfois perdus dans leur propre contexte. On passe progressivement d’un assistant auquel on colle des extraits à des agents capables de conduire une investigation plus structurée. Le résultat reste à confronter à des preuves, et sur des équipements en production, l’analyse doit évidemment rester autorisée, maîtrisée et isolée des opérations risquées.
 
 ## Le contexte métier ne se devine pas
 
