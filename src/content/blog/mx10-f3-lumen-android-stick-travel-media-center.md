@@ -150,7 +150,7 @@ At around **€30**, I would be much more cautious.
 
 Buy this kind of dongle knowing that the commercial name may not guarantee the board revision inside the package, Android properties can be spoofed, DRM certification is limited, and recovery can be painful if the firmware is unusual. If your only goal is good-quality Netflix in a hotel, a properly certified streamer is the more sensible purchase. **Strong** sells the [LEAP 41](https://www.strong-eu.com/products/receivers/srt-41), a certified Google TV stick advertised with Widevine L1 and Netflix and Prime Video certifications. **Xiaomi** offers the [TV Stick 4K (2nd Gen)](https://www.mi.com/be-fr/product/xiaomi-tv-stick-4k-2nd-gen/specs/), which runs Google TV; Xiaomi also lists Google, Netflix, Prime Video and YouTube software certifications in its [FAQ](https://www.mi.com/fr/support/faq/details/KA-873843/). Check the exact model and generation before buying, as names can be confusingly similar.
 
-For anyone looking at alternatives, here is my <a href="https://link.amazon/B0bDe9k3G" rel="nofollow sponsored">Amazon affiliate link</a>. I couldn't verify the final product destination of that shortened URL, so I won't pretend to know its model, current price or certifications. I may earn a commission from eligible purchases made through that link, without an advertised extra cost to you.
+If you want to look at another option, here is an <a href="https://link.amazon/B0bDe9k3G" rel="nofollow sponsored">Amazon link</a><sup>*</sup>. I haven't verified the exact product, price or certifications behind the shortened link, so I won't make claims about them.
 
 For someone who enjoys opening devices, making backups, understanding them and tailoring the software, though, the MX10-F3 remains an entertaining little machine. The Allwinner H313 is far more capable than the original experience suggests.
 
@@ -167,3 +167,7 @@ The H313 did not become faster. The 2 GB of RAM did not double overnight. Netfli
 Most importantly, Lumen now fits my real use case: I arrive at a hotel, plug in the stick, get my apps back and avoid spending twenty minutes wrestling with somebody else's Smart TV.
 
 For something I paid twelve euros for, that feels like a pretty good result.
+
+---
+
+<small>* Amazon affiliate link: I may earn a commission on qualifying purchases made through this link, at no additional cost to you.</small>
