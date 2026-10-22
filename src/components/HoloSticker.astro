@@ -1,0 +1,65 @@
+---
+interface Props {
+  enabled?: boolean;
+  rotation?: number;
+  scale?: number;
+  placement?: 'thumbnail' | 'cover' | 'card';
+}
+const { enabled = false, rotation = -14, scale = 1.04, placement = 'thumbnail' } = Astro.props;
+---
+{enabled && (
+  <img
+    src="/stickers/dech_star.webp"
+    alt=""
+    aria-hidden="true"
+    width="150"
+    height="150"
+    loading="lazy"
+    decoding="async"
+    class:list={['holo-post-sticker', placement]}
+    style={`--holo-rotation: ${rotation}deg; --holo-scale: ${scale};`}
+  />
+)}
+<style>
+  .holo-post-sticker {
+    position: absolute;
+    z-index: 8;
+    height: auto;
+    transform: rotate(var(--holo-rotation, -14deg)) scale(var(--holo-scale, 1.04));
+    transform-origin: center;
+    filter: drop-shadow(0 4px 6px rgb(0 0 0 / .24));
+    pointer-events: none;
+  }
+  .thumbnail {
+    top: -1.15rem;
+    left: -1.9rem;
+    width: clamp(96px, 35%, 146px);
+  }
+  .cover {
+    top: -1.1rem;
+    right: -1.15rem;
+    width: clamp(100px, 22%, 150px);
+  }
+  .card {
+    top: -.9rem;
+    right: -1rem;
+    width: clamp(90px, 23%, 132px);
+  }
+  @media (max-width: 640px) {
+    .thumbnail {
+      top: -.85rem;
+      left: -1.15rem;
+      width: clamp(90px, 33%, 116px);
+    }
+    .cover {
+      top: -.8rem;
+      right: -.65rem;
+      width: clamp(92px, 25%, 118px);
+    }
+    .card {
+      top: -.7rem;
+      right: -.65rem;
+      width: clamp(82px, 24%, 110px);
+    }
+  }
+</style>
