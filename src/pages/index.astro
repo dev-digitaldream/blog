@@ -159,8 +159,9 @@ function postSticker(post: BlogEntry): 'heart' | 'star' | undefined {
                     <span class="peel-sticker-face">
                       <img src="/stickers/star-holographic.svg" alt="" width="92" height="90" draggable="false" />
                     </span>
-                    <span class="peel-sticker-back"></span>
-                    <span class="peel-sticker-glint"></span>
+                    <span class="peel-sticker-flap">
+                      <img src="/stickers/star-holographic.svg" alt="" width="92" height="90" draggable="false" />
+                    </span>
                   </span>
                 )}
 
@@ -325,124 +326,82 @@ function postSticker(post: BlogEntry): 'heart' | 'star' | undefined {
 </Layout>
 
 <style>
+  /* Feuille réelle repliée sur une ligne horizontale : aucun triangle ajouté. */
   .peel-sticker {
-    --peel: 0;
+    --lift: 0%;
     position: absolute;
-    z-index: 7;
+    z-index: 8;
     top: 1.65rem;
     right: -.75rem;
-    width: 92px;
-    aspect-ratio: 92 / 90;
     display: block;
+    width: 92px;
+    height: 90px;
     transform: rotate(-13deg);
-    filter: drop-shadow(2px 5px 3px rgb(43 32 60 / .21));
-    touch-action: none;
+    pointer-events: auto;
     cursor: grab;
+    touch-action: none;
     user-select: none;
-    isolation: isolate;
+    filter: drop-shadow(1px 4px 3px rgb(0 0 0 / .22));
   }
   .peel-sticker:active { cursor: grabbing; }
-  .peel-sticker-face {
+  .peel-sticker-face, .peel-sticker-flap {
     position: absolute;
     inset: 0;
     display: block;
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--peel-y, 0%)), calc(100% - var(--peel-x, 0%)) 100%, 0 100%);
-    transform: perspective(240px) rotateY(calc(var(--peel) * -13deg)) rotateX(calc(var(--peel) * 7deg));
-    transform-origin: top left;
-    will-change: transform, clip-path;
-  }
-  .peel-sticker-face img { width: 100%; height: 100%; display: block; }
-  .peel-sticker-back {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: var(--peel-x, 0%);
-    height: var(--peel-y, 0%);
-    background: linear-gradient(135deg, #c9c5d5, #fffdfa 45%, #e5dce9 100%);
-    clip-path: polygon(100% 0, 100% 100%, 0 100%);
-    border-radius: 0 0 4px 0;
-    transform: rotate(calc(var(--peel) * 5deg));
-    transform-origin: top left;
-    box-shadow: inset 2px -2px 5px rgb(44 25 65 / .14);
-    opacity: var(--peel);
-  }
-  .peel-sticker-glint {
-    position: absolute;
-    inset: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
-    background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / .55) 55%, transparent 70%);
-    clip-path: polygon(80% 0, 100% 33%, 100% 65%, 59% 100%, 35% 80%, 0 64%, 12% 21%, 45% 0);
-    mix-blend-mode: screen;
-    opacity: .38;
+    transition: clip-path 480ms cubic-bezier(.2,.8,.2,1), top 480ms cubic-bezier(.2,.8,.2,1);
+  }
+  .peel-sticker-face {
+    clip-path: polygon(0 var(--lift), 100% var(--lift), 100% 100%, 0 100%);
+  }
+  .peel-sticker-flap {
+    top: calc(-100% + 2 * var(--lift));
+    transform: scaleY(-1);
+    clip-path: polygon(0 0, 100% 0, 100% var(--lift), 0 var(--lift));
+    filter: drop-shadow(0 3px 3px rgb(0 0 0 / .19));
+  }
+  .peel-sticker img { display: block; width: 100%; height: 100%; }
+  .peel-sticker-flap img {
+    /* même silhouette que l'étoile, véritable verso papier */
+    filter: brightness(0) saturate(0) invert(92%) sepia(7%) saturate(108%) hue-rotate(298deg);
   }
   @media (prefers-reduced-motion: reduce) {
-    .peel-sticker-face { will-change: auto; }
+    .peel-sticker-face, .peel-sticker-flap { transition: none; }
   }
 </style>
-
 <script>
-  // Petite simulation de papier décollé, contrôlée au pointeur et amortie au relâchement.
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Pli de type React Bits : la partie supérieure de l'image est réfléchie,
+  // et non remplacée par un triangle extérieur.
   document.querySelectorAll<HTMLElement>('[data-peel-sticker]').forEach((sticker) => {
-    let target = 0;
-    let value = 0;
-    let velocity = 0;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return;
     let dragging = false;
-    let startX = 0;
     let startY = 0;
-    let frame = 0;
-    let hover = false;
-    const draw = () => {
-      if (reduceMotion) {
-        sticker.style.setProperty('--peel', '0');
-        return;
-      }
-      const force = (target - value) * 0.12;
-      velocity = (velocity + force) * 0.72;
-      value = Math.max(0, Math.min(.88, value + velocity));
-      sticker.style.setProperty('--peel', value.toFixed(3));
-      sticker.style.setProperty('--peel-x', `${(value * 75).toFixed(2)}%`);
-      sticker.style.setProperty('--peel-y', `${(value * 80).toFixed(2)}%`);
-      if (Math.abs(target - value) > .002 || Math.abs(velocity) > .002) {
-        frame = requestAnimationFrame(draw);
-      } else { frame = 0; }
-    };
-    const animate = () => {
-      if (!frame) frame = requestAnimationFrame(draw);
-    };
-    sticker.addEventListener('pointerenter', () => {
-      hover = true;
-      if (!dragging) target = .12;
-      animate();
-    });
-    sticker.addEventListener('pointerleave', () => {
-      hover = false;
-      if (!dragging) target = 0;
-      animate();
-    });
+    let startX = 0;
+    const lift = (pct: number) => sticker.style.setProperty('--lift', `${Math.max(0, Math.min(48, pct))}%`);
+    sticker.addEventListener('pointerenter', () => { if (!dragging) lift(23); });
+    sticker.addEventListener('pointerleave', () => { if (!dragging) lift(0); });
     sticker.addEventListener('pointerdown', (event) => {
-      if (reduceMotion) return;
       event.preventDefault();
       event.stopPropagation();
       dragging = true;
       startX = event.clientX;
       startY = event.clientY;
       sticker.setPointerCapture(event.pointerId);
-      target = .2;
-      animate();
+      lift(30);
     });
     sticker.addEventListener('pointermove', (event) => {
       if (!dragging) return;
-      const distance = Math.hypot(event.clientX - startX, event.clientY - startY);
-      target = Math.min(.88, .2 + distance / 125);
-      animate();
+      lift(30 + Math.hypot(event.clientX - startX, event.clientY - startY) * .16);
     });
     const release = (event: PointerEvent) => {
       if (!dragging) return;
       event.preventDefault();
       dragging = false;
-      target = hover ? .12 : 0;
-      animate();
+      const r = sticker.getBoundingClientRect();
+      lift(event.clientX >= r.left && event.clientX <= r.right && event.clientY >= r.top && event.clientY <= r.bottom ? 23 : 0);
     };
     sticker.addEventListener('pointerup', release);
     sticker.addEventListener('pointercancel', release);
