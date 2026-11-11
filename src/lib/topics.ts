@@ -34,12 +34,18 @@ export const topics: Record<TopicLanguage, TopicDefinition[]> = {
           description: 'Le travail ne s’arrête pas au poste de bureau. Ces deux notes abordent la fiabilité des VPS low cost et le choix d’une plateforme auto-hébergée, avec un critère commun : pouvoir comprendre la panne.',
           postIds: ['vps-low-cost-ce-que-personne-ne-dit-vraiment', 'paas-auto-heberges-lexperience-cloud-sans-la-facture-2026'],
         },
+        {
+          title: 'Écouter sur Mac, avec une interface à son goût',
+          description: 'Idiophile One est mon lecteur audio gratuit pour Mac, développé autour d’une façade inspirée de la hi-fi vintage et d’un chemin audio que je peux examiner.',
+          postIds: ['idiophile-one-lecteur-audiophile-vintage-mac'],
+        },
       ],
       postIds: [
         'vps-low-cost-ce-que-personne-ne-dit-vraiment',
         'paas-auto-heberges-lexperience-cloud-sans-la-facture-2026',
         'macscp-outil-transfert-manquait-mac',
         'faire-tourner-windows-11-sur-un-mac-apple-silicon-avec-vmware-fusion',
+        'idiophile-one-lecteur-audiophile-vintage-mac',
       ],
     },
     {
@@ -65,6 +71,7 @@ export const topics: Record<TopicLanguage, TopicDefinition[]> = {
         'quand-lia-debloque-enfin-des-systemes-industriels-fermes',
         'macscp-outil-transfert-manquait-mac',
         'plaud-notes-lenregistreur-qui-promet-de-penser-a-ta-place',
+        'mx10-f3-lumen-stick-android-12-euros',
       ],
     },
     {
@@ -88,6 +95,8 @@ export const topics: Record<TopicLanguage, TopicDefinition[]> = {
         'le-brouillard-des-baas-deux-ans-a-chercher-une-base-de-donne',
         'astro-rachete-par-cloudflare-quand-les-frameworks-cessent-detre-neutres',
         'macscp-outil-transfert-manquait-mac',
+        'idiophile-one-lecteur-audiophile-vintage-mac',
+        'mx10-f3-lumen-stick-android-12-euros',
       ],
     },
   ],
@@ -114,12 +123,18 @@ export const topics: Record<TopicLanguage, TopicDefinition[]> = {
           description: 'The work does not stop at the desktop. These two notes cover the reliability of low-cost VPS hosting and the choice of a self-hosted platform, with one shared criterion: being able to understand a failure.',
           postIds: ['low-cost-vps-what-nobody-tells-you', 'self-hosted-paas-cloud-experience-without-the-bill'],
         },
+        {
+          title: 'Listening on a Mac, with an interface of my own',
+          description: 'Idiophile One is my free Mac audio player, built around a vintage hi-fi-inspired front panel and an audio path I can inspect.',
+          postIds: ['idiophile-one-vintage-mac-en'],
+        },
       ],
       postIds: [
         'low-cost-vps-what-nobody-tells-you',
         'self-hosted-paas-cloud-experience-without-the-bill',
         'macscp-file-transfer-tool-missing-on-mac',
         'running-windows-11-on-apple-silicon-mac-vmware-fusion',
+        'idiophile-one-vintage-mac-en',
       ],
     },
     {
@@ -145,6 +160,7 @@ export const topics: Record<TopicLanguage, TopicDefinition[]> = {
         'when-ai-finally-unlocked-industrial-systems',
         'macscp-file-transfer-tool-missing-on-mac',
         'plaud-note-2026-ai-grew-up',
+        'mx10-f3-lumen-android-stick-travel-media-center',
       ],
     },
     {
@@ -168,6 +184,8 @@ export const topics: Record<TopicLanguage, TopicDefinition[]> = {
         'le-brouillard-des-baas-two-years-searching-for-a-database',
         'astro-bought-by-cloudflare-when-frameworks-stop-being-neutral',
         'macscp-file-transfer-tool-missing-on-mac',
+        'idiophile-one-vintage-mac-en',
+        'mx10-f3-lumen-android-stick-travel-media-center',
       ],
     },
   ],
